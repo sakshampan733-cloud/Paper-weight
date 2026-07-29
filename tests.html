@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paperweight — tests</title>
+<style>
+  :root{--ok:#2e7d32;--bad:#c62828;--dim:#666;--line:#ddd}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;margin:0;padding:24px;background:#fafafa;color:#20242d}
+  h1{font-size:20px;margin:0 0 4px}
+  #summary{font-size:14px;color:var(--dim);margin-bottom:18px}
+  #summary.done b.pass{color:var(--ok)} #summary.done b.fail{color:var(--bad)}
+  .test{border:1px solid var(--line);border-radius:8px;background:#fff;margin-bottom:8px;overflow:hidden}
+  .test>.head{display:flex;gap:10px;align-items:center;padding:10px 14px;font-size:14px}
+  .test .mark{font-weight:700;width:18px;text-align:center}
+  .test.pass .mark{color:var(--ok)} .test.fail .mark{color:var(--bad)} .test.run .mark{color:var(--dim)}
+  .test .name{flex:1}
+  .test .detail{font-size:12.5px;color:var(--bad);padding:0 14px 10px 42px;white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace}
+  /* the app under test loads here, kept offscreen but real (not display:none, which can skip layout) */
+  #frameWrap{position:fixed;left:-10000px;top:0;width:768px;height:1024px}
+  iframe{width:768px;height:1024px;border:0}
+</style>
+</head>
+<body>
+<h1>Paperweight — test suite</h1>
+<div id="summary">Running…</div>
+<div id="results"></div>
+<div id="frameWrap"><iframe id="app"></iframe></div>
+
+<script>
+const APP_SRC='paperweight.html';
+const results=document.getElementById('results');
+const summaryEl=document.getElementById('summary');
+const iframe=document.getElementById('app');
+
+/* Load (or reload) the app into the iframe with a clean slate, and wait until
+   its boot has run. localStorage is shared with this page (same origin), so we
+   wipe the app's key and pre-set the guide flags before each load. */
+function loadApp(seedState){
+  return new Promise((resolve)=>{
+    try{
+      localStorage.removeItem('sem5v2');
+      localStorage.setItem('pw-guide-seen','1');
+      localStorage.setItem('pw-seen-version','1.7');
+      if(seedState) localStorage.setItem('sem5v2', JSON.stringify(seedState));
+    }catch(e){}
+    iframe.onload=()=>{
+      // give boot() a tick to finish its initial render
+      setTimeout(()=>resolve(iframe.contentWindow), 80);
+    };
+    // unique query busts cache and guarantees a fresh load each call
+    iframe.src=APP_SRC+'?t='+Date.now()+'-'+Math.random();
+  });
+}
+
+/* Run a snippet inside the app's realm. Because DATA/state are lexical
+   top-level bindings (not window properties), the parent can't read them
+   directly — eval in the app realm can. Snippets end in an expression that
+   is JSON (string/number/bool/object); we stringify+parse across the boundary. */
+function ev(cw, code){
+  const out=cw.eval('(function(){'+code+'})()');
+  return out;
+}
+function evJSON(cw, code){
+  return JSON.parse(cw.eval('JSON.stringify((function(){'+code+'})())'));
+}
+
+function assert(cond, msg){ if(!cond) throw new Error(msg||'assertion failed'); }
+function assertEq(a, b, msg){ if(a!==b) throw new Error((msg||'')+` — expected ${JSON.stringify(b)}, got ${JSON.stringify(a)}`); }
+
+const TESTS=[];
+function test(name, fn){ TESTS.push({name, fn}); }
+
+/* ─────────────────────────── BUG 1: subject removal ─────────────────────────── */
+
+test('Bug 1 — "Remove subject" button shows for a DEFAULT subject', async ()=>{
+  const cw=await loadApp();
+  const found=evJSON(cw, `
+    cur.sub = DATA.subjects.find(s=>s.id==='s1');
+    openChapter(null,'notes');
+    return { hasBtn: !!document.querySelector('#delSubBtn') };
+  `);
+  assert(found.hasBtn, 'delSubBtn missing on a default subject overview (the original bug)');
+});
+
+test('Bug 1 — removing a default subject persists across reload', async ()=>{
+  let cw=await loadApp();
+  ev(cw, `
+    state.removedSubjectIds=(state.removedSubjectIds||[]);
+    state.removedSubjectIds.push('s3');
+    const i=DATA.subjects.findIndex(s=>s.id==='s3'); if(i>-1) DATA.subjects.splice(i,1);
+    save();
+  `);
+  // reload WITHOUT wiping (loadApp wipes) — so read the saved blob and reseed
+  const saved=JSON.parse(localStorage.getItem('sem5v2'));
+  cw=await loadApp(saved);
+  const after=evJSON(cw, `return { ids: DATA.subjects.map(s=>s.id) };`);
+  assert(!after.ids.includes('s3'), 's3 came back after reload; got '+after.ids.join(','));
+});
+
+test('Bug 1 — cannot remove the last remaining subject', async ()=>{
+  const seed={removedSubjectIds:['s2','s3','s4']};
+  const cw=await loadApp(seed);
+  const r=evJSON(cw, `
+    const before=DATA.subjects.length;
+    cur.sub=DATA.subjects[0];
+    openChapter(null,'notes');
+    const btn=document.querySelector('#delSubBtn');
+    return { before, btnShown: !!btn };
+  `);
+  assertEq(r.before, 1, 'seed left more than one subject');
+  assert(!r.btnShown, 'remove button should be hidden when only one subject remains');
+});
+
+test('Bug 1 — removing a CUSTOM subject drops it from state.subs', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    const s={id:'cs-test', code:'CT', name:'Custom Test'};
+    (state.subs=state.subs||[]).push(s);
+    DATA.subjects.push({id:s.id,code:s.code,name:s.name,units:[{name:'Unit 1',chapters:[]}]});
+    // remove it the way the handler does for a custom sub
+    state.subs=state.subs.filter(x=>x.id!=='cs-test');
+    const i=DATA.subjects.findIndex(x=>x.id==='cs-test'); if(i>-1) DATA.subjects.splice(i,1);
+    save();
+    return { inSubs: (state.subs||[]).some(x=>x.id==='cs-test'), inData: DATA.subjects.some(x=>x.id==='cs-test') };
+  `);
+  assert(!r.inSubs && !r.inData, 'custom subject not fully removed');
+});
+
+/* ─────────────────────────── BUG 3: question card DOM ─────────────────────────── */
+
+function seedQuestionChapter(cw, q, a){
+  ev(cw, `
+    mergeChapterEntry({subject:'s1', unit:'Unit 1', chapter:{id:'qc', name:'QC', lectures:[{title:'L1', cards:[
+      {type:'question', q:${JSON.stringify(q)}, a:${JSON.stringify(a||'<p>ans</p>')}, src:'', tags:['Theory']}
+    ]}]}});
+    const c=allChapters(DATA.subjects.find(s=>s.id==='s1')).find(x=>x.id==='qc');
+    c.sub=DATA.subjects.find(s=>s.id==='s1'); c.unit=c.sub.units.find(u=>u.name==='Unit 1');
+    c.lectures.forEach((lec,li)=>{ lec.no=1; lec.ch=c; lec.id=lec.id||c.id+'-l'+li; lec.cards.forEach((cd,cdi)=>{ cd.lec=lec; cd.id=lec.id+'-'+cdi; CARDS[cd.id]=cd; }); });
+    cur.sub=c.sub; openChapter(c,'questions',true);
+  `);
+}
+
+test('Bug 3 — question header is a focusable div, star & chevron are real children', async ()=>{
+  const cw=await loadApp();
+  seedQuestionChapter(cw, 'Sample question?');
+  const r=evJSON(cw, `
+    const qHead=document.querySelector('.qHead');
+    return {
+      tag: qHead.tagName,
+      role: qHead.getAttribute('role'),
+      tabindex: qHead.getAttribute('tabindex'),
+      starChild: !!qHead.querySelector('[data-star]'),
+      chevChild: !!qHead.querySelector('.qChev')
+    };
+  `);
+  assertEq(r.tag, 'DIV', 'qHead should be a div (was a button, which auto-closed on the nested star button)');
+  assertEq(r.role, 'button');
+  assertEq(r.tabindex, '0');
+  assert(r.starChild, 'star button is not inside qHead (nested-button auto-close bug)');
+  assert(r.chevChild, 'chevron is not inside qHead');
+});
+
+test('Bug 3 — chevron/head click toggles open; star click does NOT', async ()=>{
+  const cw=await loadApp();
+  seedQuestionChapter(cw, 'Toggle test?');
+  const r=evJSON(cw, `
+    const head=document.querySelector('.qHead');
+    const card=document.querySelector('.qCard');
+    const star=head.querySelector('[data-star]');
+    head.click();
+    const openedByHead=card.classList.contains('open');
+    head.click(); // close again
+    const closedAgain=!card.classList.contains('open');
+    star.click(); // should toggle the star, NOT open the card
+    const stillClosed=!card.classList.contains('open');
+    return { openedByHead, closedAgain, stillClosed };
+  `);
+  assert(r.openedByHead, 'clicking the header did not open the answer');
+  assert(r.closedAgain, 'second header click did not close it');
+  assert(r.stillClosed, 'clicking the star wrongly toggled the card open');
+});
+
+test('Bug 3 — small inputs are ≥16px (no iOS auto-zoom)', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    function fs(sel){ const el=document.querySelector(sel); return el?parseFloat(getComputedStyle(el).fontSize):null; }
+    // open the palette so #palInput exists
+    palToggle(true);
+    const pal=fs('#palInput');
+    palToggle(false);
+    // open the pdf sheet so its select exists
+    pdfToggle(true);
+    const sel=fs('.pdfField select');
+    pdfToggle(false);
+    return { pal, sel };
+  `);
+  assert(r.pal>=16, 'search input under 16px ('+r.pal+') — iOS will auto-zoom');
+  assert(r.sel>=16, 'pdf sheet select under 16px ('+r.sel+') — iOS will auto-zoom');
+});
+
+/* ─────────────────────────── BUG 4: long question wrapping ─────────────────────────── */
+
+test('Bug 4 — a long unbroken question does not force horizontal scroll', async ()=>{
+  const cw=await loadApp();
+  seedQuestionChapter(cw, 'Reconcile'+'X'.repeat(240)+'End');
+  const r=evJSON(cw, `
+    return { bodyScroll: document.body.scrollWidth, inner: window.innerWidth };
+  `);
+  assert(r.bodyScroll <= r.inner+1, 'page overflows horizontally: scrollWidth '+r.bodyScroll+' > innerWidth '+r.inner);
+});
+
+/* ─────────────────────────── BUG 2: subject-match fallback visibility ─────────────────────────── */
+
+test('Bug 2 — importing an unmatched subject reports subjectMatched:false', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    const res=applyImportPayload({subject:'Totally Unknown Subject', unit:'Unit 1',
+      chapter:{id:'fb1', name:'Fallback Ch', lectures:[{title:'L', cards:[{type:'note',title:'N',html:'<p>x</p>'}]}]}});
+    const first=res.done[0];
+    return { subjectMatched:first.subjectMatched, landedIn:first.subject, firstSubjectName:DATA.subjects[0].name };
+  `);
+  assertEq(r.subjectMatched, false, 'unmatched subject should be flagged so the user is warned');
+  assertEq(r.landedIn, r.firstSubjectName, 'unmatched import should fall back to the first subject');
+});
+
+test('Bug 2 — importing a matched subject id reports subjectMatched:true', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    const res=applyImportPayload({subject:'s2', unit:'Unit 1',
+      chapter:{id:'fb2', name:'Matched Ch', lectures:[{title:'L', cards:[{type:'note',title:'N',html:'<p>x</p>'}]}]}});
+    return { subjectMatched:res.done[0].subjectMatched, landedIn:res.done[0].subject };
+  `);
+  assertEq(r.subjectMatched, true, 'a real subject id should be treated as a match');
+});
+
+/* ─────────────────────────── FEATURE 8: moveChapterTo ─────────────────────────── */
+
+test('Feature 8 — moveChapterTo relocates a chapter across subjects and keeps content+progress', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    mergeChapterEntry({subject:'s1', unit:'Unit 1', chapter:{id:'mv', name:'Movable', lectures:[{title:'L1', cards:[{type:'note',title:'N',html:'<p>keep me</p>'}]}]}});
+    state.content=state.content||[]; state.content.push({subject:'s1', unit:'Unit 1', chapter:{id:'mv', name:'Movable', lectures:[{title:'L1', cards:[{type:'note',title:'N',html:'<p>keep me</p>'}]}]}});
+    buildPalIndex();
+    // mark progress + a star on the chapter's lecture/card
+    const c1=allChapters(DATA.subjects.find(s=>s.id==='s1')).find(x=>x.id==='mv');
+    const lecId=c1.lectures[0].id, cardId=c1.lectures[0].cards[0].id;
+    state.done[lecId]={l:1}; state.stars[cardId]=true; save();
+
+    const moved=moveChapterTo('mv','s2','Unit 1');
+    const entry=(state.content||[]).find(en=>entryChapId(en)==='mv');
+    const inS2=allChapters(DATA.subjects.find(s=>s.id==='s2')).some(x=>x.id==='mv');
+    const inS1=allChapters(DATA.subjects.find(s=>s.id==='s1')).some(x=>x.id==='mv');
+    const c2=allChapters(DATA.subjects.find(s=>s.id==='s2')).find(x=>x.id==='mv');
+    return {
+      moved, inS1, inS2,
+      entrySubject: entry&&entry.subject, entryUnit: entry&&entry.unit,
+      contentKept: c2 && c2.lectures[0].cards[0].html.indexOf('keep me')>-1,
+      progressKept: !!state.done[lecId], starKept: !!state.stars[cardId]
+    };
+  `);
+  assert(r.moved, 'moveChapterTo returned false');
+  assert(!r.inS1 && r.inS2, 'chapter not relocated (s1='+r.inS1+' s2='+r.inS2+')');
+  assertEq(r.entrySubject, 's2', 'persisted entry subject not updated');
+  assert(r.contentKept, 'chapter content was altered by the move');
+  assert(r.progressKept && r.starKept, 'progress/stars lost on move (should key off card ids)');
+});
+
+test('Feature 8 — moveChapterTo into a new unit within the same subject', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    mergeChapterEntry({subject:'s1', unit:'Unit 1', chapter:{id:'mu', name:'Ch', lectures:[{title:'L',cards:[]}]}});
+    buildPalIndex();
+    const moved=moveChapterTo('mu','s1','Unit 2');
+    const sub=DATA.subjects.find(s=>s.id==='s1');
+    const u2=sub.units.find(u=>u.name==='Unit 2');
+    return { moved, unit2Created: !!u2, inUnit2: u2 && u2.chapters.some(c=>c.id==='mu') };
+  `);
+  assert(r.moved && r.unit2Created && r.inUnit2, 'move into a freshly-created unit failed');
+});
+
+/* ─────────────────────────── FEATURES 5/6: request shape ─────────────────────────── */
+
+async function submitPdf(cw, prompt, qcount){
+  // pdfSubmit reads the file via FileReader (async) then fetches — so we await
+  // an app-realm promise that resolves inside the stubbed fetch with the captured
+  // body as a JSON string. Returning ok:false stops the success-path reload.
+  const json=await cw.eval(`(function(){
+    return new Promise((resolve)=>{
+      window.fetch=(url,opts)=>{ const b=opts&&opts.body?JSON.parse(opts.body):null;
+        resolve(JSON.stringify({ url, hasCustomPrompt:'customPrompt' in (b||{}), customPrompt:b&&b.customPrompt,
+                  hasQCount:'questionCount' in (b||{}), questionCount:b&&b.questionCount, hasPdf:!!(b&&b.pdfBase64) }));
+        return Promise.resolve({ok:false, status:0, json:()=>Promise.resolve({error:'captured'})});
+      };
+      pdfToggle(true);
+      pdfPickedSub='s1'; pdfPickedUnit='Unit 1';
+      pdfPickedPrompt=${JSON.stringify(prompt||'')}; pdfPickedQCount=${JSON.stringify(qcount||'')};
+      const dt=new DataTransfer(); dt.items.add(new File([new Uint8Array([37,80,68,70])],'c.pdf',{type:'application/pdf'}));
+      document.querySelector('#pdfFile').files=dt.files;
+      pdfSubmit();
+    });
+  })()`);
+  return JSON.parse(json);
+}
+
+test('Feature 5/6 — custom prompt + question count are sent in the extract request', async ()=>{
+  const cw=await loadApp();
+  const r=await submitPdf(cw, 'focus only on the formulas', '7');
+  assert(r.hasPdf, 'pdf not in request body');
+  assertEq(r.customPrompt, 'focus only on the formulas', 'customPrompt not forwarded');
+  assertEq(r.questionCount, 7, 'questionCount not forwarded');
+});
+
+test('Feature 5/6 — blank fields are omitted (default extraction)', async ()=>{
+  const cw=await loadApp();
+  const r=await submitPdf(cw, '', '');
+  assert(r.hasPdf, 'pdf not in request body');
+  assert(!r.hasCustomPrompt, 'customPrompt should be omitted when blank');
+  assert(!r.hasQCount, 'questionCount should be omitted when blank');
+});
+
+/* ─────────────────────────── usage caps ─────────────────────────── */
+
+test('PDF cap — blocks at 20 and rolls over next month', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    const ym=pdfCurrentMonth();
+    state.pdfUsage={ym, count:19};
+    bumpPdfUsage();
+    const countAfterBump=pdfUsageInfo().count;
+    const atCap=pdfUsageInfo().count>=PDF_MONTHLY_CAP;
+    // simulate last month, confirm rollover
+    state.pdfUsage={ym:'2000-01', count:20};
+    const rolled=pdfUsageInfo();
+    return { countAfterBump, atCap, rolledCount:rolled.count, rolledYm:rolled.ym, thisYm:ym };
+  `);
+  assertEq(r.countAfterBump, 20, 'bump from 19 should reach 20');
+  assert(r.atCap, 'cap not reached after bumping to 20');
+  assertEq(r.rolledCount, 0, 'stale month should reset the counter to 0');
+  assertEq(r.rolledYm, r.thisYm, 'rollover should adopt the current month');
+});
+
+test('Paper cap — separate counter, blocks at PAPER_MONTHLY_CAP', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    const ym=pdfCurrentMonth();
+    state.paperUsage={ym, count:PAPER_MONTHLY_CAP-1};
+    bumpPaperUsage();
+    const paperAtCap=paperUsageInfo().count>=PAPER_MONTHLY_CAP;
+    // bumping papers must NOT touch the PDF counter
+    const pdfUntouched=(pdfUsageInfo().count||0)===0;
+    return { paperAtCap, pdfUntouched, cap:PAPER_MONTHLY_CAP };
+  `);
+  assert(r.paperAtCap, 'paper cap not reached');
+  assert(r.pdfUntouched, 'paper upload wrongly consumed the PDF quota');
+});
+
+/* ─────────────────────────── runner ─────────────────────────── */
+
+async function run(){
+  let pass=0, fail=0;
+  for(const t of TESTS){
+    const row=document.createElement('div');
+    row.className='test run';
+    row.innerHTML='<div class="head"><span class="mark">…</span><span class="name"></span></div>';
+    row.querySelector('.name').textContent=t.name;
+    results.appendChild(row);
+    try{
+      await t.fn();
+      row.className='test pass';
+      row.querySelector('.mark').textContent='✓';
+      pass++;
+    }catch(e){
+      row.className='test fail';
+      row.querySelector('.mark').textContent='✗';
+      const d=document.createElement('div');
+      d.className='detail';
+      d.textContent=(e&&e.message||String(e));
+      row.appendChild(d);
+      fail++;
+    }
+  }
+  summaryEl.className='done';
+  summaryEl.innerHTML=`<b class="pass">${pass} passed</b> · <b class="fail">${fail} failed</b> · ${TESTS.length} total`;
+  document.title=(fail?'✗ ':'✓ ')+`Paperweight tests (${pass}/${TESTS.length})`;
+}
+run();
+</script>
+</body>
+</html>
