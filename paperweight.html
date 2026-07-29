@@ -789,7 +789,7 @@ body.sheetOpen #pwStack{opacity:0}
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 /* backend that holds the Anthropic key — fill in after deploying to Vercel */
-const API_BASE='https://REPLACE-ME.vercel.app/api';
+const API_BASE='https://paper-weight-three.vercel.app/api';
 const EXTRACT_API_URL=API_BASE+'/extract';
 const QUESTIONS_API_URL=API_BASE+'/questions';
 const PAPER_API_URL=API_BASE+'/paper';
