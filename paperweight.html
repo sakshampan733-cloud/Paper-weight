@@ -421,7 +421,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
 #printRoot{display:none}
 @media print{
   body{background:#fff!important}
-  #topbar,#app,#palWrap,#quizWrap,#prtWrap,#pdfWrap,#paperWrap{display:none!important}
+  #topbar,#app,#palWrap,#quizWrap,#prtWrap,#pdfWrap,#paperWrap,#jsonWrap,#promptWrap{display:none!important}
   #printRoot{display:block; font-family:Georgia,'Times New Roman',serif; color:#111; font-size:11.5pt; line-height:1.55}
   #printRoot .pHead{margin-bottom:16pt; border-bottom:2pt solid #111; padding-bottom:8pt}
   #printRoot .pCrumb{font-size:9pt; letter-spacing:.12em; text-transform:uppercase; color:#555; margin-bottom:4pt}
@@ -582,6 +582,22 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   <div class="pdfSheet">
     <div class="setupLbl">Upload a past exam paper</div>
     <div id="paperBody"></div>
+  </div>
+</div>
+
+<!-- JSON import (same filing form as the PDF sheet) -->
+<div id="jsonWrap">
+  <div class="pdfSheet">
+    <div class="setupLbl">Import a chapter JSON</div>
+    <div id="jsonBody"></div>
+  </div>
+</div>
+
+<!-- Copy-paste prompt for making a chapter JSON in Claude -->
+<div id="promptWrap">
+  <div class="pdfSheet">
+    <div class="setupLbl">Prompt for making a chapter JSON</div>
+    <div id="promptBody"></div>
   </div>
 </div>
 
@@ -754,8 +770,9 @@ body.sheetOpen #pwStack{opacity:0}
 .impChap b{color:var(--dim);font-weight:500}
 .impChap button{color:var(--red);font-size:12px;line-height:1;padding:2px 4px}
 /* ── PDF import sheet ── */
-#pdfWrap,#paperWrap{position:fixed; inset:0; z-index:100; display:none; background:rgba(5,7,10,.55); backdrop-filter:blur(3px)}
-#pdfWrap.show,#paperWrap.show{display:flex; align-items:flex-start; justify-content:center; padding-top:12vh}
+#pdfWrap,#paperWrap,#jsonWrap,#promptWrap{position:fixed; inset:0; z-index:100; display:none; background:rgba(5,7,10,.55); backdrop-filter:blur(3px)}
+#pdfWrap.show,#paperWrap.show,#jsonWrap.show,#promptWrap.show{display:flex; align-items:flex-start; justify-content:center; padding-top:12vh}
+#promptText{width:100%; min-height:230px; font-family:var(--mono); font-size:12px; line-height:1.55; padding:11px 12px; border-radius:8px; border:1px solid var(--line2); background:var(--bg2); color:var(--body2); resize:vertical}
 .pdfSheet{width:440px; max-width:92vw; max-height:78vh; overflow-y:auto; background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:20px 18px; box-shadow:0 24px 70px rgba(0,0,0,.55)}
 .pdfSheet .setupLbl{padding:0 0 12px}
 .pdfField{margin-bottom:14px}
@@ -874,11 +891,23 @@ function mergeChapterEntry(en){
 (state.content||[]).forEach(en=>{ try{ mergeChapterEntry(en); }catch(e){} });
 
 /* the one place chapter/backup JSON gets merged in — used by both the
-   file-picker import and the PDF-import flow, so they can't drift apart */
-function applyImportPayload(d){
+   file-picker import and the PDF-import flow, so they can't drift apart.
+   `forced` ({subject, unit, chapterId}) overrides whatever filing the file
+   itself claims, so the subject/unit you pick in the UI always wins. It is
+   applied only to directly-supplied chapters, never to a backup's own
+   `content[]` — a backup already carries its own correct filing. */
+function applyImportPayload(d,forced){
   const ents=chapEntries(d); const done=[];
   state.content=state.content||[];
   ents.forEach(en=>{
+    if(forced){
+      const chap0=entryChapter(en);
+      if(!chap0) return;
+      const chap=Object.assign({},chap0);
+      if(forced.chapterId && ents.length===1) chap.id=forced.chapterId;
+      delete chap.subject; delete chap.unit;
+      en={subject:forced.subject, unit:forced.unit, chapter:chap};
+    }
     let res=null; try{ res=mergeChapterEntry(en); }catch(err){}
     if(!res) return;
     const ix=state.content.findIndex(x=>entryChapId(x)===res.id);
@@ -1087,7 +1116,6 @@ function renderSidebar(){
   });
   h+=`<button class="chRow${cur.ch==='settings'?' on':''}" id="setRow" style="margin-top:10px">
     <span class="t"><span style="color:var(--dim)">Settings</span></span></button>
-    <input type="file" id="impFile" accept=".json" style="display:none">
     <div id="sideFoot">Settings ▸ Import PDF to add a chapter.</div>`;
   $('#sidebar').innerHTML=h;
   $$('#sidebar .chRow').forEach(b=>b.onclick=e=>{
@@ -1101,34 +1129,6 @@ function renderSidebar(){
     closeSideIfDrawer();
   });
   $$('#sidebar .chGrip').forEach(g=>g.addEventListener('pointerdown',startChapterDrag));
-  $('#impFile').onchange=e=>{
-    const f=e.target.files[0]; if(!f)return;
-    const r=new FileReader();
-    r.onload=()=>{
-      let d; try{ d=JSON.parse(r.result); }catch(err){ toast('That file isn\u2019t valid JSON.'); e.target.value=''; return; }
-      const {done,stored}=applyImportPayload(d);
-      e.target.value='';
-      if(!stored){ toast('Imported, but this device\u2019s storage is full — export a backup and remove an old chapter.',5000); return; }
-      if(done.length){
-        const added=done.filter(x=>!x.updated).length, upd=done.length-added;
-        const bits=[]; if(added)bits.push(added+' chapter'+(added>1?'s':'')+' added'); if(upd)bits.push(upd+' updated');
-        const unmatched=done.filter(x=>x.subjectMatched===false);
-        if(unmatched.length){
-          const where=[...new Set(unmatched.map(x=>x.subject))].join(', ');
-          toast(bits.join(' \u00b7 ')+' \u2014 couldn\u2019t match the subject in the file, landed in '+where+'. Drag it to the right place if that\u2019s wrong.',6000);
-          setTimeout(()=>location.reload(),6200);
-        } else {
-          toast(bits.join(' \u00b7 ')+' \u2014 reloading');
-          setTimeout(()=>location.reload(),900);
-        }
-      } else {
-        const touched=['done','stars','quiz','exams','hl','subs'].some(k=>d&&d[k]&&Object.keys(d[k]).length);
-        buildPalIndex(); openChapter(cur.ch,cur.tab);
-        toast(touched?'Progress restored.':'Nothing in that file to import.');
-      }
-    };
-    r.readAsText(f);
-  };
 }
 
 /* ── PDF import — sends a chapter PDF to the backend, imports the JSON it
@@ -1151,19 +1151,49 @@ function bumpPdfUsage(){
   state.pdfUsage.count++;
   save();
 }
-let pdfPickedSub=null, pdfPickedUnit=null, pdfAbort=null, pdfPickedPrompt='', pdfPickedQCount='';
+/* ── shared import-target pickers (subject / unit / existing-chapter) ──
+   Used by both the PDF sheet and the JSON sheet, so the two filing paths
+   can't drift apart. `t` is a {sub, unit, chap} holder the caller owns. */
+function normalizeTarget(t){
+  if(!DATA.subjects.length) return null;
+  if(!t.sub || !DATA.subjects.some(s=>s.id===t.sub)) t.sub=DATA.subjects[0].id;
+  const sub=DATA.subjects.find(s=>s.id===t.sub);
+  if(!t.unit || !sub.units.some(u=>u.name===t.unit)) t.unit=(sub.units[0]&&sub.units[0].name)||'Unit 1';
+  return sub;
+}
+function targetFieldsHTML(t,ids){
+  const sub=normalizeTarget(t);
+  const unit=sub.units.find(u=>u.name===t.unit);
+  const chOpts=(unit?unit.chapters:[]).map(c=>`<option value="${esc(c.id)}"${c.id===t.chap?' selected':''}>Replace “${esc(c.name)}”</option>`).join('');
+  return `
+    <div class="pdfField"><label>Subject</label><select id="${ids.sub}">${DATA.subjects.map(s=>`<option value="${esc(s.id)}"${s.id===t.sub?' selected':''}>${esc(s.name)}</option>`).join('')}</select></div>
+    <div class="pdfField"><label>Unit</label><select id="${ids.unit}">${sub.units.map(u=>`<option value="${esc(u.name)}"${u.name===t.unit?' selected':''}>${esc(u.name)}</option>`).join('')}<option value="__new__">+ New unit…</option></select></div>
+    <div class="pdfField"><label>If this chapter already exists</label><select id="${ids.chap}"><option value="">New chapter</option>${chOpts}</select></div>`;
+}
+function bindTargetFields(t,ids,rerender){
+  $('#'+ids.sub).onchange=e=>{ t.sub=e.target.value; t.unit=null; t.chap=''; rerender(); };
+  $('#'+ids.unit).onchange=e=>{
+    if(e.target.value==='__new__'){
+      const name=(prompt('New unit name?')||'').trim();
+      if(name){
+        const sub=DATA.subjects.find(s=>s.id===t.sub);
+        if(!sub.units.some(u=>u.name.toLowerCase()===name.toLowerCase())) sub.units.push({name,chapters:[]});
+        t.unit=name;
+      }
+      rerender(); return;
+    }
+    t.unit=e.target.value; t.chap=''; rerender();
+  };
+  $('#'+ids.chap).onchange=e=>{ t.chap=e.target.value; };
+}
+
+let pdfTarget={sub:null,unit:null,chap:''}, pdfAbort=null, pdfPickedPrompt='', pdfPickedQCount='';
+const PDF_IDS={sub:'pdfSub',unit:'pdfUnit',chap:'pdfChap'};
 function pdfFormHTML(){
   if(!DATA.subjects.length) return '<div class="setNote">Add a subject first.</div>';
-  if(!pdfPickedSub || !DATA.subjects.some(s=>s.id===pdfPickedSub)) pdfPickedSub=DATA.subjects[0].id;
-  const sub=DATA.subjects.find(s=>s.id===pdfPickedSub);
-  if(!pdfPickedUnit || !sub.units.some(u=>u.name===pdfPickedUnit)) pdfPickedUnit=(sub.units[0]&&sub.units[0].name)||'Unit 1';
-  const unit=sub.units.find(u=>u.name===pdfPickedUnit);
-  const chOpts=(unit?unit.chapters:[]).map(c=>`<option value="${esc(c.id)}">Replace “${esc(c.name)}”</option>`).join('');
   const capped=pdfUsageInfo().count>=PDF_MONTHLY_CAP;
   return `
-    <div class="pdfField"><label>Subject</label><select id="pdfSub">${DATA.subjects.map(s=>`<option value="${esc(s.id)}"${s.id===sub.id?' selected':''}>${esc(s.name)}</option>`).join('')}</select></div>
-    <div class="pdfField"><label>Unit</label><select id="pdfUnit">${sub.units.map(u=>`<option value="${esc(u.name)}"${u.name===pdfPickedUnit?' selected':''}>${esc(u.name)}</option>`).join('')}<option value="__new__">+ New unit…</option></select></div>
-    <div class="pdfField"><label>If this chapter already exists</label><select id="pdfChap"><option value="">New chapter</option>${chOpts}</select></div>
+    ${targetFieldsHTML(pdfTarget,PDF_IDS)}
     <div class="pdfField"><label>Chapter PDF</label><input type="file" id="pdfFile" accept="application/pdf,.pdf"></div>
     <div class="pdfField"><label>Instructions for this import <span class="pdfOptional">(optional)</span></label>
       <textarea id="pdfPrompt" rows="2" placeholder="e.g. “emphasize the diagrams”, “skip the case studies”, “focus only on the formulas”" maxlength="2000">${esc(pdfPickedPrompt||'')}</textarea></div>
@@ -1178,19 +1208,7 @@ function pdfFormHTML(){
 }
 function pdfRenderForm(){ $('#pdfBody').innerHTML=pdfFormHTML(); pdfBindForm(); }
 function pdfBindForm(){
-  $('#pdfSub').onchange=e=>{ pdfPickedSub=e.target.value; pdfPickedUnit=null; pdfRenderForm(); };
-  $('#pdfUnit').onchange=e=>{
-    if(e.target.value==='__new__'){
-      const name=(prompt('New unit name?')||'').trim();
-      if(name){
-        const sub=DATA.subjects.find(s=>s.id===pdfPickedSub);
-        if(!sub.units.some(u=>u.name.toLowerCase()===name.toLowerCase())) sub.units.push({name,chapters:[]});
-        pdfPickedUnit=name;
-      }
-      pdfRenderForm(); return;
-    }
-    pdfPickedUnit=e.target.value; pdfRenderForm();
-  };
+  bindTargetFields(pdfTarget,PDF_IDS,pdfRenderForm);
   $('#pdfPrompt').oninput=e=>{ pdfPickedPrompt=e.target.value; };
   $('#pdfQCount').oninput=e=>{ pdfPickedQCount=e.target.value; };
   $('#pdfCancel').onclick=()=>pdfToggle(false);
@@ -1211,8 +1229,8 @@ function pdfShowLoading(){
   $('#pdfCancelLoad').onclick=()=>{ if(pdfAbort) pdfAbort.abort(); };
 }
 function pdfSubmit(){
-  const sub=DATA.subjects.find(s=>s.id===pdfPickedSub);
-  const unit=pdfPickedUnit;
+  const sub=DATA.subjects.find(s=>s.id===pdfTarget.sub);
+  const unit=pdfTarget.unit;
   const chapId=$('#pdfChap').value||null;
   const file=$('#pdfFile').files[0];
   if(!file) return toast('Choose a PDF first.');
@@ -1251,6 +1269,132 @@ function pdfSubmit(){
     }
   };
   reader.readAsDataURL(file);
+}
+
+/* ── JSON import — the same subject/unit/chapter filing form as the PDF
+   sheet (shared via targetFieldsHTML), so a hand-made JSON lands exactly
+   where you point it instead of wherever its own "subject" key guessed.
+   A full backup file is detected and restored as-is, ignoring the pickers. */
+let jsonTarget={sub:null,unit:null,chap:''};
+const JSON_IDS={sub:'jsonSub',unit:'jsonUnit',chap:'jsonChap'};
+function jsonFormHTML(){
+  if(!DATA.subjects.length) return '<div class="setNote">Add a subject first.</div>';
+  return `
+    ${targetFieldsHTML(jsonTarget,JSON_IDS)}
+    <div class="pdfField"><label>Chapter JSON file</label><input type="file" id="jsonFile" accept=".json,application/json"></div>
+    <div class="pdfUsage">Free — no Claude call, so this doesn’t touch your monthly cap. Need the JSON? Settings ▸ Prompt for making a JSON.</div>
+    <div class="pdfBtns">
+      <button class="setMini" id="jsonCancel">Cancel</button>
+      <button class="setMini" id="jsonGo" style="border-color:var(--gold-line); color:var(--gold)">Import</button>
+    </div>`;
+}
+function jsonRenderForm(){ $('#jsonBody').innerHTML=jsonFormHTML(); jsonBindForm(); }
+function jsonBindForm(){
+  bindTargetFields(jsonTarget,JSON_IDS,jsonRenderForm);
+  $('#jsonCancel').onclick=()=>jsonToggle(false);
+  $('#jsonGo').onclick=jsonSubmit;
+}
+function jsonToggle(show){
+  $('#jsonWrap').classList.toggle('show',!!show);
+  if(show) jsonRenderForm();
+}
+function jsonSubmit(){
+  const sub=DATA.subjects.find(s=>s.id===jsonTarget.sub);
+  const unit=jsonTarget.unit;
+  const chapId=$('#jsonChap').value||null;
+  const file=$('#jsonFile').files[0];
+  if(!file) return toast('Choose a JSON file first.');
+  const r=new FileReader();
+  r.onload=()=>{
+    let d; try{ d=JSON.parse(r.result); }catch(err){ return toast('That file isn’t valid JSON.'); }
+    const isChapterFile=chapEntries(d).length>0;
+    const forced=isChapterFile?{subject:sub.id, unit, chapterId:chapId}:null;
+    const {done,stored}=applyImportPayload(d,forced);
+    jsonToggle(false);
+    if(!stored){ toast('Imported, but this device’s storage is full — export a backup and remove an old chapter.',5000); return; }
+    if(done.length){
+      const added=done.filter(x=>!x.updated).length, upd=done.length-added;
+      const bits=[]; if(added)bits.push(added+' chapter'+(added>1?'s':'')+' added'); if(upd)bits.push(upd+' updated');
+      if(isChapterFile){
+        toast(bits.join(' · ')+` into ${sub.name} ▸ ${unit} — reloading`,3000);
+        setTimeout(()=>location.reload(),1200);
+      } else {
+        /* a backup keeps its own filing, so an unmatched subject inside it can
+           still land somewhere unintended — say so rather than failing quietly */
+        const unmatched=done.filter(x=>x.subjectMatched===false);
+        if(unmatched.length){
+          const where=[...new Set(unmatched.map(x=>x.subject))].join(', ');
+          toast(bits.join(' · ')+` — couldn’t match a subject in the backup, landed in ${where}. Drag it if that’s wrong.`,6000);
+          setTimeout(()=>location.reload(),6200);
+        } else {
+          toast(bits.join(' · ')+' restored from the backup — reloading',3000);
+          setTimeout(()=>location.reload(),1200);
+        }
+      }
+    } else {
+      const touched=['done','stars','quiz','exams','hl','subs'].some(k=>d&&d[k]&&Object.keys(d[k]).length);
+      buildPalIndex(); openChapter(cur.ch,cur.tab);
+      toast(touched?'Progress restored.':'Nothing in that file to import.');
+    }
+  };
+  r.readAsText(file);
+}
+
+/* ── the copy-paste prompt for hand-making a chapter JSON in Claude chat.
+   Kept in sync with the card shapes the renderer actually accepts (see
+   noteCard/formulaCard/questionCard) and with api/extract.js's schema. */
+const JSON_PROMPT=`I'm using a study-notes app called Paperweight. It imports chapters as JSON. Read the chapter I'm giving you (PDF/photos/text) and reply with ONLY a JSON code block in exactly this shape — no commentary before or after:
+
+{
+  "chapter": {
+    "name": "The actual topic name, not \\"Chapter 1\\"",
+    "lectures": [
+      {
+        "title": "Lecture or section title",
+        "cards": [
+          { "type": "note", "title": "Concept name", "html": "<p>Explanation.</p><ul><li>Point</li></ul>" },
+          { "type": "formula", "title": "Formula sheet", "items": [ { "l": "Short label", "f": "PC = DM + DL + DE", "n": "optional note, or \\"\\"" } ] },
+          { "type": "question", "q": "Question text?", "a": "<p>Full worked answer.</p>", "src": "exam name if given, else \\"\\"", "tags": ["Numerical"] }
+        ]
+      }
+    ]
+  }
+}
+
+Rules:
+- One lecture per major section/topic. A short chapter can be a single lecture.
+- "html" and "a" accept only: <p>, <ul>/<ol>/<li>, <b>, <em>, <code>, <table>/<tr>/<th>/<td>, and <div class="work">…</div> for worked calculations in monospace. No other tags, no markdown, no images.
+- Write note cards covering every concept and definition of substance — don't summarize away detail.
+- Make a formula card for every formula, and a question card for every practice question, illustration, or worked example, each with its full solution in "a".
+- "tags" is usually ["Theory"] or ["Numerical"].
+- Don't include a "subject" or "unit" key — I choose those in the app when I import.
+- Valid JSON only: double quotes, no trailing commas, no comments.`;
+function promptToggle(show){
+  $('#promptWrap').classList.toggle('show',!!show);
+  if(!show) return;
+  $('#promptBody').innerHTML=`
+    <div class="setNote" style="margin-top:0">Paste this into Claude (or any chatbot) along with your chapter, then import the JSON it gives back via Settings ▸ Import JSON.</div>
+    <textarea id="promptText" readonly>${esc(JSON_PROMPT)}</textarea>
+    <div class="pdfBtns" style="margin-top:12px">
+      <button class="setMini" id="promptClose">Close</button>
+      <button class="setMini" id="promptCopy" style="border-color:var(--gold-line); color:var(--gold)">Copy prompt</button>
+    </div>`;
+  $('#promptClose').onclick=()=>promptToggle(false);
+  $('#promptCopy').onclick=async()=>{
+    const ta=$('#promptText');
+    try{
+      await navigator.clipboard.writeText(JSON_PROMPT);
+      toast('Prompt copied.');
+    }catch(err){
+      /* clipboard API is blocked on file:// and older iOS — fall back to
+         selecting the text so a long-press ▸ Copy still works */
+      ta.removeAttribute('readonly'); ta.focus(); ta.select();
+      ta.setSelectionRange(0,JSON_PROMPT.length);
+      let ok=false; try{ ok=document.execCommand('copy'); }catch(e2){}
+      ta.setAttribute('readonly','');
+      toast(ok?'Prompt copied.':'Couldn’t copy automatically — it’s selected, copy it manually.',4000);
+    }
+  };
 }
 
 /* ── AI question generation — per-chapter "Generate questions" and the
@@ -1587,8 +1731,10 @@ function settingsHTML(){
         <button class="setMini" id="pdfBtn">Import PDF</button></div>
       <div class="setLine"><span>Export a backup<em>Notes, chapters and progress in one file.</em></span>
         <button class="setMini" id="expBtn">Export</button></div>
-      <div class="setLine"><span>Import<em>A chapter from Claude, or a backup.</em></span>
-        <button class="setMini" id="impBtn">Import</button></div>
+      <div class="setLine"><span>Import JSON<em>A hand-made chapter, or a backup. You pick the subject and unit.</em></span>
+        <button class="setMini" id="impBtn">Import JSON</button></div>
+      <div class="setLine"><span>Prompt for making a JSON<em>Copy it into Claude with your chapter, import what comes back.</em></span>
+        <button class="setMini" id="promptBtn">Show prompt</button></div>
       <div class="setLine"><span>Load demo chapter<em>See how an imported chapter looks.</em></span>
         <button class="setMini" id="demoBtn">Load</button></div>
       <div class="setLine"><span>The guide<em>The quick tour you saw on first open.</em></span>
@@ -1643,7 +1789,8 @@ function renderMain(){
       const blob=new Blob([JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,subs:state.subs||[],subjectNames:state.subjectNames||{},content:state.content||[]},null,1)],{type:'application/json'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='sem5-backup.json'; a.click();
     };
-    $('#impBtn').onclick=()=>$('#impFile').click();
+    $('#impBtn').onclick=()=>jsonToggle(true);
+    $('#promptBtn').onclick=()=>promptToggle(true);
     $('#demoBtn').onclick=()=>{
       const demo={subject:DATA.subjects[0]&&DATA.subjects[0].id,unit:'Unit 1',chapter:{id:'demo-chapter',name:'Demo Chapter',lectures:[{title:'Lecture 1 — a sample',cards:[
         {type:'note',title:'This is a demo',html:'<p>An imported chapter looks like this. Remove it from Settings when you are done.</p>'},
@@ -2070,7 +2217,9 @@ function prtOpen(){
 /* ── global keys & wiring ── */
 addEventListener('keydown',e=>{
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); palToggle(!$('#palWrap').classList.contains('show')); return; }
-  if(e.key==='Escape'){ palToggle(false); quizClose(); prtToggle(false); return; }
+  /* pdf/paper sheets are deliberately left out — Escape mid-extraction would
+     abort a call that's already been paid for */
+  if(e.key==='Escape'){ palToggle(false); quizClose(); prtToggle(false); jsonToggle(false); promptToggle(false); return; }
   if($('#palWrap').classList.contains('show')){
     if(e.key==='ArrowDown'){ palSel=Math.min(palSel+1,palHits.length-1); palRender(); e.preventDefault(); }
     if(e.key==='ArrowUp'){ palSel=Math.max(palSel-1,0); palRender(); e.preventDefault(); }
@@ -2306,6 +2455,8 @@ $('#prtWrap').onclick=e=>{ if(e.target.id==='prtWrap')prtToggle(false); };
 $('#palWrap').onclick=e=>{ if(e.target.id==='palWrap')palToggle(false); };
 $('#pdfWrap').onclick=e=>{ if(e.target.id==='pdfWrap')pdfToggle(false); };
 $('#paperWrap').onclick=e=>{ if(e.target.id==='paperWrap')paperToggle(false); };
+$('#jsonWrap').onclick=e=>{ if(e.target.id==='jsonWrap')jsonToggle(false); };
+$('#promptWrap').onclick=e=>{ if(e.target.id==='promptWrap')promptToggle(false); };
 
 /* ── first-run guide ── */
 const GUIDE_VERSION='1';               // bump to re-show after a big change
