@@ -9,6 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Paperweight">
 <meta name="color-scheme" content="dark light" id="csMeta">
 <meta name="theme-color" content="#0B0E13" id="tcMeta">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -86,6 +88,9 @@ input{font-family:inherit}
   border:1px solid var(--line); border-radius:4px; padding:1px 5px;
 }
 #quizLaunch{color:var(--gold); border-color:var(--gold-line); background:var(--gold-bg); font-weight:600}
+#offlineFlag{display:none; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--gold); border:1px solid var(--gold-line); background:var(--gold-bg); padding:4px 9px; border-radius:99px; white-space:nowrap}
+#offlineFlag.on{display:inline-block}
 #quizLaunch:hover{background:rgba(217,168,78,.2); color:var(--gold); border-color:var(--gold)}
 
 /* ── Layout ─────────────────────────────────────── */
@@ -485,10 +490,12 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   function setIcons(){
     try{
       var light=document.documentElement.dataset.theme==='light';
+      /* only replace the static /icon-*.png fallbacks if the canvas actually drew */
+      var big=draw(180,light), small=draw(64,light);
       var t=document.querySelector('link[rel="apple-touch-icon"]')||document.createElement('link');
-      t.rel='apple-touch-icon'; t.href=draw(180,light); if(!t.parentNode)document.head.appendChild(t);
+      t.rel='apple-touch-icon'; if(big) t.href=big; if(!t.parentNode)document.head.appendChild(t);
       var f=document.querySelector('link[rel="icon"]')||document.createElement('link');
-      f.rel='icon'; f.href=draw(64,light); if(!f.parentNode)document.head.appendChild(f);
+      f.rel='icon'; if(small) f.href=small; if(!f.parentNode)document.head.appendChild(f);
     }catch(e){}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setIcons); else setIcons();
@@ -514,6 +521,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   <div id="brand">Paper<em>weight</em></div>
   <nav id="subjTabs" aria-label="Subjects"></nav>
   <div id="topRight">
+    <span id="offlineFlag" title="No connection — your notes still work, but Claude features are paused">Offline</span>
     <button class="topBtn" id="hlBtn" title="Highlighter — turn on, then drag across any text">✍<span>Highlight</span></button>
     <button class="topBtn" id="palBtn"><span>Search</span> <kbd>⌘K</kbd></button>
     <button class="topBtn" id="quizLaunch">◆ <span>Quiz</span></button>
@@ -1229,6 +1237,7 @@ function pdfShowLoading(){
   $('#pdfCancelLoad').onclick=()=>{ if(pdfAbort) pdfAbort.abort(); };
 }
 function pdfSubmit(){
+  if(blockedOffline('reading a PDF')) return;
   const sub=DATA.subjects.find(s=>s.id===pdfTarget.sub);
   const unit=pdfTarget.unit;
   const chapId=$('#pdfChap').value||null;
@@ -1271,17 +1280,22 @@ function pdfSubmit(){
   reader.readAsDataURL(file);
 }
 
-/* ── JSON import — the same subject/unit/chapter filing form as the PDF
-   sheet (shared via targetFieldsHTML), so a hand-made JSON lands exactly
-   where you point it instead of wherever its own "subject" key guessed.
+/* ── JSON import — pick 1+ files. A file that already carries its own
+   {subject, unit} (e.g. anything from tools/build_json.py) files itself
+   automatically; the picker below only applies to files that don't declare
+   where they go, e.g. hand-made JSON from the copy-paste prompt, which
+   deliberately omits those keys. Selecting several such undescribed files
+   at once files all of them to the same picked subject/unit — selecting
+   several self-describing files fans each out to its own place.
    A full backup file is detected and restored as-is, ignoring the pickers. */
 let jsonTarget={sub:null,unit:null,chap:''};
 const JSON_IDS={sub:'jsonSub',unit:'jsonUnit',chap:'jsonChap'};
 function jsonFormHTML(){
   if(!DATA.subjects.length) return '<div class="setNote">Add a subject first.</div>';
   return `
-    ${targetFieldsHTML(jsonTarget,JSON_IDS)}
-    <div class="pdfField"><label>Chapter JSON file</label><input type="file" id="jsonFile" accept=".json,application/json"></div>
+    <div class="pdfField"><label>Chapter JSON file(s)</label><input type="file" id="jsonFile" accept=".json,application/json" multiple></div>
+    <div class="setNote" id="jsonFileNote" style="display:none"></div>
+    <div id="jsonPickerFields">${targetFieldsHTML(jsonTarget,JSON_IDS)}</div>
     <div class="pdfUsage">Free — no Claude call, so this doesn’t touch your monthly cap. Need the JSON? Settings ▸ Prompt for making a JSON.</div>
     <div class="pdfBtns">
       <button class="setMini" id="jsonCancel">Cancel</button>
@@ -1291,6 +1305,7 @@ function jsonFormHTML(){
 function jsonRenderForm(){ $('#jsonBody').innerHTML=jsonFormHTML(); jsonBindForm(); }
 function jsonBindForm(){
   bindTargetFields(jsonTarget,JSON_IDS,jsonRenderForm);
+  $('#jsonFile').onchange=jsonPreviewFiles;
   $('#jsonCancel').onclick=()=>jsonToggle(false);
   $('#jsonGo').onclick=jsonSubmit;
 }
@@ -1298,46 +1313,95 @@ function jsonToggle(show){
   $('#jsonWrap').classList.toggle('show',!!show);
   if(show) jsonRenderForm();
 }
+/* A chapter entry is "self-describing" once it (or its wrapper) names both
+   a subject and a unit — for a multi-entry {chapters:[...]} file, every
+   entry has to, since a partial match would leave some chapters unfiled. */
+function entryIsDescribed(en){
+  const chap=entryChapter(en); if(!chap) return false;
+  const key=String(en.subject||en.sub||chap.subject||'').trim();
+  const uname=String(en.unit||chap.unit||'').trim();
+  return !!key && !!uname;
+}
+function fileIsDescribed(d){
+  const ents=chapEntries(d);
+  return ents.length>0 && ents.every(entryIsDescribed);
+}
+function readJsonFiles(files){
+  return Promise.all(files.map(f=>new Promise(resolve=>{
+    const r=new FileReader();
+    r.onload=()=>{ try{ resolve({name:f.name, d:JSON.parse(r.result)}); }catch(e){ resolve({name:f.name, err:true}); } };
+    r.onerror=()=>resolve({name:f.name, err:true});
+    r.readAsText(f);
+  })));
+}
+/* Live preview as soon as files are picked, so it's clear before hitting
+   Import which files will route themselves and which need the picker. */
+function jsonPreviewFiles(){
+  const files=Array.from($('#jsonFile').files||[]);
+  const note=$('#jsonFileNote'), picker=$('#jsonPickerFields');
+  if(!files.length){ note.style.display='none'; if(picker) picker.style.display=''; return; }
+  readJsonFiles(files).then(results=>{
+    let described=0, undescribed=0, backups=0, bad=0;
+    results.forEach(({d,err})=>{
+      if(err){ bad++; return; }
+      const ents=chapEntries(d);
+      if(!ents.length){ backups++; return; }
+      if(ents.every(entryIsDescribed)) described++; else undescribed++;
+    });
+    const bits=[];
+    if(described) bits.push(`${described} file${described>1?'s':''} already know${described>1?'':'s'} where to go — filed automatically`);
+    if(undescribed) bits.push(`${undescribed} need${undescribed>1?'':'s'} the subject/unit below`);
+    if(backups) bits.push(`${backups} backup${backups>1?'s':''} — restored as-is`);
+    if(bad) bits.push(`${bad} not readable as JSON`);
+    note.textContent=bits.join(' · ');
+    note.style.display=bits.length?'block':'none';
+    // undescribed files are the only ones that read the picker, so hide it
+    // once nothing selected needs it — one less thing to fill in for the
+    // common case of dropping in a full self-describing set
+    if(picker) picker.style.display=undescribed?'':'none';
+  });
+}
 function jsonSubmit(){
   const sub=DATA.subjects.find(s=>s.id===jsonTarget.sub);
   const unit=jsonTarget.unit;
   const chapId=$('#jsonChap').value||null;
-  const file=$('#jsonFile').files[0];
-  if(!file) return toast('Choose a JSON file first.');
-  const r=new FileReader();
-  r.onload=()=>{
-    let d; try{ d=JSON.parse(r.result); }catch(err){ return toast('That file isn’t valid JSON.'); }
-    const isChapterFile=chapEntries(d).length>0;
-    const forced=isChapterFile?{subject:sub.id, unit, chapterId:chapId}:null;
-    const {done,stored}=applyImportPayload(d,forced);
+  const files=Array.from($('#jsonFile').files||[]);
+  if(!files.length) return toast('Choose a JSON file first.');
+  readJsonFiles(files).then(results=>{
     jsonToggle(false);
-    if(!stored){ toast('Imported, but this device’s storage is full — export a backup and remove an old chapter.',5000); return; }
-    if(done.length){
-      const added=done.filter(x=>!x.updated).length, upd=done.length-added;
-      const bits=[]; if(added)bits.push(added+' chapter'+(added>1?'s':'')+' added'); if(upd)bits.push(upd+' updated');
-      if(isChapterFile){
-        toast(bits.join(' · ')+` into ${sub.name} ▸ ${unit} — reloading`,3000);
-        setTimeout(()=>location.reload(),1200);
-      } else {
-        /* a backup keeps its own filing, so an unmatched subject inside it can
-           still land somewhere unintended — say so rather than failing quietly */
-        const unmatched=done.filter(x=>x.subjectMatched===false);
-        if(unmatched.length){
-          const where=[...new Set(unmatched.map(x=>x.subject))].join(', ');
-          toast(bits.join(' · ')+` — couldn’t match a subject in the backup, landed in ${where}. Drag it if that’s wrong.`,6000);
-          setTimeout(()=>location.reload(),6200);
-        } else {
-          toast(bits.join(' · ')+' restored from the backup — reloading',3000);
-          setTimeout(()=>location.reload(),1200);
-        }
+    const undescribedCount=results.filter(({d,err})=>!err && chapEntries(d).length && !fileIsDescribed(d)).length;
+    let added=0, updated=0, restored=0, stored=true;
+    const skipped=[], guessed=[];
+    results.forEach(({name,d,err})=>{
+      if(err){ skipped.push(name); return; }
+      const isChapterFile=chapEntries(d).length>0;
+      let forced=null;
+      if(isChapterFile && !fileIsDescribed(d)){
+        if(!sub){ skipped.push(name); return; }
+        // only pass a "replace this chapter" hint when it's unambiguous —
+        // i.e. exactly one undescribed file is in play
+        forced={subject:sub.id, unit, chapterId: undescribedCount===1?chapId:null};
       }
-    } else {
-      const touched=['done','stars','quiz','exams','hl','subs'].some(k=>d&&d[k]&&Object.keys(d[k]).length);
-      buildPalIndex(); openChapter(cur.ch,cur.tab);
-      toast(touched?'Progress restored.':'Nothing in that file to import.');
-    }
-  };
-  r.readAsText(file);
+      const res=applyImportPayload(d,forced);
+      if(!res.stored) stored=false;
+      if(!res.done.length){
+        if(!isChapterFile) restored++;   // backup with only progress/state, no chapters
+        else skipped.push(name);
+        return;
+      }
+      res.done.forEach(x=>{ x.updated?updated++:added++; if(x.subjectMatched===false) guessed.push(name); });
+    });
+    const bits=[];
+    if(added) bits.push(added+' chapter'+(added>1?'s':'')+' added');
+    if(updated) bits.push(updated+' updated');
+    if(restored) bits.push(restored+' backup'+(restored>1?'s':'')+' restored');
+    if(skipped.length) bits.push(skipped.length+' skipped');
+    let msg=bits.join(' · ')||'Nothing importable in those files.';
+    if(guessed.length) msg+=` — ${guessed.length} didn't match a subject, check where ${guessed.length>1?'they':'it'} landed.`;
+    if(!stored) msg+=' — storage is full, some may not have saved.';
+    toast(msg,5500);
+    if(added+updated+restored) setTimeout(()=>location.reload(),1600);
+  });
 }
 
 /* ── the copy-paste prompt for hand-making a chapter JSON in Claude chat.
@@ -1418,6 +1482,7 @@ async function maybeFillAnswer(cd){
   if(aiUsageInfo().count>=AI_MONTHLY_CAP) return;
   const box=document.querySelector(`.qCard[data-cid="${cd.id}"] .qAnsInner`);
   if(!box) return;
+  if(isOffline()){ box.innerHTML='<span class="qNoAns">No answer saved, and you’re offline — reopen this when you have a connection.</span>'; return; }
   box.innerHTML='<span class="qNoAns">Generating an answer…</span>';
   try{
     const cards=cd.lec.ch.lectures.flatMap(l=>l.cards);
@@ -1432,6 +1497,7 @@ async function maybeFillAnswer(cd){
   }
 }
 async function generateQuestionsForChapter(ch){
+  if(blockedOffline('generating questions')) return;
   if(aiUsageInfo().count>=AI_MONTHLY_CAP){ toast('Monthly AI question cap reached — resets on the 1st.'); return; }
   const countStr=(prompt('How many questions should Claude generate from these notes?','5')||'').trim();
   if(!countStr) return;
@@ -1518,6 +1584,7 @@ function renderPredictionTiers(tiers){
   }).join('')||'<div class="setNote">No predictions came back — try more papers.</div>';
 }
 async function runPrediction(sub){
+  if(blockedOffline('predicting a paper')) return;
   const papers=subjectPapers(sub.id);
   if(!papers.length) return toast('Upload at least one paper first.');
   const btn=$('#predictGoBtn'); if(btn){ btn.disabled=true; btn.textContent='Analyzing…'; }
@@ -1565,6 +1632,7 @@ function paperShowLoading(){
   $('#paperCancelLoad').onclick=()=>{ if(paperAbort) paperAbort.abort(); };
 }
 function paperSubmit(){
+  if(blockedOffline('reading a paper')) return;
   const sub=cur.sub;
   const term=paperPickedTerm;
   const file=$('#paperFile').files[0];
@@ -1727,8 +1795,9 @@ function settingsHTML(){
     <div class="setBlk"><div class="setupLbl">Subjects</div>${subs}</div>
 
     <div class="setBlk"><div class="setupLbl">Your work</div>
+      ${isOffline()?`<div class="setNote" style="color:var(--gold); margin-top:0">You’re offline. Notes, highlights, quizzes and JSON import all work — only the Claude features below are paused.</div>`:''}
       <div class="setLine"><span>Import PDF<em>Send a chapter PDF straight to Claude — ${pdfUsageHTML()}.</em></span>
-        <button class="setMini" id="pdfBtn">Import PDF</button></div>
+        <button class="setMini" id="pdfBtn"${isOffline()?' disabled':''}>Import PDF</button></div>
       <div class="setLine"><span>Export a backup<em>Notes, chapters and progress in one file.</em></span>
         <button class="setMini" id="expBtn">Export</button></div>
       <div class="setLine"><span>Import JSON<em>A hand-made chapter, or a backup. You pick the subject and unit.</em></span>
@@ -2480,10 +2549,13 @@ const GUIDE=[
    h:'<b>Settings</b> (the ⋯ menu, or the sidebar) has your theme, export a full backup, load a demo chapter to look around, and manage subjects. That corner stack? One sheet per chapter you add.',
    k:'Do a quick <b>Export backup</b> now and then — it\'s your notes and progress in one file.'}
 ];
-const APP_VERSION='1.7';
+const APP_VERSION='1.8';
 const WHATS_NEW=[
-  'Import a chapter PDF straight from the app — Settings ▸ Import PDF sends it to Claude and imports the result automatically, no copy-pasting JSON.',
-  'Subjects can be renamed from Settings, not just added.'
+  'Works offline. Open it with no signal and your notes, highlights, questions and quizzes are all there. Add it to your home screen and it opens like a real app.',
+  'Import JSON now asks which subject and unit to file the chapter under, so a hand-made file lands exactly where you want it.',
+  'Settings ▸ Prompt for making a JSON gives you the exact prompt to paste into Claude with a chapter.',
+  'Import a chapter PDF straight from the app, with an optional instruction box — “focus only on the formulas”, “make 10 exam questions”.',
+  'Subjects can be renamed and removed from Settings, and chapters dragged between units and subjects.'
 ];
 function showWhatsNew(){
   const g=$('#guide');
@@ -2523,8 +2595,34 @@ function showGuide(force){
   $('#gSkip').onclick=done;
 }
 
+/* ── offline support ───────────────────────────────────────────────
+   Notes, highlights, progress and quizzes are all localStorage, so they
+   already work with no network. Two things are added here: the service
+   worker (so the page itself opens offline and installs to the home
+   screen), and one honest gate in front of the Claude-backed features,
+   which genuinely cannot work offline. ── */
+function isOffline(){ return navigator.onLine===false; }
+/* Guard an AI action. Returns true (and toasts) when it can't run. */
+function blockedOffline(what){
+  if(!isOffline()) return false;
+  toast(`You’re offline — ${what} needs a connection. Your notes still work.`,4000);
+  return true;
+}
+function renderOfflineFlag(){
+  const el=$('#offlineFlag'); if(!el) return;
+  el.classList.toggle('on',isOffline());
+}
+addEventListener('online',()=>{ renderOfflineFlag(); if(cur.ch==='settings') renderMain(); });
+addEventListener('offline',()=>{ renderOfflineFlag(); if(cur.ch==='settings') renderMain(); });
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{ /* offline-first is a bonus, never a hard requirement */ });
+  });
+}
+
 /* ── boot: restore last view ── */
 buildPalIndex();
+renderOfflineFlag();
 (function(){
   let ch=null;
   if(state.view){
