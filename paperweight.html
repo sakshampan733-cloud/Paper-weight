@@ -30,6 +30,9 @@
   --mono:'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
   --r:12px; --r-sm:8px;
   --sidebar-w:300px;
+  /* the topbar wraps to a second row on phones (subject tabs get their own
+     line), so everything offset below it reads this rather than a literal */
+  --topbar-h:56px;
 }
 [data-theme="light"]{
   --bg:#F5F3EC; --bg2:#EFECE2; --panel:#FCFBF6; --panel2:#F2EFE6; --panel3:#EAE6DA;
@@ -62,7 +65,7 @@ input{font-family:inherit}
 
 /* ── Topbar ─────────────────────────────────────── */
 #topbar{
-  position:fixed; top:0; left:0; right:0; height:56px; z-index:50;
+  position:fixed; top:0; left:0; right:0; height:var(--topbar-h); z-index:50;
   display:flex; align-items:center; gap:14px; padding:0 18px;
   background:var(--glass); backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line-soft);
@@ -94,9 +97,9 @@ input{font-family:inherit}
 #quizLaunch:hover{background:rgba(217,168,78,.2); color:var(--gold); border-color:var(--gold)}
 
 /* ── Layout ─────────────────────────────────────── */
-#app{display:flex; padding-top:56px; min-height:100vh}
+#app{display:flex; padding-top:var(--topbar-h); min-height:100vh}
 #sidebar{
-  width:var(--sidebar-w); flex-shrink:0; position:fixed; top:56px; bottom:0; left:0;
+  width:var(--sidebar-w); flex-shrink:0; position:fixed; top:var(--topbar-h); bottom:0; left:0;
   overflow-y:auto; padding:20px 14px 40px;
   background:var(--bg2); border-right:1px solid var(--line-soft);
   transition:transform .32s cubic-bezier(.22,1,.36,1);
@@ -119,7 +122,7 @@ body.sideHid #main{margin-left:0; max-width:none}
 #sideTog:hover{background:var(--panel3); color:var(--text)}
 body.sideHid #sideTog{left:0}
 #sideScrim{
-  position:fixed; inset:56px 0 0 0; z-index:55; background:rgba(0,0,0,.45);
+  position:fixed; inset:var(--topbar-h) 0 0 0; z-index:55; background:rgba(0,0,0,.45);
   opacity:0; visibility:hidden; transition:opacity .25s, visibility .25s;
 }
 @media (prefers-reduced-motion:reduce){ #sidebar,#main,#sideTog{transition:none} }
@@ -426,7 +429,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
 #printRoot{display:none}
 @media print{
   body{background:#fff!important}
-  #topbar,#app,#palWrap,#quizWrap,#prtWrap,#pdfWrap,#paperWrap,#jsonWrap,#promptWrap{display:none!important}
+  #topbar,#app,#palWrap,#quizWrap,#prtWrap,#pdfWrap,#paperWrap,#jsonWrap,#jsonManualWrap,#promptWrap{display:none!important}
   #printRoot{display:block; font-family:Georgia,'Times New Roman',serif; color:#111; font-size:11.5pt; line-height:1.55}
   #printRoot .pHead{margin-bottom:16pt; border-bottom:2pt solid #111; padding-bottom:8pt}
   #printRoot .pCrumb{font-size:9pt; letter-spacing:.12em; text-transform:uppercase; color:#555; margin-bottom:4pt}
@@ -461,6 +464,21 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   .topBtn span,.topBtn kbd{display:none}
   .fmRow{flex-direction:column; gap:4px}
   .fmLbl,.fmNote{width:100%; text-align:left}
+  /* Settings rows are label-left / control-right, which at phone widths
+     squeezes the label into a 2-3 word column. Stack instead so the label
+     and its explanation get the full width and controls sit under them. */
+  .setLine{flex-wrap:wrap; gap:10px}
+  .setLine > span:first-child{flex:1 1 100%}
+  .setLine .setMini,.setLine .setSeg{margin-left:0}
+  .setBlk{max-width:none}
+  /* the subject tabs and the icon buttons compete for one 375px row —
+     let the tabs take their own line and scroll horizontally */
+  :root{--topbar-h:96px}
+  #topbar{flex-wrap:wrap; padding:8px 14px; row-gap:4px; align-content:center}
+  #subjTabs{order:3; flex:1 1 100%; margin-left:0; padding-bottom:2px;
+    scrollbar-width:none; -ms-overflow-style:none}
+  #subjTabs::-webkit-scrollbar{display:none}
+  #topRight{gap:6px}
 }
 </style>
 <script>
@@ -528,6 +546,8 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
     <div id="moreWrap">
       <button class="topBtn" id="moreBtn" aria-label="More">⋯</button>
       <div id="moreMenu">
+        <button data-act="import">Import JSON</button>
+        <button data-act="importManual">Import JSON manually</button>
         <button data-act="settings">Settings</button>
         <button data-act="theme">Appearance <span id="themeBtn">☾</span></button>
         <button data-act="print">Print</button>
@@ -593,11 +613,19 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   </div>
 </div>
 
-<!-- JSON import (same filing form as the PDF sheet) -->
+<!-- JSON import, auto: files that already declare their own subject/unit -->
 <div id="jsonWrap">
   <div class="pdfSheet">
-    <div class="setupLbl">Import a chapter JSON</div>
+    <div class="setupLbl">Import JSON</div>
     <div id="jsonBody"></div>
+  </div>
+</div>
+
+<!-- JSON import, manual: you pick the subject/unit/chapter yourself -->
+<div id="jsonManualWrap">
+  <div class="pdfSheet">
+    <div class="setupLbl">Import JSON manually</div>
+    <div id="jsonManualBody"></div>
   </div>
 </div>
 
@@ -760,7 +788,11 @@ body.sheetOpen #pwStack{opacity:0}
 .pwWeight.thud{animation:thud .5s cubic-bezier(.3,1.4,.5,1)}
 @keyframes thud{0%{transform:translateY(-7px) scaleY(1.1)}55%{transform:translateY(1px) scaleY(.88)}100%{transform:none}}
 
-.setBlk{margin:26px 0 0; max-width:640px}
+/* Settings is a narrow column of label/control rows. Left-aligned inside a
+   wide #main it reads as a phone layout stranded on one side, so centre the
+   whole page — title and blocks together — instead of just capping a block. */
+.setPage{max-width:680px; margin:0 auto}
+.setBlk{margin:26px 0 0; max-width:none}
 .setLine{display:flex; align-items:center; gap:16px; padding:13px 0; border-bottom:1px solid var(--line-soft); font-size:14.5px}
 .setLine:last-child{border-bottom:none}
 .setLine > span:first-child{flex:1; min-width:0}
@@ -778,8 +810,8 @@ body.sheetOpen #pwStack{opacity:0}
 .impChap b{color:var(--dim);font-weight:500}
 .impChap button{color:var(--red);font-size:12px;line-height:1;padding:2px 4px}
 /* ── PDF import sheet ── */
-#pdfWrap,#paperWrap,#jsonWrap,#promptWrap{position:fixed; inset:0; z-index:100; display:none; background:rgba(5,7,10,.55); backdrop-filter:blur(3px)}
-#pdfWrap.show,#paperWrap.show,#jsonWrap.show,#promptWrap.show{display:flex; align-items:flex-start; justify-content:center; padding-top:12vh}
+#pdfWrap,#paperWrap,#jsonWrap,#jsonManualWrap,#promptWrap{position:fixed; inset:0; z-index:100; display:none; background:rgba(5,7,10,.55); backdrop-filter:blur(3px)}
+#pdfWrap.show,#paperWrap.show,#jsonWrap.show,#jsonManualWrap.show,#promptWrap.show{display:flex; align-items:flex-start; justify-content:center; padding-top:12vh}
 #promptText{width:100%; min-height:230px; font-family:var(--mono); font-size:12px; line-height:1.55; padding:11px 12px; border-radius:8px; border:1px solid var(--line2); background:var(--bg2); color:var(--body2); resize:vertical}
 .pdfSheet{width:440px; max-width:92vw; max-height:78vh; overflow-y:auto; background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:20px 18px; box-shadow:0 24px 70px rgba(0,0,0,.55)}
 .pdfSheet .setupLbl{padding:0 0 12px}
@@ -929,6 +961,9 @@ function applyImportPayload(d,forced){
     if(!res)return; const ix=state.content.findIndex(x=>entryChapId(x)===res.id);
     if(ix>-1) state.content[ix]=en; else state.content.push(en); done.push(res); });
   Object.keys(state.done).forEach(k=>{ if(state.done[k]===true) state.done[k]={l:1,n:1,q:1}; });
+  /* newly merged chapters have no ch.no/lec.no/card ids yet — assign them now
+     so anything rendered before the post-import reload is already correct */
+  DATA.subjects.forEach(indexSubject);
   const stored=save();
   return {done,stored};
 }
@@ -958,6 +993,7 @@ function moveChapterTo(chapterId, targetSubId, targetUnitName){
   // persist: update the matching state.content entry's subject/unit fields
   const entry=(state.content||[]).find(en=>entryChapId(en)===chapterId);
   if(entry){ entry.subject=targetSub.id; entry.unit=toUnit.name; if(entry.chapter){ delete entry.chapter.subject; delete entry.chapter.unit; } }
+  DATA.subjects.forEach(indexSubject);   // chapter numbers shift on both sides of a move
   save();
   return true;
 }
@@ -970,19 +1006,26 @@ function toast(msg,ms){
   clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'), ms||2800);
 }
 
-/* index the data: ids, lecture numbers, back-references */
+/* index the data: ids, chapter/lecture numbers, back-references. Chapter
+   numbers run continuously across a subject's units (Ch 1, 2, 3…), not
+   restarting per unit — that matches how a syllabus and exam paper both
+   refer to "chapter 6" regardless of which unit it's filed under. */
 const CARDS={}, FMITEMS={};
-DATA.subjects.forEach(sub=>{
-  let n=0;
+/* Also called after an import or a chapter move, since both change the
+   membership and order of a subject's units — without it a freshly merged
+   chapter renders as "Ch undefined" until the next reload. */
+function indexSubject(sub){
+  let n=0, cn=0;
   sub.units.forEach((u,ui)=>u.chapters.forEach((ch,ci)=>{
-    ch.sub=sub; ch.unit=u;
+    ch.sub=sub; ch.unit=u; ch.no=++cn;
     ch.lectures.forEach((lec,li)=>{
       n++; lec.no=n; lec.ch=ch; lec.id=lec.id||ch.id+'-l'+li;
       lec.cards.forEach((cd,cdi)=>{ cd.lec=lec; cd.id=lec.id+'-'+cdi; CARDS[cd.id]=cd;
         if(cd.type==='formula') cd.items.forEach((it,i)=>{it.id=cd.id+'-i'+i; FMITEMS[it.id]={it,cd};}); });
     });
   }));
-});
+}
+DATA.subjects.forEach(indexSubject);
 const allChapters=sub=>sub.units.flatMap(u=>u.chapters);
 const isCustomSub=sub=>(state.subs||[]).some(s=>s.id===sub.id);
 const chQuestions=ch=>ch.lectures.flatMap(l=>l.cards.filter(c=>c.type==='question'));
@@ -1117,14 +1160,14 @@ function renderSidebar(){
       const d=chDone(ch), t=ch.lectures.length, pct=chStepsPct(ch);
       h+=`<button class="chRow chChap${ch===cur.ch?' on':''}" data-cid="${ch.id}">
         <span class="chGrip" title="Drag to move to another unit or subject" aria-label="Move chapter">⠿</span>
-        <span class="t"><span>${esc(ch.name)}</span><span class="n">${d}/${t}</span></span>
+        <span class="t"><span><span style="color:var(--faint)">Ch ${ch.no} · </span>${esc(ch.name)}</span><span class="n">${d}/${t}</span></span>
         <span class="chBar"><i class="${pct===100?'full':''}" style="width:${pct}%"></i></span></button>`;
     });
     if(!u.chapters.length) h+=`<div style="padding:6px 10px;font-size:12px;color:var(--faint)">No chapters yet</div>`;
   });
   h+=`<button class="chRow${cur.ch==='settings'?' on':''}" id="setRow" style="margin-top:10px">
     <span class="t"><span style="color:var(--dim)">Settings</span></span></button>
-    <div id="sideFoot">Settings ▸ Import PDF to add a chapter.</div>`;
+    <div id="sideFoot">Add a chapter from ⋯ ▸ Import JSON.</div>`;
   $('#sidebar').innerHTML=h;
   $$('#sidebar .chRow').forEach(b=>b.onclick=e=>{
     if(chDragJustHappened) return;                    // a drag ended on this row — don't also open it
@@ -1280,38 +1323,22 @@ function pdfSubmit(){
   reader.readAsDataURL(file);
 }
 
-/* ── JSON import — pick 1+ files. A file that already carries its own
-   {subject, unit} (e.g. anything from tools/build_json.py) files itself
-   automatically; the picker below only applies to files that don't declare
-   where they go, e.g. hand-made JSON from the copy-paste prompt, which
-   deliberately omits those keys. Selecting several such undescribed files
-   at once files all of them to the same picked subject/unit — selecting
-   several self-describing files fans each out to its own place.
-   A full backup file is detected and restored as-is, ignoring the pickers. */
-let jsonTarget={sub:null,unit:null,chap:''};
-const JSON_IDS={sub:'jsonSub',unit:'jsonUnit',chap:'jsonChap'};
-function jsonFormHTML(){
-  if(!DATA.subjects.length) return '<div class="setNote">Add a subject first.</div>';
-  return `
-    <div class="pdfField"><label>Chapter JSON file(s)</label><input type="file" id="jsonFile" accept=".json,application/json" multiple></div>
-    <div class="setNote" id="jsonFileNote" style="display:none"></div>
-    <div id="jsonPickerFields">${targetFieldsHTML(jsonTarget,JSON_IDS)}</div>
-    <div class="pdfUsage">Free — no Claude call, so this doesn’t touch your monthly cap. Need the JSON? Settings ▸ Prompt for making a JSON.</div>
-    <div class="pdfBtns">
-      <button class="setMini" id="jsonCancel">Cancel</button>
-      <button class="setMini" id="jsonGo" style="border-color:var(--gold-line); color:var(--gold)">Import</button>
-    </div>`;
-}
-function jsonRenderForm(){ $('#jsonBody').innerHTML=jsonFormHTML(); jsonBindForm(); }
-function jsonBindForm(){
-  bindTargetFields(jsonTarget,JSON_IDS,jsonRenderForm);
-  $('#jsonFile').onchange=jsonPreviewFiles;
-  $('#jsonCancel').onclick=()=>jsonToggle(false);
-  $('#jsonGo').onclick=jsonSubmit;
-}
-function jsonToggle(show){
-  $('#jsonWrap').classList.toggle('show',!!show);
-  if(show) jsonRenderForm();
+/* ── JSON import — two separate, deliberately non-overlapping flows.
+   "Auto" (jsonWrap) is for files that already carry their own {subject,
+   unit} — anything from tools/build_json.py — and never shows a picker;
+   a file that turns out not to declare its routing is skipped and named
+   in the toast rather than silently guessed at. "Manual" (jsonManualWrap)
+   is for a hand-made file (e.g. from the copy-paste prompt, which
+   deliberately omits those keys) — you always pick the subject/unit/
+   optional-replace target yourself, applied to every file you select.
+   A full backup file is detected in either flow and restored as-is. */
+function readJsonFiles(files){
+  return Promise.all(files.map(f=>new Promise(resolve=>{
+    const r=new FileReader();
+    r.onload=()=>{ try{ resolve({name:f.name, d:JSON.parse(r.result)}); }catch(e){ resolve({name:f.name, err:true}); } };
+    r.onerror=()=>resolve({name:f.name, err:true});
+    r.readAsText(f);
+  })));
 }
 /* A chapter entry is "self-describing" once it (or its wrapper) names both
    a subject and a unit — for a multi-entry {chapters:[...]} file, every
@@ -1326,20 +1353,61 @@ function fileIsDescribed(d){
   const ents=chapEntries(d);
   return ents.length>0 && ents.every(entryIsDescribed);
 }
-function readJsonFiles(files){
-  return Promise.all(files.map(f=>new Promise(resolve=>{
-    const r=new FileReader();
-    r.onload=()=>{ try{ resolve({name:f.name, d:JSON.parse(r.result)}); }catch(e){ resolve({name:f.name, err:true}); } };
-    r.onerror=()=>resolve({name:f.name, err:true});
-    r.readAsText(f);
-  })));
+function applyResults(results,{forcedFor}={}){
+  let added=0, updated=0, restored=0, stored=true;
+  const skipped=[], guessed=[];
+  results.forEach(({name,d,err})=>{
+    if(err){ skipped.push(name); return; }
+    const isChapterFile=chapEntries(d).length>0;
+    const forced=forcedFor?forcedFor(d,isChapterFile,name):null;
+    if(forced==='skip'){ skipped.push(name); return; }
+    const res=applyImportPayload(d,forced);
+    if(!res.stored) stored=false;
+    if(!res.done.length){
+      if(!isChapterFile) restored++;   // backup with only progress/state, no chapters
+      else skipped.push(name);
+      return;
+    }
+    res.done.forEach(x=>{ x.updated?updated++:added++; if(x.subjectMatched===false) guessed.push(name); });
+  });
+  const bits=[];
+  if(added) bits.push(added+' chapter'+(added>1?'s':'')+' added');
+  if(updated) bits.push(updated+' updated');
+  if(restored) bits.push(restored+' backup'+(restored>1?'s':'')+' restored');
+  if(skipped.length) bits.push(skipped.length+' skipped'+(skipped.length<=3?' ('+skipped.join(', ')+')':''));
+  let msg=bits.join(' · ')||'Nothing importable in those files.';
+  if(guessed.length) msg+=` — ${guessed.length} didn't match a subject, check where ${guessed.length>1?'they':'it'} landed.`;
+  if(!stored) msg+=' — storage is full, some may not have saved.';
+  toast(msg,5500);
+  if(added+updated+restored) setTimeout(()=>location.reload(),1600);
 }
-/* Live preview as soon as files are picked, so it's clear before hitting
-   Import which files will route themselves and which need the picker. */
+
+/* ── Auto: no picker, ever. Files that don't declare their own routing
+   are skipped rather than guessed into the first subject. */
+function jsonFormHTML(){
+  return `
+    <div class="pdfField"><label>Chapter JSON file(s)</label><input type="file" id="jsonFile" accept=".json,application/json" multiple></div>
+    <div class="setNote" id="jsonFileNote" style="display:none"></div>
+    <div class="pdfUsage">Free — no Claude call, so this doesn’t touch your monthly cap. Pick as many files as you like; each goes to the subject and unit it names. A file that doesn’t name one is skipped — use <b>Import JSON manually</b> for those.</div>
+    <div class="pdfBtns">
+      <button class="setMini" id="jsonCancel">Cancel</button>
+      <button class="setMini" id="jsonGo" style="border-color:var(--gold-line); color:var(--gold)">Import</button>
+    </div>`;
+}
+function jsonRenderForm(){ $('#jsonBody').innerHTML=jsonFormHTML(); jsonBindForm(); }
+function jsonBindForm(){
+  $('#jsonFile').onchange=jsonPreviewFiles;
+  $('#jsonCancel').onclick=()=>jsonToggle(false);
+  $('#jsonGo').onclick=jsonSubmit;
+}
+function jsonToggle(show){
+  $('#jsonWrap').classList.toggle('show',!!show);
+  if(show) jsonRenderForm();
+}
 function jsonPreviewFiles(){
   const files=Array.from($('#jsonFile').files||[]);
-  const note=$('#jsonFileNote'), picker=$('#jsonPickerFields');
-  if(!files.length){ note.style.display='none'; if(picker) picker.style.display=''; return; }
+  const note=$('#jsonFileNote');
+  if(!files.length){ note.style.display='none'; return; }
   readJsonFiles(files).then(results=>{
     let described=0, undescribed=0, backups=0, bad=0;
     results.forEach(({d,err})=>{
@@ -1349,58 +1417,61 @@ function jsonPreviewFiles(){
       if(ents.every(entryIsDescribed)) described++; else undescribed++;
     });
     const bits=[];
-    if(described) bits.push(`${described} file${described>1?'s':''} already know${described>1?'':'s'} where to go — filed automatically`);
-    if(undescribed) bits.push(`${undescribed} need${undescribed>1?'':'s'} the subject/unit below`);
-    if(backups) bits.push(`${backups} backup${backups>1?'s':''} — restored as-is`);
+    if(described) bits.push(`${described} file${described>1?'s':''} will import automatically`);
+    if(backups) bits.push(`${backups} backup${backups>1?'s':''} will be restored as-is`);
+    if(undescribed) bits.push(`${undescribed} don’t name a subject/unit — will be skipped, use Import JSON manually for those`);
     if(bad) bits.push(`${bad} not readable as JSON`);
     note.textContent=bits.join(' · ');
     note.style.display=bits.length?'block':'none';
-    // undescribed files are the only ones that read the picker, so hide it
-    // once nothing selected needs it — one less thing to fill in for the
-    // common case of dropping in a full self-describing set
-    if(picker) picker.style.display=undescribed?'':'none';
   });
 }
 function jsonSubmit(){
-  const sub=DATA.subjects.find(s=>s.id===jsonTarget.sub);
-  const unit=jsonTarget.unit;
-  const chapId=$('#jsonChap').value||null;
   const files=Array.from($('#jsonFile').files||[]);
   if(!files.length) return toast('Choose a JSON file first.');
   readJsonFiles(files).then(results=>{
     jsonToggle(false);
-    const undescribedCount=results.filter(({d,err})=>!err && chapEntries(d).length && !fileIsDescribed(d)).length;
-    let added=0, updated=0, restored=0, stored=true;
-    const skipped=[], guessed=[];
-    results.forEach(({name,d,err})=>{
-      if(err){ skipped.push(name); return; }
-      const isChapterFile=chapEntries(d).length>0;
-      let forced=null;
-      if(isChapterFile && !fileIsDescribed(d)){
-        if(!sub){ skipped.push(name); return; }
-        // only pass a "replace this chapter" hint when it's unambiguous —
-        // i.e. exactly one undescribed file is in play
-        forced={subject:sub.id, unit, chapterId: undescribedCount===1?chapId:null};
-      }
-      const res=applyImportPayload(d,forced);
-      if(!res.stored) stored=false;
-      if(!res.done.length){
-        if(!isChapterFile) restored++;   // backup with only progress/state, no chapters
-        else skipped.push(name);
-        return;
-      }
-      res.done.forEach(x=>{ x.updated?updated++:added++; if(x.subjectMatched===false) guessed.push(name); });
-    });
-    const bits=[];
-    if(added) bits.push(added+' chapter'+(added>1?'s':'')+' added');
-    if(updated) bits.push(updated+' updated');
-    if(restored) bits.push(restored+' backup'+(restored>1?'s':'')+' restored');
-    if(skipped.length) bits.push(skipped.length+' skipped');
-    let msg=bits.join(' · ')||'Nothing importable in those files.';
-    if(guessed.length) msg+=` — ${guessed.length} didn't match a subject, check where ${guessed.length>1?'they':'it'} landed.`;
-    if(!stored) msg+=' — storage is full, some may not have saved.';
-    toast(msg,5500);
-    if(added+updated+restored) setTimeout(()=>location.reload(),1600);
+    applyResults(results,{forcedFor:(d,isChapterFile)=> isChapterFile && !fileIsDescribed(d) ? 'skip' : null});
+  });
+}
+
+/* ── Manual: always shows the subject/unit/replace picker, applied to
+   every selected file regardless of what that file itself declares. */
+let jsonManualTarget={sub:null,unit:null,chap:''};
+const JSON_MANUAL_IDS={sub:'jsonmSub',unit:'jsonmUnit',chap:'jsonmChap'};
+function jsonManualFormHTML(){
+  if(!DATA.subjects.length) return '<div class="setNote">Add a subject first.</div>';
+  return `
+    ${targetFieldsHTML(jsonManualTarget,JSON_MANUAL_IDS)}
+    <div class="pdfField"><label>Chapter JSON file(s)</label><input type="file" id="jsonmFile" accept=".json,application/json" multiple></div>
+    <div class="pdfUsage">Free — no Claude call, so this doesn’t touch your monthly cap. The subject/unit above is used for every file you pick here, even if a file already declares its own. Need the JSON? Settings ▸ Prompt for making a JSON.</div>
+    <div class="pdfBtns">
+      <button class="setMini" id="jsonmCancel">Cancel</button>
+      <button class="setMini" id="jsonmGo" style="border-color:var(--gold-line); color:var(--gold)">Import</button>
+    </div>`;
+}
+function jsonManualRenderForm(){ $('#jsonManualBody').innerHTML=jsonManualFormHTML(); jsonManualBindForm(); }
+function jsonManualBindForm(){
+  bindTargetFields(jsonManualTarget,JSON_MANUAL_IDS,jsonManualRenderForm);
+  $('#jsonmCancel').onclick=()=>jsonManualToggle(false);
+  $('#jsonmGo').onclick=jsonManualSubmit;
+}
+function jsonManualToggle(show){
+  $('#jsonManualWrap').classList.toggle('show',!!show);
+  if(show) jsonManualRenderForm();
+}
+function jsonManualSubmit(){
+  const sub=DATA.subjects.find(s=>s.id===jsonManualTarget.sub);
+  const unit=jsonManualTarget.unit;
+  const chapId=$('#jsonmChap').value||null;
+  const files=Array.from($('#jsonmFile').files||[]);
+  if(!files.length) return toast('Choose a JSON file first.');
+  if(!sub) return toast('Add a subject first.');
+  readJsonFiles(files).then(results=>{
+    jsonManualToggle(false);
+    const chapterFileCount=results.filter(({d,err})=>!err && chapEntries(d).length).length;
+    applyResults(results,{forcedFor:(d,isChapterFile)=> isChapterFile
+      ? {subject:sub.id, unit, chapterId: chapterFileCount===1?chapId:null}
+      : null});
   });
 }
 
@@ -1780,7 +1851,7 @@ function settingsHTML(){
   const subs=DATA.subjects.map(sb=>`<div class="setLine"><span>${esc(sb.name)}</span>
     <span class="setNote" style="margin:0">${allChapters(sb).length} ch.</span>
     <button class="setMini" data-rensub="${esc(sb.id)}">Rename</button></div>`).join('');
-  return `<div class="crumb"><b>SEMESTER V</b></div><h1 class="chTitle">Settings</h1>
+  return `<div class="setPage"><div class="crumb"><b>SEMESTER V</b></div><h1 class="chTitle">Settings</h1>
 
     <div class="setBlk"><div class="setupLbl">Appearance</div>
       <div class="setLine"><span>Theme<em>Auto follows your phone's light/dark setting.</em></span>
@@ -1800,8 +1871,10 @@ function settingsHTML(){
         <button class="setMini" id="pdfBtn"${isOffline()?' disabled':''}>Import PDF</button></div>
       <div class="setLine"><span>Export a backup<em>Notes, chapters and progress in one file.</em></span>
         <button class="setMini" id="expBtn">Export</button></div>
-      <div class="setLine"><span>Import JSON<em>A hand-made chapter, or a backup. You pick the subject and unit.</em></span>
+      <div class="setLine"><span>Import JSON<em>Files that name their own subject and unit, or a backup. Drop in as many as you like.</em></span>
         <button class="setMini" id="impBtn">Import JSON</button></div>
+      <div class="setLine"><span>Import JSON manually<em>For a hand-made chapter — you pick the subject and unit yourself.</em></span>
+        <button class="setMini" id="impManBtn">Import manually</button></div>
       <div class="setLine"><span>Prompt for making a JSON<em>Copy it into Claude with your chapter, import what comes back.</em></span>
         <button class="setMini" id="promptBtn">Show prompt</button></div>
       <div class="setLine"><span>Load demo chapter<em>See how an imported chapter looks.</em></span>
@@ -1809,7 +1882,7 @@ function settingsHTML(){
       <div class="setLine"><span>The guide<em>The quick tour you saw on first open.</em></span>
         <button class="setMini" id="guideBtn">Show</button></div>
       <div class="setLine"><span>Erase everything<em>Clears this device. Export first.</em></span>
-        <button class="setMini danger" id="wipeBtn">Erase</button></div></div>`;
+        <button class="setMini danger" id="wipeBtn">Erase</button></div></div></div>`;
 }
 let _pwSeen=null;
 function renderStack(){
@@ -1859,6 +1932,7 @@ function renderMain(){
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='sem5-backup.json'; a.click();
     };
     $('#impBtn').onclick=()=>jsonToggle(true);
+    $('#impManBtn').onclick=()=>jsonManualToggle(true);
     $('#promptBtn').onclick=()=>promptToggle(true);
     $('#demoBtn').onclick=()=>{
       const demo={subject:DATA.subjects[0]&&DATA.subjects[0].id,unit:'Unit 1',chapter:{id:'demo-chapter',name:'Demo Chapter',lectures:[{title:'Lecture 1 — a sample',cards:[
@@ -1931,11 +2005,16 @@ function renderMain(){
       h+='<div class="homeGrid">'+chs.map(c=>{
         const d=chDone(c), t=c.lectures.length, pct=chStepsPct(c);
         return `<button class="homeCard" data-cid="${c.id}">${ring(pct)}
-          <span><span class="hcT">${esc(c.name)}</span><br>
+          <span><span class="hcT">Ch ${c.no} · ${esc(c.name)}</span><br>
           <span class="hcU">${esc(c.unit.name)} · ${d}/${t} lecs${(()=>{const s=quizStats(chQuizKeys(c));return s.g?` · quiz ${s.pct}%`:` · ${chQuestions(c).length} ques`;})()}</span></span></button>`;
       }).join('')+'</div>';
     } else {
-      h+=`<div class="empty"><div class="big">Nothing here yet</div>Settings ▸ Import PDF to bring in your first chapter.</div>`;
+      h+=`<div class="empty"><div class="big">Nothing here yet</div>Bring in your first chapter:
+        <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:14px">
+          <button class="setMini" id="emptyImp" style="border-color:var(--gold-line); color:var(--gold)">Import JSON</button>
+          <button class="setMini" id="emptyImpMan">Import manually</button>
+          <button class="setMini" id="emptyPdf"${isOffline()?' disabled':''}>Import PDF</button>
+        </div></div>`;
     }
     m.innerHTML=h;
     $$('#main .homeCard').forEach(b=>b.onclick=()=>openChapter(chs.find(c=>c.id===b.dataset.cid),'notes'));
@@ -1961,13 +2040,17 @@ function renderMain(){
       save(); buildPalIndex();
       cur.sub=DATA.subjects[0]; openChapter(null,'notes');
     };
+    const eImp=$('#emptyImp'), eImpMan=$('#emptyImpMan'), ePdf=$('#emptyPdf');
+    if(eImp) eImp.onclick=()=>jsonToggle(true);
+    if(eImpMan) eImpMan.onclick=()=>jsonManualToggle(true);
+    if(ePdf) ePdf.onclick=()=>pdfToggle(true);
     scrollTo(0,0);
     return;
   }
   const qs=chQuestions(ch), fms=chFormulaCards(ch);
   const fmCount=fms.reduce((a,c)=>a+c.items.length,0);
   const d=chDone(ch), t=ch.lectures.length, pct=chStepsPct(ch);
-  let h=`<div class="crumb"><b>${esc(ch.sub.code)}</b> · ${esc(ch.unit.name)}</div>
+  let h=`<div class="crumb"><b>${esc(ch.sub.code)}</b> · ${esc(ch.unit.name)} · Ch ${ch.no}</div>
     <h1 class="chTitle">${esc(ch.name)}</h1>
     <div id="chMeta"><div id="chProg"><i style="width:${pct}%"></i></div><div id="chProgTxt">${chSteps(ch)}/${t*3} steps · ${d}/${t} lectures complete${(()=>{const s=quizStats(chQuizKeys(ch));return s.g?` · quiz ${s.r}✓ ${s.p}~ ${s.w}✗ of ${s.n}`:'';})()}</div></div>
     <div id="tabs">
@@ -2288,7 +2371,7 @@ addEventListener('keydown',e=>{
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); palToggle(!$('#palWrap').classList.contains('show')); return; }
   /* pdf/paper sheets are deliberately left out — Escape mid-extraction would
      abort a call that's already been paid for */
-  if(e.key==='Escape'){ palToggle(false); quizClose(); prtToggle(false); jsonToggle(false); promptToggle(false); return; }
+  if(e.key==='Escape'){ palToggle(false); quizClose(); prtToggle(false); jsonToggle(false); jsonManualToggle(false); promptToggle(false); return; }
   if($('#palWrap').classList.contains('show')){
     if(e.key==='ArrowDown'){ palSel=Math.min(palSel+1,palHits.length-1); palRender(); e.preventDefault(); }
     if(e.key==='ArrowUp'){ palSel=Math.max(palSel-1,0); palRender(); e.preventDefault(); }
@@ -2323,6 +2406,8 @@ $$('#moreMenu button').forEach(b=>b.onclick=e=>{
   if(a==='print') prtOpen();
   else if(a==='theme') setTheme(state.theme==='auto'?'light':state.theme==='light'?'dark':'auto');
   else if(a==='settings') openChapter('settings','notes');
+  else if(a==='import') jsonToggle(true);
+  else if(a==='importManual') jsonManualToggle(true);
 });
 applyTheme();
 /* ── Highlighter ───────────────────────────────────────────────────
@@ -2525,6 +2610,7 @@ $('#palWrap').onclick=e=>{ if(e.target.id==='palWrap')palToggle(false); };
 $('#pdfWrap').onclick=e=>{ if(e.target.id==='pdfWrap')pdfToggle(false); };
 $('#paperWrap').onclick=e=>{ if(e.target.id==='paperWrap')paperToggle(false); };
 $('#jsonWrap').onclick=e=>{ if(e.target.id==='jsonWrap')jsonToggle(false); };
+$('#jsonManualWrap').onclick=e=>{ if(e.target.id==='jsonManualWrap')jsonManualToggle(false); };
 $('#promptWrap').onclick=e=>{ if(e.target.id==='promptWrap')promptToggle(false); };
 
 /* ── first-run guide ── */
