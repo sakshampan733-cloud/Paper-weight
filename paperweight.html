@@ -930,6 +930,88 @@ function mergeChapterEntry(en){
 /* replay everything imported so far, before the page indexes itself */
 (state.content||[]).forEach(en=>{ try{ mergeChapterEntry(en); }catch(e){} });
 
+/* ══ unit edits ══════════════════════════════════════════════════════
+   Units aren't stored anywhere on their own — they're implied by the
+   chapters filed under them, plus the hardcoded 'Unit 1' every subject
+   declares in DATA. So an import that names its own unit ("Unit 1:
+   Introduction to Business Economics") leaves the empty default sitting
+   next to it, and deleting that default can't just splice DATA — it's
+   re-declared on the next load. These two lists are the persistence:
+   `removedUnits` suppresses a unit by name, `addedUnits` keeps an empty
+   one the user deliberately made. Both run AFTER the content replay, so
+   they see the real chapter counts. Removal only ever applies to a unit
+   that ended up empty — never one holding chapters, so a stale entry
+   can't make a chapter vanish.
+   ════════════════════════════════════════════════════════════════════ */
+function unitsFor(subId, key){ return (state[key]||{})[subId]||[]; }
+(function(){
+  DATA.subjects.forEach(sub=>{
+    unitsFor(sub.id,'addedUnits').forEach(name=>{
+      if(!sub.units.some(u=>u.name.toLowerCase()===String(name).toLowerCase()))
+        sub.units.push({name:String(name), chapters:[]});
+    });
+    const gone=unitsFor(sub.id,'removedUnits').map(n=>String(n).toLowerCase());
+    if(gone.length) sub.units=sub.units.filter(u=>
+      !(gone.includes(u.name.toLowerCase()) && !u.chapters.length));
+  });
+})();
+/* Rename a unit in place. Chapters carry their filing in state.content, so
+   the rename has to follow there too or the next load rebuilds the old
+   name. Returns false when the target name is already taken. */
+function renameUnit(subId, oldName, newName){
+  const sub=DATA.subjects.find(s=>s.id===subId); if(!sub) return false;
+  const from=String(oldName), to=String(newName).trim();
+  if(!to || from===to) return false;
+  if(sub.units.some(u=>u.name.toLowerCase()===to.toLowerCase() && u.name!==from)) return false;
+  const unit=sub.units.find(u=>u.name===from); if(!unit) return false;
+  unit.name=to;
+  (state.content||[]).forEach(en=>{
+    const chap=entryChapter(en); if(!chap) return;
+    if(!unit.chapters.some(c=>c.id===chap.id)) return;
+    en.subject=sub.id; en.unit=to;
+    if(en.chapter){ delete en.chapter.subject; delete en.chapter.unit; }
+  });
+  /* suppress the old name (it may be a DATA default) and remember the new
+     one if nothing is filed under it, so an empty rename still sticks */
+  state.removedUnits=state.removedUnits||{};
+  state.removedUnits[subId]=[...new Set([...(state.removedUnits[subId]||[]), from])];
+  state.addedUnits=state.addedUnits||{};
+  const added=new Set(state.addedUnits[subId]||[]);
+  added.delete(from); if(!unit.chapters.length) added.add(to);
+  state.addedUnits[subId]=[...added];
+  save();
+  return true;
+}
+/* Delete an empty unit. Refuses while it still holds chapters — dropping
+   those silently is how you lose a semester of notes; move or remove them
+   first (Settings ▸ Chapters, or drag them in the sidebar). */
+function removeUnit(subId, name){
+  const sub=DATA.subjects.find(s=>s.id===subId); if(!sub) return 'nosub';
+  const unit=sub.units.find(u=>u.name===String(name)); if(!unit) return 'nounit';
+  if(unit.chapters.length) return 'haschapters';
+  sub.units=sub.units.filter(u=>u!==unit);
+  state.removedUnits=state.removedUnits||{};
+  state.removedUnits[subId]=[...new Set([...(state.removedUnits[subId]||[]), String(name)])];
+  state.addedUnits=state.addedUnits||{};
+  state.addedUnits[subId]=(state.addedUnits[subId]||[]).filter(n=>String(n)!==String(name));
+  save();
+  return 'ok';
+}
+/* An empty unit the user made by hand, so it survives a reload even before
+   anything is filed into it. */
+function addUnit(subId, name){
+  const sub=DATA.subjects.find(s=>s.id===subId); if(!sub) return false;
+  const nm=String(name).trim(); if(!nm) return false;
+  if(sub.units.some(u=>u.name.toLowerCase()===nm.toLowerCase())) return false;
+  sub.units.push({name:nm, chapters:[]});
+  state.addedUnits=state.addedUnits||{};
+  state.addedUnits[subId]=[...new Set([...(state.addedUnits[subId]||[]), nm])];
+  state.removedUnits=state.removedUnits||{};
+  state.removedUnits[subId]=(state.removedUnits[subId]||[]).filter(n=>String(n).toLowerCase()!==nm.toLowerCase());
+  save();
+  return true;
+}
+
 /* the one place chapter/backup JSON gets merged in — used by both the
    file-picker import and the PDF-import flow, so they can't drift apart.
    `forced` ({subject, unit, chapterId}) overrides whatever filing the file
@@ -957,6 +1039,8 @@ function applyImportPayload(d,forced){
   Object.assign(state.done,d.done||{}); Object.assign(state.stars,d.stars||{}); Object.assign(state.quiz,d.quiz||{}); Object.assign(state.exams,d.exams||{}); Object.assign(state.hl,d.hl||{});
   (d.subs||[]).forEach(s=>{ if(!DATA.subjects.some(x=>x.name.toLowerCase()===s.name.toLowerCase())){ (state.subs=state.subs||[]).push(s); DATA.subjects.push({id:s.id,code:s.code,name:s.name,units:[{name:'Unit 1',chapters:[]}]}); } });
   Object.assign(state.subjectNames=state.subjectNames||{}, d.subjectNames||{});
+  Object.assign(state.removedUnits=state.removedUnits||{}, d.removedUnits||{});
+  Object.assign(state.addedUnits=state.addedUnits||{}, d.addedUnits||{});
   (d.content||[]).forEach(en=>{ if(!entryChapId(en))return; let res=null; try{ res=mergeChapterEntry(en); }catch(err){}
     if(!res)return; const ix=state.content.findIndex(x=>entryChapId(x)===res.id);
     if(ix>-1) state.content[ix]=en; else state.content.push(en); done.push(res); });
@@ -998,7 +1082,7 @@ function moveChapterTo(chapterId, targetSubId, targetUnitName){
   return true;
 }
 
-function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',pdfUsage:state.pdfUsage||null,subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],aiAnswers:state.aiAnswers||{},aiUsage:state.aiUsage||null,pastPapers:state.pastPapers||{},paperUsage:state.paperUsage||null,lastPrediction:state.lastPrediction||null})); return true; }catch(e){ return false; } }
+function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',pdfUsage:state.pdfUsage||null,subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},aiAnswers:state.aiAnswers||{},aiUsage:state.aiUsage||null,pastPapers:state.pastPapers||{},paperUsage:state.paperUsage||null,lastPrediction:state.lastPrediction||null})); return true; }catch(e){ return false; } }
 function toast(msg,ms){
   let el=document.getElementById('toastBox');
   if(!el){ el=document.createElement('div'); el.id='toastBox'; document.body.appendChild(el); }
@@ -1851,6 +1935,20 @@ function settingsHTML(){
   const subs=DATA.subjects.map(sb=>`<div class="setLine"><span>${esc(sb.name)}</span>
     <span class="setNote" style="margin:0">${allChapters(sb).length} ch.</span>
     <button class="setMini" data-rensub="${esc(sb.id)}">Rename</button></div>`).join('');
+  /* units, grouped by subject — an empty one can be deleted outright, one
+     holding chapters says so instead of offering a delete that would have
+     to refuse anyway */
+  const units=DATA.subjects.map(sb=>{
+    const rows=sb.units.map(u=>{
+      const n=u.chapters.length;
+      return `<div class="setLine"><span>${esc(u.name)}<em>${n?n+(n===1?' chapter':' chapters'):'empty'}</em></span>
+        <button class="setMini" data-renunit="${esc(u.name)}" data-sub="${esc(sb.id)}">Rename</button>
+        ${n?'':`<button class="setMini danger" data-rmunit="${esc(u.name)}" data-sub="${esc(sb.id)}">Delete</button>`}</div>`;
+    }).join('') || `<div class="setNote">No units yet.</div>`;
+    return `<div class="setNote" style="margin:14px 0 2px; color:var(--dim)">${esc(sb.name)}</div>${rows}
+      <div class="setLine"><span style="color:var(--faint); font-size:13px">Add a unit</span>
+        <button class="setMini" data-addunit="${esc(sb.id)}">+ New unit</button></div>`;
+  }).join('');
   return `<div class="setPage"><div class="crumb"><b>SEMESTER V</b></div><h1 class="chTitle">Settings</h1>
 
     <div class="setBlk"><div class="setupLbl">Appearance</div>
@@ -1864,6 +1962,9 @@ function settingsHTML(){
     <div class="setBlk"><div class="setupLbl">Chapters</div>${chapters}</div>
 
     <div class="setBlk"><div class="setupLbl">Subjects</div>${subs}</div>
+
+    <div class="setBlk"><div class="setupLbl">Units</div>
+      <div class="setNote" style="margin-top:0">Rename a unit, or delete an empty one. A unit holding chapters can't be deleted — remove or move its chapters first.</div>${units}</div>
 
     <div class="setBlk"><div class="setupLbl">Your work</div>
       ${isOffline()?`<div class="setNote" style="color:var(--gold); margin-top:0">You’re offline. Notes, highlights, quizzes and JSON import all work — only the Claude features below are paused.</div>`:''}
@@ -1926,9 +2027,27 @@ function renderMain(){
       state.subjectNames=state.subjectNames||{}; state.subjectNames[sub.id]={name,code};
       save(); toast('Renamed — reloading'); setTimeout(()=>location.reload(),600);
     });
+    $$('#main [data-renunit]').forEach(b=>b.onclick=()=>{
+      const old=b.dataset.renunit;
+      const name=(prompt('Unit name?', old)||'').trim(); if(!name||name===old) return;
+      if(!renameUnit(b.dataset.sub, old, name)) return toast('That unit name is already taken.');
+      toast('Renamed — reloading'); setTimeout(()=>location.reload(),700);
+    });
+    $$('#main [data-rmunit]').forEach(b=>b.onclick=()=>{
+      if(b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='Sure?'; setTimeout(()=>{b.dataset.armed='0';b.textContent='Delete';},2600); return; }
+      const r=removeUnit(b.dataset.sub, b.dataset.rmunit);
+      if(r==='haschapters') return toast('That unit still has chapters — remove or move them first.',4000);
+      if(r!=='ok') return toast('Could not delete that unit.');
+      toast('Unit deleted — reloading'); setTimeout(()=>location.reload(),700);
+    });
+    $$('#main [data-addunit]').forEach(b=>b.onclick=()=>{
+      const name=(prompt('New unit name?')||'').trim(); if(!name) return;
+      if(!addUnit(b.dataset.addunit, name)) return toast('That unit already exists.');
+      toast('Unit added — reloading'); setTimeout(()=>location.reload(),700);
+    });
     $('#pdfBtn').onclick=()=>pdfToggle(true);
     $('#expBtn').onclick=()=>{
-      const blob=new Blob([JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,subs:state.subs||[],subjectNames:state.subjectNames||{},content:state.content||[]},null,1)],{type:'application/json'});
+      const blob=new Blob([JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,subs:state.subs||[],subjectNames:state.subjectNames||{},removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},content:state.content||[]},null,1)],{type:'application/json'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='sem5-backup.json'; a.click();
     };
     $('#impBtn').onclick=()=>jsonToggle(true);
