@@ -1959,6 +1959,11 @@ function settingsHTML(){
           <button data-th="dark" class="${state.theme==='dark'?'on':''}">Dark</button>
         </span></div></div>
 
+    <div class="setBlk"><div class="setupLbl">Offline</div>
+      <div class="setLine"><span>Works without a connection<em id="offReadyNote">Checking…</em></span>
+        <span class="setNote" style="margin:0" id="offReadyFlag">…</span></div>
+      <div class="setNote">Your notes, questions, quizzes, highlights and JSON import all work in airplane mode. Only the Claude features (Import PDF, AI answers, Paper Predictor) need a connection.</div></div>
+
     <div class="setBlk"><div class="setupLbl">Chapters</div>${chapters}</div>
 
     <div class="setBlk"><div class="setupLbl">Subjects</div>${subs}</div>
@@ -2045,6 +2050,7 @@ function renderMain(){
       if(!addUnit(b.dataset.addunit, name)) return toast('That unit already exists.');
       toast('Unit added — reloading'); setTimeout(()=>location.reload(),700);
     });
+    reportOfflineReady();
     $('#pdfBtn').onclick=()=>pdfToggle(true);
     $('#expBtn').onclick=()=>{
       const blob=new Blob([JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,subs:state.subs||[],subjectNames:state.subjectNames||{},removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},content:state.content||[]},null,1)],{type:'application/json'});
@@ -2807,6 +2813,36 @@ function showGuide(force){
    screen), and one honest gate in front of the Claude-backed features,
    which genuinely cannot work offline. ── */
 function isOffline(){ return navigator.onLine===false; }
+/* Is the app actually usable in airplane mode right now? A registered
+   worker isn't enough — the shell has to be sitting in the cache, which
+   is what a cold offline open reads. Checking the cache directly means
+   this can't claim "ready" while the precache is still in flight or a
+   404 quietly left a hole in it (opening at file:// has no SW at all). */
+async function offlineReady(){
+  if(!('serviceWorker' in navigator) || !('caches' in window))
+    return {ok:false, why:'This browser can’t store the app for offline use.'};
+  if(!location.protocol.startsWith('http'))
+    return {ok:false, why:'Opened as a local file — offline storage needs the app served over http(s).'};
+  let reg=null;
+  try{ reg=await navigator.serviceWorker.getRegistration(); }catch(e){}
+  if(!reg) return {ok:false, why:'Not stored yet. Open the app once with a connection, then reload.'};
+  let hit=null;
+  try{
+    hit=await caches.match('/paperweight.html') || await caches.match(location.pathname);
+  }catch(e){}
+  if(!hit) return {ok:false, why:'Worker installed but the page isn’t stored yet — reload once while online.'};
+  return {ok:true, why:'Stored on this device. Turn on airplane mode and it still opens.'};
+}
+function reportOfflineReady(){
+  const note=$('#offReadyNote'), flag=$('#offReadyFlag');
+  if(!note||!flag) return;
+  offlineReady().then(r=>{
+    if(!$('#offReadyNote')) return;              // navigated away mid-check
+    note.textContent=r.why;
+    flag.textContent=r.ok?'Ready':'Not yet';
+    flag.style.color=r.ok?'var(--teal)':'var(--gold)';
+  }).catch(()=>{ note.textContent='Could not check.'; flag.textContent='—'; });
+}
 /* Guard an AI action. Returns true (and toasts) when it can't run. */
 function blockedOffline(what){
   if(!isOffline()) return false;
