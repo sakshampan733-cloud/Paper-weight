@@ -51,6 +51,16 @@
 *{box-sizing:border-box; margin:0; padding:0}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{transition:none!important; animation:none!important} }
+/* Imported content can include a wide table (a slab-rate schedule, say) with
+   no wrapper of its own to scroll internally. Without this, one such table
+   stretches the whole page wider than the viewport — and because the
+   viewport meta tag pins initial-scale to 1, a phone can't just clip that;
+   it zooms the ENTIRE page out to fit, shrinking every card's text along
+   with it. This is the actual mechanism behind "everything went tiny after
+   I imported a chapter." html/body never scroll sideways; anything that
+   would overflow scrolls inside itself instead — see .cardBody table below
+   for the one case that actually needs it. */
+html,body{overflow-x:hidden; max-width:100%}
 body{
   background:var(--bg); color:var(--text);
   font-family:var(--body); font-size:15px; line-height:1.65;
@@ -104,7 +114,12 @@ input{font-family:inherit}
   background:var(--bg2); border-right:1px solid var(--line-soft);
   transition:transform .32s cubic-bezier(.22,1,.36,1);
 }
-#main{flex:1; margin-left:var(--sidebar-w); padding:34px 46px 120px; max-width:1060px;
+/* min-width:0 is load-bearing: a flex item defaults to min-width:auto, so
+   #main refuses to shrink below its widest content and pushes past the
+   viewport instead. That's the other half of the "everything went tiny"
+   bug — one wide imported table stretched #main, #main stretched the page,
+   and the phone zoomed out to compensate. */
+#main{flex:1; min-width:0; margin-left:var(--sidebar-w); padding:34px 46px 120px; max-width:1060px;
   transition:margin-left .32s cubic-bezier(.22,1,.36,1)}
 body.sideHid #sidebar{transform:translateX(-100%)}
 body.sideHid #main{margin-left:0; max-width:none}
@@ -156,10 +171,16 @@ body.sideHid #sideTog{left:0}
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.4)}
 .dropHot{outline:2px dashed var(--teal); outline-offset:2px; border-radius:var(--r-sm)}
 .unitLbl.dropHot{background:var(--teal-bg)}
+/* which half of a chapter row the drag is hovering — a thin line at the
+   edge the chapter will land on, so "before" vs "after" isn't a guess */
+.chChap.dropBefore{box-shadow:inset 0 2px 0 var(--teal)}
+.chChap.dropAfter{box-shadow:inset 0 -2px 0 var(--teal)}
 #sideFoot{margin-top:26px; padding:12px 10px; border-top:1px solid var(--line-soft); font-size:11.5px; color:var(--faint); line-height:1.7}
 
 /* ── Chapter header ─────────────────────────────── */
-.crumb{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:10px}
+/* the unit name in here can be long ("Unit 3: Marginal & Absorption
+   Costing, Profit Volume Ratio"), so it has to be allowed to wrap */
+.crumb{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:10px; overflow-wrap:anywhere; line-height:1.6}
 .crumb b{color:var(--teal); font-weight:500}
 h1.chTitle{font-family:var(--disp); font-size:34px; font-weight:600; letter-spacing:.2px; line-height:1.2; margin-bottom:18px}
 #chMeta{display:flex; align-items:center; gap:18px; margin-bottom:26px; flex-wrap:wrap}
@@ -186,7 +207,9 @@ h1.chTitle{font-family:var(--disp); font-size:34px; font-weight:600; letter-spac
   border:1px solid var(--gold-line); background:var(--gold-bg);
   padding:3px 9px; border-radius:6px; letter-spacing:.05em; flex-shrink:0;
 }
-.lecTitle{font-family:var(--disp); font-size:20px; font-weight:600; flex:1}
+/* min-width:0 lets a long title actually shrink — a flex child defaults to
+   min-content width, which is what pushed the step buttons off-screen */
+.lecTitle{font-family:var(--disp); font-size:20px; font-weight:600; flex:1; min-width:0; overflow-wrap:anywhere}
 .doneBtn{
   display:flex; align-items:center; gap:7px; font-size:12px; color:var(--faint);
   border:1px solid var(--line); padding:5px 12px; border-radius:99px; transition:all .15s; flex-shrink:0;
@@ -219,7 +242,11 @@ h1.chTitle{font-family:var(--disp); font-size:34px; font-weight:600; letter-spac
 .cardBody h3:first-child, .cardBody h4:first-child{margin-top:0}
 .cardBody blockquote, .qAnsInner blockquote{margin:0 0 13px; padding-left:14px; border-left:2px solid var(--line2); color:var(--dim)}
 .cardBody em, .qAnsInner em{color:var(--teal); font-style:normal}
-.cardBody table{width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px}
+/* display:block + overflow-x:auto directly on the table itself (there's no
+   wrapper div to hang this on — imported HTML can't add one) lets a wide
+   table scroll on its own instead of stretching the page. Question/quiz
+   answers accept the same HTML subset, so they need the same guard. */
+.cardBody table,.qAnsInner table,.qzAnsBox table{display:block; overflow-x:auto; max-width:100%; width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px; -webkit-overflow-scrolling:touch}
 .cardBody th{
   text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
   color:var(--faint); font-weight:600; padding:8px 12px; border-bottom:1px solid var(--line);
@@ -462,6 +489,11 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   h1.chTitle{font-size:27px}
   #brand{display:none}
   .topBtn span,.topBtn kbd{display:none}
+  /* lecture number + title on one line, the three step buttons on the next
+     — all three don't fit beside a title on a 375px screen */
+  .lecHead{flex-wrap:wrap; gap:10px; margin-top:34px}
+  .lecTitle{font-size:18px}
+  .stepWrap{flex:1 1 100%}
   .fmRow{flex-direction:column; gap:4px}
   .fmLbl,.fmNote{width:100%; text-align:left}
   /* Settings rows are label-left / control-right, which at phone widths
@@ -922,10 +954,45 @@ function mergeChapterEntry(en){
   let clean;
   try{ clean=JSON.parse(JSON.stringify({id:chap.id, name:chap.name||'Untitled chapter', lectures:chap.lectures})); }
   catch(e){ return null; }
+  /* "order" is what fixes chapter position — without it, position is just
+     whichever order the file picker happened to return the selected files
+     in (not necessarily filename order), which is how "Ch 5" ends up first.
+     A file that declares one wins outright, so re-importing a corrected
+     JSON always sticks. One that doesn't (a hand-made chapter) falls back
+     to whatever manual order a drag already gave this chapter — reimporting
+     content shouldn't undo a reorder you did in the app. */
+  if(typeof chap.order==='number') clean.order=chap.order;
   const ix=unit.chapters.findIndex(c=>c.id===clean.id);
   const updated=ix>-1;
-  if(updated) unit.chapters[ix]=clean; else unit.chapters.push(clean);
+  if(updated){
+    if(clean.order===undefined && typeof unit.chapters[ix].order==='number') clean.order=unit.chapters[ix].order;
+    unit.chapters[ix]=clean;
+  } else unit.chapters.push(clean);
+  sortUnitChapters(unit);
   return {subject:sub.name, unit:unit.name, name:clean.name, id:clean.id, updated, subjectMatched};
+}
+/* Chapters with an explicit order sort ascending by it; ones without keep
+   their existing relative position and sort after the ordered ones —
+   Array#sort is stable, so ties (both "no order") never get shuffled by
+   this call itself. */
+function sortUnitChapters(unit){
+  unit.chapters.sort((a,b)=>(typeof a.order==='number'?a.order:1e9)-(typeof b.order==='number'?b.order:1e9));
+}
+/* Units themselves have the same problem chapters had — sub.units is built
+   in whichever order a chapter's unit was first encountered during import,
+   not the order a syllabus actually teaches them in. A subject-wide
+   chapter counter numbered by unit array position then means "Ch 1" can
+   land in Unit 2 just because that unit's first chapter happened to import
+   before Unit 1's did. Fix: read the number off the unit's own name
+   ("Unit 2: Consumer Behaviour" → 2) — every generated unit name already
+   carries one, so no schema change is needed. A unit without a leading
+   number keeps its relative position, sorted after the numbered ones. */
+function sortUnits(sub){
+  sub.units.sort((a,b)=>{
+    const na=parseInt((String(a.name).match(/^unit\s*(\d+)/i)||[])[1],10);
+    const nb=parseInt((String(b.name).match(/^unit\s*(\d+)/i)||[])[1],10);
+    return (isNaN(na)?1e9:na)-(isNaN(nb)?1e9:nb);
+  });
 }
 /* replay everything imported so far, before the page indexes itself */
 (state.content||[]).forEach(en=>{ try{ mergeChapterEntry(en); }catch(e){} });
@@ -1072,12 +1139,49 @@ function moveChapterTo(chapterId, targetSubId, targetUnitName){
   if(!toUnit){ toUnit={name:uname, chapters:[]}; targetSub.units.push(toUnit); }
   if(fromUnit===toUnit) return false;
   fromUnit.chapters=fromUnit.chapters.filter(c=>c.id!==chapterId);
+  // an order number from its old unit means nothing in a different one —
+  // drop it so it lands at the end instead of jumping to some arbitrary
+  // spot among the target unit's own ordered chapters
+  delete chapter.order;
   toUnit.chapters.push(chapter);
+  sortUnitChapters(toUnit);
   chapter.sub=targetSub; chapter.unit=toUnit;                 // keep live back-refs consistent
   // persist: update the matching state.content entry's subject/unit fields
   const entry=(state.content||[]).find(en=>entryChapId(en)===chapterId);
-  if(entry){ entry.subject=targetSub.id; entry.unit=toUnit.name; if(entry.chapter){ delete entry.chapter.subject; delete entry.chapter.unit; } }
+  if(entry){
+    entry.subject=targetSub.id; entry.unit=toUnit.name;
+    if(entry.chapter){ delete entry.chapter.subject; delete entry.chapter.unit; delete entry.chapter.order; }
+  }
   DATA.subjects.forEach(indexSubject);   // chapter numbers shift on both sides of a move
+  save();
+  return true;
+}
+
+/* Reposition a chapter next to another one WITHIN the same unit — what
+   moveChapterTo doesn't do, since it only ever moves between units/subjects
+   and always appends. Renumbers every chapter in the unit to a fresh
+   1..N "order" afterward and writes it back onto each one's state.content
+   entry, so the new position is explicit and survives a reload or a later
+   re-import rather than being an accident of array position. Refuses
+   across units — dragging onto a chapter in a different unit is ambiguous
+   about whether you meant "reorder" or "move", so that gesture is left to
+   the existing drop-on-a-unit-label path instead. */
+function reorderChapter(chapterId, refChapterId, placeBefore){
+  if(chapterId===refChapterId) return false;
+  let unit=null;
+  DATA.subjects.forEach(s=>s.units.forEach(u=>{ if(u.chapters.some(c=>c.id===chapterId)) unit=u; }));
+  if(!unit || !unit.chapters.some(c=>c.id===refChapterId)) return false;
+  const chapter=unit.chapters.find(c=>c.id===chapterId);
+  unit.chapters=unit.chapters.filter(c=>c.id!==chapterId);
+  let at=unit.chapters.findIndex(c=>c.id===refChapterId);
+  if(!placeBefore) at++;
+  unit.chapters.splice(at,0,chapter);
+  unit.chapters.forEach((c,i)=>{
+    c.order=i+1;
+    const en=(state.content||[]).find(x=>entryChapId(x)===c.id);
+    if(en){ const ch=entryChapter(en); if(ch) ch.order=c.order; }
+  });
+  DATA.subjects.forEach(indexSubject);
   save();
   return true;
 }
@@ -1099,6 +1203,7 @@ const CARDS={}, FMITEMS={};
    membership and order of a subject's units — without it a freshly merged
    chapter renders as "Ch undefined" until the next reload. */
 function indexSubject(sub){
+  sortUnits(sub);
   let n=0, cn=0;
   sub.units.forEach((u,ui)=>u.chapters.forEach((ch,ci)=>{
     ch.sub=sub; ch.unit=u; ch.no=++cn;
@@ -1160,8 +1265,12 @@ function renderSubjTabs(){
    Pointer-based (works on mouse/touch/pen alike, unlike HTML5 draggable
    which iOS Safari won't do for arbitrary elements). Grabbing the grip
    drags a floating clone; dropping over a unit label moves within the
-   subject, dropping over a subject tab moves to that subject. The actual
-   move is moveChapterTo() — this code only turns a gesture into a call. */
+   subject, dropping over a subject tab moves to that subject, dropping
+   over ANOTHER chapter row reorders within the current unit — top half of
+   the row means "before it", bottom half means "after it". Moving between
+   units/subjects is moveChapterTo(); reordering within one is
+   reorderChapter() — this code only turns a gesture into one call or the
+   other. */
 let chDragJustHappened=false, chDrag=null;
 function startChapterDrag(e){
   e.preventDefault(); e.stopPropagation();
@@ -1179,9 +1288,14 @@ function startChapterDrag(e){
   window.addEventListener('pointercancel', endChapterDrag, true);
 }
 function moveGhost(e){ if(chDrag){ chDrag.ghost.style.left=e.clientX+12+'px'; chDrag.ghost.style.top=e.clientY+12+'px'; } }
-function clearDropHighlights(){ $$('.dropHot').forEach(el=>el.classList.remove('dropHot')); }
-function dropTargetAt(x,y){
+function clearDropHighlights(){ $$('.dropHot').forEach(el=>{ el.classList.remove('dropHot','dropBefore','dropAfter'); }); }
+function dropTargetAt(x,y,draggedId){
   const el=document.elementFromPoint(x,y); if(!el) return null;
+  const chRow=el.closest('.chChap[data-cid]');
+  if(chRow && chRow.dataset.cid!==draggedId){
+    const r=chRow.getBoundingClientRect();
+    return {kind:'chapter', refId:chRow.dataset.cid, placeBefore:(y-r.top)<r.height/2, el:chRow};
+  }
   const unit=el.closest('.unitLbl[data-unit]');
   if(unit) return {kind:'unit', unitName:unit.dataset.unit, el:unit};
   const tab=el.closest('.subjTab[data-sid]');
@@ -1193,9 +1307,12 @@ function onChapterDragMove(e){
   chDrag.moved=true;
   moveGhost(e);
   clearDropHighlights();
-  const t=dropTargetAt(e.clientX,e.clientY);
+  const t=dropTargetAt(e.clientX,e.clientY,chDrag.chapterId);
   chDrag.target=t;
-  if(t) t.el.classList.add('dropHot');
+  if(t){
+    t.el.classList.add('dropHot');
+    if(t.kind==='chapter') t.el.classList.add(t.placeBefore?'dropBefore':'dropAfter');
+  }
 }
 function endChapterDrag(e){
   if(!chDrag) return;
@@ -1206,7 +1323,9 @@ function endChapterDrag(e){
   ghost.remove(); clearDropHighlights(); chDrag=null;
   if(!moved || e.type==='pointercancel' || !target){ return; }
   let moved2=false;
-  if(target.kind==='unit'){
+  if(target.kind==='chapter'){
+    moved2=reorderChapter(chapterId, target.refId, target.placeBefore);
+  } else if(target.kind==='unit'){
     moved2=moveChapterTo(chapterId, cur.sub.id, target.unitName);
   } else if(target.kind==='subject'){
     const targetSub=DATA.subjects.find(s=>s.id===target.subId);
@@ -1218,7 +1337,7 @@ function endChapterDrag(e){
     buildPalIndex();
     if(cur.ch && cur.ch.id===chapterId){ cur.ch=null; }
     renderSubjTabs(); renderSidebar();
-    toast('Chapter moved');
+    toast(target.kind==='chapter'?'Chapter reordered':'Chapter moved');
   }
 }
 
@@ -1243,7 +1362,7 @@ function renderSidebar(){
     u.chapters.forEach(ch=>{
       const d=chDone(ch), t=ch.lectures.length, pct=chStepsPct(ch);
       h+=`<button class="chRow chChap${ch===cur.ch?' on':''}" data-cid="${ch.id}">
-        <span class="chGrip" title="Drag to move to another unit or subject" aria-label="Move chapter">⠿</span>
+        <span class="chGrip" title="Drag onto another chapter to reorder, or onto a unit/subject to move it there" aria-label="Move chapter">⠿</span>
         <span class="t"><span><span style="color:var(--faint)">Ch ${ch.no} · </span>${esc(ch.name)}</span><span class="n">${d}/${t}</span></span>
         <span class="chBar"><i class="${pct===100?'full':''}" style="width:${pct}%"></i></span></button>`;
     });
