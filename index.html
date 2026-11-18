@@ -1019,6 +1019,19 @@ const EXTRACT_API_URL=API_BASE+'/extract';
 const QUESTIONS_API_URL=API_BASE+'/questions';
 const PAPER_API_URL=API_BASE+'/paper';
 const PREDICT_API_URL=API_BASE+'/predict';
+// The AI features need your passcode (set as PAPERWEIGHT_PASS in Vercel). Asked once per device, then remembered.
+async function apiFetch(url,opts={}){
+  const send=()=>fetch(url,{...opts,headers:{...(opts.headers||{}),'X-Paperweight-Pass':localStorage.getItem('pw-pass')||''}});
+  let resp=await send();
+  if(resp.status===401){
+    const p=prompt('Paperweight passcode (the one you set in Vercel). Asked once on this device.');
+    if(!p) return resp;
+    localStorage.setItem('pw-pass',p.trim());
+    resp=await send();
+    if(resp.status===401) localStorage.removeItem('pw-pass');
+  }
+  return resp;
+}
 const PDF_MONTHLY_CAP=20;
 const PAPER_MONTHLY_CAP=10;
 
@@ -1641,7 +1654,7 @@ function pdfSubmit(){
     const ctrl=new AbortController(); pdfAbort=ctrl;
     const bail=setTimeout(()=>ctrl.abort(),60000);
     try{
-      const resp=await fetch(EXTRACT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:ctrl.signal});
+      const resp=await apiFetch(EXTRACT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:ctrl.signal});
       const data=await resp.json().catch(()=>({}));
       if(!resp.ok) throw new Error(data.error||('Extraction failed ('+resp.status+')'));
       if(!data.chapter) throw new Error('Claude didn’t return a chapter — try again.');
@@ -1896,7 +1909,7 @@ async function maybeFillAnswer(cd){
   box.innerHTML='<span class="qNoAns">Generating an answer…</span>';
   try{
     const cards=cd.lec.ch.lectures.flatMap(l=>l.cards);
-    const resp=await fetch(QUESTIONS_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'answer',question:cd.q,cards})});
+    const resp=await apiFetch(QUESTIONS_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'answer',question:cd.q,cards})});
     const data=await resp.json().catch(()=>({}));
     if(!resp.ok||!data.answer) throw new Error(data.error||'Could not generate an answer.');
     state.aiAnswers=state.aiAnswers||{}; state.aiAnswers[cd.id]=data.answer;
@@ -1919,7 +1932,7 @@ async function generateQuestionsForChapter(ch){
   if(status) status.textContent='Generating…';
   if(btn) btn.disabled=true;
   try{
-    const resp=await fetch(QUESTIONS_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'generate',count,cards:notes})});
+    const resp=await apiFetch(QUESTIONS_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'generate',count,cards:notes})});
     const data=await resp.json().catch(()=>({}));
     if(!resp.ok||!Array.isArray(data.questions)) throw new Error(data.error||'Could not generate questions.');
     bumpAiUsage();
@@ -2000,7 +2013,7 @@ async function runPrediction(sub){
   const btn=$('#predictGoBtn'); if(btn){ btn.disabled=true; btn.textContent='Analyzing…'; }
   try{
     const payload=papers.map(p=>({term:p.term, questions:p.questions}));
-    const resp=await fetch(PREDICT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({papers:payload})});
+    const resp=await apiFetch(PREDICT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({papers:payload})});
     const data=await resp.json().catch(()=>({}));
     if(!resp.ok||!data.tiers) throw new Error(data.error||'Prediction failed.');
     state.lastPrediction={subId:sub.id, tiers:data.tiers}; save();
@@ -2057,7 +2070,7 @@ function paperSubmit(){
     const ctrl=new AbortController(); paperAbort=ctrl;
     const bail=setTimeout(()=>ctrl.abort(),60000);
     try{
-      const resp=await fetch(PAPER_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pdfBase64:b64}),signal:ctrl.signal});
+      const resp=await apiFetch(PAPER_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pdfBase64:b64}),signal:ctrl.signal});
       const data=await resp.json().catch(()=>({}));
       if(!resp.ok) throw new Error(data.error||('Extraction failed ('+resp.status+')'));
       if(!Array.isArray(data.questions)) throw new Error('Claude didn’t return any questions — try again.');

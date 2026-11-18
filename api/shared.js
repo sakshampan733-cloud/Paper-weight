@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { timingSafeEqual } from 'node:crypto';
 
 // Reads ANTHROPIC_API_KEY from the environment automatically — set it as a
 // Vercel project environment variable, never commit it. Shared by every
@@ -10,7 +11,7 @@ export const MAX_B64_LEN = 5 * 1024 * 1024; // ~3.7MB of PDF once decoded; keeps
 export function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Paperweight-Pass');
 }
 
 // Returns true if the caller should stop (preflight or wrong method already handled).
@@ -23,6 +24,18 @@ export function preflight(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Use POST.' });
     return true;
+  }
+  // The Anthropic key never leaves Vercel, but without this anyone who reads the public code could call these
+  // functions and spend it. Set PAPERWEIGHT_PASS in Vercel's environment variables to require a passcode; until
+  // it's set, nothing changes.
+  const pass = process.env.PAPERWEIGHT_PASS;
+  if (pass) {
+    const given = Buffer.from(String(req.headers['x-paperweight-pass'] || ''));
+    const want = Buffer.from(pass);
+    if (given.length !== want.length || !timingSafeEqual(given, want)) {
+      res.status(401).json({ error: 'Passcode needed.', needPass: true });
+      return true;
+    }
   }
   return false;
 }
