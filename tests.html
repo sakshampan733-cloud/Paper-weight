@@ -28,7 +28,7 @@
 <div id="frameWrap"><iframe id="app"></iframe></div>
 
 <script>
-const APP_SRC='paperweight.html';
+const APP_SRC='index.html';
 const results=document.getElementById('results');
 const summaryEl=document.getElementById('summary');
 const iframe=document.getElementById('app');
@@ -353,6 +353,164 @@ test('Paper cap — separate counter, blocks at PAPER_MONTHLY_CAP', async ()=>{
   `);
   assert(r.paperAtCap, 'paper cap not reached');
   assert(r.pdfUntouched, 'paper upload wrongly consumed the PDF quota');
+});
+
+/* ─────────────────────────── 1.9: readability upgrade ─────────────────────────── */
+
+/* a chapter with N lectures of `notes` note cards each, plus a questions-only lecture */
+function seedNotesChapter(cw, {lectures=3, notes=2, html='<p>note</p>', subject='s1', unit='Unit 1', id='rc'}={}){
+  ev(cw, `
+    const lecs=[];
+    for(let l=0;l<${lectures};l++){
+      const cards=[];
+      for(let n=0;n<${notes};n++) cards.push({type:'note', title:'Note '+l+'.'+n, html:${JSON.stringify(html)}});
+      cards.push({type:'question', q:'Q for lecture '+(l+1), a:'<p>a</p>', src:'', tags:['Theory']});
+      lecs.push({title:'Lecture title '+(l+1), cards});
+    }
+    lecs.push({title:'Homework', cards:[{type:'question', q:'HW 1', a:'<p>a</p>', src:'', tags:[]},{type:'question', q:'HW 2', a:'<p>a</p>', src:'', tags:[]}]});
+    applyImportPayload({subject:${JSON.stringify(subject)}, unit:${JSON.stringify(unit)}, chapter:{id:${JSON.stringify(id)}, name:'Readable', lectures:lecs}});
+    const sub=DATA.subjects.find(s=>s.units.some(u=>u.chapters.some(c=>c.id===${JSON.stringify(id)})));
+    cur.sub=sub; openChapter(allChapters(sub).find(c=>c.id===${JSON.stringify(id)}),'notes',true);
+  `);
+}
+
+test('1.9 — a file that brings its own subject lands in it in the same pass', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    const res=applyImportPayload({subs:[{id:'cs-ma',code:'MA',name:'Management Accounting'}],
+      subject:'Management Accounting', unit:'Unit 1', chapter:{id:'ma1', name:'CVP', lectures:[{title:'L1', cards:[{type:'note',title:'t',html:'<p>x</p>'}]}]}});
+    const ma=DATA.subjects.find(s=>s.name==='Management Accounting');
+    return { matched: res.done[0].subjectMatched, inMA: !!ma && allChapters(ma).some(c=>c.id==='ma1'),
+             inFirst: allChapters(DATA.subjects[0]).some(c=>c.id==='ma1') };
+  `);
+  assert(r.matched, 'import still reported the subject as a guess');
+  assert(r.inMA, 'chapter is not in the new Management Accounting subject');
+  assert(!r.inFirst, 'chapter was also filed into the first subject');
+});
+
+test('1.9 — a backup\'s subject renames apply before its chapters are matched', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    applyImportPayload({subjectNames:{s2:{name:'Income Tax',code:'IT'}},
+      chapters:[{subject:'Income Tax', unit:'Unit 1', chapter:{id:'it9', name:'X', lectures:[{title:'L', cards:[]}]}}]});
+    return { s2: allChapters(DATA.subjects.find(s=>s.id==='s2')).some(c=>c.id==='it9'), code: DATA.subjects.find(s=>s.id==='s2').code };
+  `);
+  assert(r.s2, 'chapter did not land in the renamed subject');
+  assertEq(r.code, 'IT');
+});
+
+test('1.9 — Notes tab lists every lecture up top and jumps to it', async ()=>{
+  const cw=await loadApp();
+  seedNotesChapter(cw, {lectures:3});
+  const r=evJSON(cw, `
+    const jumps=[...document.querySelectorAll('.lecNav .lecJump')];
+    const target=document.querySelector('.lecHead[data-cid="'+jumps[2].dataset.jump+'"]');
+    return { n:jumps.length, firstText:jumps[0].textContent, targetFound: !!target };
+  `);
+  assertEq(r.n, 4, 'lecture navigator should list all 4 sections');
+  assert(r.firstText.includes('Lecture title 1'), 'navigator chip text: '+r.firstText);
+  assert(r.targetFound, 'a navigator chip does not point at a lecture heading');
+});
+
+test('1.9 — questions-only section points to its questions; lecture link filters the Questions tab', async ()=>{
+  const cw=await loadApp();
+  seedNotesChapter(cw, {lectures:2});
+  const r=evJSON(cw, `
+    const qonly=document.querySelectorAll('.lecQonly [data-qlec]').length;
+    const perLec=document.querySelectorAll('.lecQs [data-qlec]').length;
+    document.querySelectorAll('.lecQonly [data-qlec]')[0].click();
+    const filtered=document.querySelectorAll('.qCard').length, bar=!!document.querySelector('.qFilter');
+    document.querySelector('#qShowAll').click();
+    const all=document.querySelectorAll('.qCard').length;
+    return { qonly, perLec, filtered, bar, all, tab:cur.tab };
+  `);
+  assertEq(r.qonly, 1, 'homework section should show one "open them" link');
+  assertEq(r.perLec, 2, 'each teaching lecture should link to its own questions');
+  assertEq(r.filtered, 2, 'filtered Questions tab should show only the homework questions');
+  assert(r.bar, 'filter bar missing');
+  assertEq(r.all, 4, 'Show all should list every question');
+  assertEq(r.tab, 'questions');
+});
+
+test('1.9 — worked calculation becomes a table; ASCII art stays monospace', async ()=>{
+  const cw=await loadApp();
+  seedNotesChapter(cw, {lectures:1, notes:1, html:'<div class="work">Sales  1,00,000\n(−) VC  60,000\nContribution  40,000</div><div class="work">Root\n├── child\n└── child</div>'});
+  const r=evJSON(cw, `
+    const tbl=document.querySelector('.cardBody .pwc table');
+    return { rows: tbl?tbl.querySelectorAll('tr').length:0, work: document.querySelectorAll('.cardBody div.work').length,
+             key: !!document.querySelector('.cardBody .pwc tr.k') };
+  `);
+  assertEq(r.rows, 3, 'calculation should become a 3-row table');
+  assertEq(r.work, 1, 'only the ASCII-art block should stay monospace');
+  assert(r.key, 'the Contribution line should be emphasised as a key row');
+});
+
+test('1.9 — <ul class="chart"> is drawn as a box-and-arrow chart', async ()=>{
+  const cw=await loadApp();
+  seedNotesChapter(cw, {lectures:1, notes:1, html:'<ul class="chart"><li>Salary<ul><li>Allowances :: Rule 280<ul><li>Fully taxable</li></ul></li><li>Perquisites</li></ul></li></ul>'});
+  const r=evJSON(cw, `
+    const f=document.querySelector('.cardBody .pwf');
+    return { chart:!!f, boxes:f?f.querySelectorAll('.b').length:0, detail:f?f.querySelector('.b i').textContent:'', leftover:document.querySelectorAll('.cardBody ul.chart').length };
+  `);
+  assert(r.chart, 'no chart rendered');
+  assertEq(r.boxes, 4, 'one box per list item');
+  assertEq(r.detail, 'Rule 280', '"Title :: detail" should put the detail inside the box');
+  assertEq(r.leftover, 0, 'the raw list should be replaced');
+});
+
+test('1.9 — a chart too wide for the screen turns vertical; a small one stays top-down', async ()=>{
+  const cw=await loadApp();
+  const wide='<ul class="chart"><li>Root<ul>'+Array.from({length:9},(_,i)=>'<li>A fairly long branch title '+i+'</li>').join('')+'</ul></li></ul>';
+  const small='<ul class="chart"><li>Root<ul><li>A</li><li>B</li></ul></li></ul>';
+  seedNotesChapter(cw, {lectures:1, notes:1, html:wide+small});
+  const r=evJSON(cw, `
+    const c=[...document.querySelectorAll('.cardBody .pwf')];
+    return { wide:c[0].classList.contains('vfit'), small:c[1].classList.contains('vfit'), overflow:c.some(p=>p.scrollWidth>p.clientWidth+1) };
+  `);
+  assert(r.wide, 'wide chart should switch to the vertical tree');
+  assert(!r.small, 'small chart should stay top-down');
+  assert(!r.overflow, 'a chart still needs sideways scrolling');
+});
+
+test('1.9 — ticking a step keeps your place in a long chapter', async ()=>{
+  const cw=await loadApp();
+  seedNotesChapter(cw, {lectures:4, notes:8, html:'<p>'+'Long note text. '.repeat(40)+'</p>'});
+  const r=evJSON(cw, `
+    scrollTo({top:1600,behavior:'instant'}); const before=scrollY;
+    document.querySelectorAll('[data-step]')[9].click();
+    return { before, after:scrollY };
+  `);
+  assert(r.before>1000, 'test page not tall enough to scroll ('+r.before+')');
+  assert(Math.abs(r.after-r.before)<=2, 'scroll jumped from '+r.before+' to '+r.after);
+});
+
+test('1.9 — the empty default "Unit 1" is hidden once chapters live in named units', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    cur.sub=DATA.subjects.find(s=>s.id==='s1'); openChapter(null,'notes',true);
+    const beforeShown=[...document.querySelectorAll('#sidebar .unitLbl')].map(x=>x.dataset.unit);
+    applyImportPayload({subject:'s1', unit:'Unit 2: Named', chapter:{id:'u2', name:'N', lectures:[{title:'L', cards:[]}]}});
+    openChapter(null,'notes',true);
+    const afterShown=[...document.querySelectorAll('#sidebar .unitLbl')].map(x=>x.dataset.unit);
+    return { beforeShown, afterShown };
+  `);
+  assert(r.beforeShown.includes('Unit 1'), 'an empty subject should still show Unit 1');
+  assert(!r.afterShown.includes('Unit 1'), 'empty default Unit 1 still shown: '+r.afterShown.join(', '));
+  assert(r.afterShown.includes('Unit 2: Named'), 'named unit missing');
+});
+
+test('1.9 — lecture numbers restart at 1 in every chapter (like the PDFs)', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    const lec=n=>Array.from({length:n},(_,i)=>({title:'L'+(i+1), cards:[{type:'note',title:'t',html:'<p>x</p>'}]}));
+    applyImportPayload({chapters:[
+      {subject:'s1', unit:'Unit 1', chapter:{id:'c1', order:1, name:'One', lectures:lec(5)}},
+      {subject:'s1', unit:'Unit 1', chapter:{id:'c2', order:2, name:'Two', lectures:lec(3)}}]});
+    const two=allChapters(DATA.subjects.find(s=>s.id==='s1')).find(c=>c.id==='c2');
+    return { nos: two.lectures.map(l=>l.no), ids: two.lectures.map(l=>l.id) };
+  `);
+  assertEq(r.nos.join(','), '1,2,3', 'second chapter lecture numbers');
+  assertEq(r.ids[0], 'c2-l0', 'lecture ids (progress keys) must not change');
 });
 
 /* ─────────────────────────── runner ─────────────────────────── */

@@ -16,11 +16,12 @@
  * Bump CACHE_VERSION when the precache list changes; old caches are dropped on
  * activate.
  */
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const SHELL_CACHE = 'pw-shell-' + CACHE_VERSION;
 const ASSET_CACHE = 'pw-assets-' + CACHE_VERSION;
 
-const SHELL_URLS = ['/paperweight.html', '/'];
+// the app is index.html, served at "/" (paperweight.html was its old name)
+const SHELL_URLS = ['/', '/index.html'];
 const ASSET_URLS = ['/manifest.webmanifest', '/icon-192.png', '/icon-512.png', '/icon-maskable-512.png'];
 
 const DOC_TIMEOUT_MS = 3500; // don't let a flaky connection stall a cold open
@@ -76,7 +77,7 @@ async function networkFirstWithTimeout(request, cacheName) {
     if (resp && resp.ok) cache.put(request, resp.clone());
     return resp;
   } catch (err) {
-    const hit = (await cache.match(request)) || (await cache.match('/paperweight.html'));
+    const hit = (await cache.match(request)) || (await cache.match('/')) || (await cache.match('/index.html'));
     if (hit) return hit;
     throw err;
   } finally {

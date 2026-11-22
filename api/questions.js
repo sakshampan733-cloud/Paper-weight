@@ -58,7 +58,7 @@ async function answer(req, res) {
     messages: [
       {
         role: 'user',
-        content: `${notes ? `Chapter notes for context:\n\n${notes}\n\n` : ''}Write a full worked answer to this exam question:\n\n${question}\n\nUse the same HTML subset the notes use (<p>, <b>, <div class="work"> for any calculation).`
+        content: `${notes ? `Chapter notes for context:\n\n${notes}\n\n` : ''}Write a full worked answer to this exam question:\n\n${question}\n\nUse the same HTML subset the notes use (<p>, <b>, <div class="work"> for any calculation, one step per line with columns separated by two or more spaces).`
       }
     ],
     output_config: {

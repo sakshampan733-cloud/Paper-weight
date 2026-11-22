@@ -65,7 +65,7 @@ export const CARD_SCHEMA = {
         html: {
           type: 'string',
           description:
-            'Rendered as innerHTML. Use <p>, <ul>/<ol>/<li>, <b>, <em>, <code>, <table>/<tr>/<th>/<td>, and <div class="work">…</div> for monospace worked calculations (preserve line breaks with \\n inside it).'
+            'Rendered as innerHTML. Use <p>, <ul>/<ol>/<li>, <b>, <em>, <code>, <table>/<tr>/<th>/<td>, <div class="work">…</div> for worked calculations (one step per line with \\n; separate columns with two or more spaces — the app renders it as a table), and <ul class="chart"> nested lists for flow charts ("Title :: detail" per item; drawn as boxes and arrows).'
         }
       },
       required: ['type', 'title', 'html'],
@@ -100,7 +100,7 @@ export const CARD_SCHEMA = {
         q: { type: 'string', description: 'the question text' },
         a: {
           type: 'string',
-          description: 'the worked answer, same HTML subset as a note card, including <div class="work"> for calculations'
+          description: 'the worked answer, same HTML subset as a note card, including <div class="work"> for calculations (columns separated by two or more spaces)'
         },
         src: { type: 'string', description: 'exam/source citation if the PDF gives one, else ""' },
         tags: {

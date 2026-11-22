@@ -331,6 +331,8 @@ h1.chTitle{font-family:var(--disp); font-size:34px; font-weight:600; letter-spac
 .tab.on{background:var(--panel3); color:var(--text); box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .tab .ct{font-family:var(--mono); font-size:10px; color:var(--faint); background:var(--bg); padding:1px 6px; border-radius:99px}
 .tab.on .ct{color:var(--gold)}
+/* on a phone the three tabs were wider than the screen and "Formulas" got cut off — share the width instead */
+@media (max-width:520px){ #tabs{width:100%} .tab{flex:1; justify-content:center; padding:7px 6px; gap:6px} }
 
 /* ── Lecture sections (Notes tab) ───────────────── */
 .lecHead{
@@ -389,6 +391,92 @@ h1.chTitle{font-family:var(--disp); font-size:34px; font-weight:600; letter-spac
 }
 .cardBody td{padding:9px 12px; border-bottom:1px solid var(--line-soft); vertical-align:top}
 .cardBody tr:last-child td{border-bottom:none}
+
+/* ── readable blocks: flow charts, process flows, worked calculations ──
+   Same look as the cards made by the exam-notes generator (tools/pwfc.py),
+   built in so any chapter gets it: charts lay out top-down like the teacher's
+   and switch to a vertical tree (.vfit, set by fitCharts) when they don't fit. */
+.pwf{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 16px;padding:4px 2px 10px;container-type:inline-size}
+.pwf ul{list-style:none;margin:0;padding:0}
+.pwf li{margin:0}
+.pwf .t{width:max-content;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+.pwf .b{position:relative;border:1.5px solid var(--line);background:var(--panel2);border-radius:10px;padding:7px 12px;font-size:13.5px;line-height:1.45;color:var(--text);font-weight:600;max-width:240px;box-sizing:border-box}
+.pwf .b i{display:block;font-style:normal;font-weight:400;font-size:12.5px;color:var(--dim);margin-top:2px}
+.pwf .b0{border-color:var(--gold);background:var(--gold-bg);font-size:15px;padding:9px 18px;max-width:340px;text-align:center}
+.pwf .b1{border-color:var(--teal);background:var(--teal-bg)}
+.pwf .b3{background:var(--panel);font-weight:500}
+.pwf .h{display:flex;justify-content:center;position:relative;padding-top:14px}
+.pwf .h::before{content:'';position:absolute;top:0;left:50%;height:14px;border-left:2px solid var(--teal-line)}
+.pwf .h>li{position:relative;padding:16px 6px 0;display:flex;flex-direction:column;align-items:center}
+.pwf .h>li::before{content:'';position:absolute;top:0;left:0;right:0;border-top:2px solid var(--teal-line)}
+.pwf .h>li:first-child::before{left:50%}
+.pwf .h>li:last-child::before{right:50%}
+.pwf .h>li:only-child::before{display:none}
+.pwf .h>li::after{content:'';position:absolute;top:0;left:50%;height:10px;border-left:2px solid var(--teal-line)}
+.pwf .h>li>.b{text-align:center}
+.pwf .h>li>.b::before{content:'';position:absolute;top:-7px;left:50%;margin-left:-5px;border:5px solid transparent;border-top:6px solid var(--teal-line);border-bottom:0}
+.pwf .h>li.c>.b{align-self:stretch;max-width:none}
+.pwf .v{position:relative;margin:4px 0 0 12px;align-self:stretch}
+.pwf .v::before{content:'';position:absolute;left:0;top:-4px;height:4px;border-left:2px solid var(--teal-line)}
+.pwf .v>li{position:relative;padding:6px 0 0 22px}
+.pwf .v>li::before{content:'';position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--teal-line)}
+.pwf .v>li:last-child::before{bottom:auto;height:24px}
+.pwf .v>li::after{content:'';position:absolute;left:0;top:23px;width:14px;border-top:2px solid var(--teal-line)}
+.pwf .v>li>.b{display:inline-block;max-width:300px;text-align:left}
+.pwf .v>li>.b::before{content:'';position:absolute;left:-7px;top:12px;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}
+.pwn{font-size:12.5px;color:var(--dim);margin:-6px 0 14px;padding-left:10px;border-left:3px solid var(--gold-line)}
+.pwl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 4px;margin:10px 0 14px}
+.pwl .b{border:1.5px solid var(--teal);background:var(--teal-bg);border-radius:10px;padding:6px 11px;font-size:13.5px;font-weight:600;color:var(--text);line-height:1.4}
+.pwl .b i{display:block;font-style:normal;font-weight:400;font-size:12px;color:var(--dim)}
+.pwl .g{border-color:var(--gold);background:var(--gold-bg)}
+.pwl .a{color:var(--teal);font-weight:700;font-size:17px;padding:0 3px}
+.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}
+.pwc .ln{white-space:pre-wrap}
+.pwc .gap{height:10px}
+.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}
+.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}
+.pwc th{font-weight:600;color:var(--dim)}
+.pwc .n{text-align:right!important;white-space:nowrap}
+.pwc .x{text-align:left!important;white-space:normal;min-width:7em}
+.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}
+.pwc .ok{color:var(--teal);font-weight:700}
+.pwf.vfit .t{width:auto;align-items:flex-start}
+.pwf.vfit .b0{text-align:left}
+.pwf.vfit .h{display:block;padding:0;margin:4px 0 0 12px}
+.pwf.vfit .h::before{left:0;top:-4px;height:4px}
+.pwf.vfit .h>li{display:block;padding:6px 0 0 22px}
+.pwf.vfit .h>li::before,.pwf.vfit .h>li:first-child::before,.pwf.vfit .h>li:last-child::before,.pwf.vfit .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}
+.pwf.vfit .h>li:last-child::before{bottom:auto;height:24px}
+.pwf.vfit .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}
+.pwf.vfit .h>li>.b{display:inline-block;text-align:left;max-width:300px}
+.pwf.vfit .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}
+.pwc th{text-transform:none!important; letter-spacing:normal!important; font-size:inherit!important}
+@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}
+/* ── lecture navigator + per-lecture questions (Notes tab) ── */
+.lecNav{display:flex; flex-wrap:wrap; gap:6px; margin:-14px 0 30px}
+.lecNav + .lecHead{margin-top:0}
+.lecJump{display:flex; align-items:center; gap:7px; max-width:280px; padding:5px 12px 5px 6px; border:1px solid var(--line); border-radius:99px; font-size:12.5px; color:var(--dim); background:var(--panel); transition:all .15s}
+.lecJump:hover{color:var(--text); border-color:var(--line2)}
+.lecJump b{font-family:var(--mono); font-size:10.5px; font-weight:500; color:var(--gold); background:var(--gold-bg); border:1px solid var(--gold-line); border-radius:99px; min-width:22px; height:20px; display:inline-flex; align-items:center; justify-content:center; padding:0 5px; flex-shrink:0}
+.lecJump span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.lecJump.done b{color:var(--teal); background:var(--teal-bg); border-color:var(--teal-line)}
+.lecHead{scroll-margin-top:calc(var(--topbar-h) + 14px)}
+.lecQonly{font-size:13.5px; color:var(--dim); padding:2px 2px 10px}
+.lecQs{margin:-6px 0 8px; text-align:right}
+.lecQonly button,.lecQs button{color:var(--teal); font-weight:500; font-size:13px}
+.lecQonly button:hover,.lecQs button:hover{text-decoration:underline}
+.qFilter{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--dim); margin:0 0 16px; padding:9px 14px; background:var(--panel); border:1px solid var(--line-soft); border-radius:10px}
+.qFilter b{color:var(--text); font-weight:600}
+.qFilter button{color:var(--teal); font-weight:500; margin-left:auto}
+#toTop{position:fixed; left:18px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:40; width:42px; height:42px; border-radius:50%; background:var(--panel2); border:1px solid var(--line); color:var(--text); font-size:17px; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .2s, transform .2s}
+#toTop.show{opacity:1; pointer-events:auto; transform:none}
+@media (max-width:720px){
+  .lecNav{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:4px}
+  .lecNav::-webkit-scrollbar{display:none}
+  .lecJump{max-width:220px; flex-shrink:0}
+}
+@media print{ .lecNav,.lecQs,.lecQonly,#toTop{display:none!important} }
 /* ── highlighter colours ── */
 :root{
   --hc-y:#E9BE45; --hc-g:#7ED473; --hc-b:#6FB8FF;
@@ -1237,6 +1325,15 @@ function addUnit(subId, name){
 function applyImportPayload(d,forced){
   const ents=chapEntries(d); const done=[];
   state.content=state.content||[];
+  /* subjects first: a file can bring the subject its chapters belong to (a new
+     subject's own "subs" entry, or a backup's renames). Registering them before
+     the chapters are filed lets those chapters land there in this same pass —
+     filing first used to guess them into the first subject until a reload. */
+  (d.subs||[]).forEach(s=>{ if(s&&s.name&&!DATA.subjects.some(x=>x.name.toLowerCase()===s.name.toLowerCase())){ (state.subs=state.subs||[]).push(s); DATA.subjects.push({id:s.id,code:s.code,name:s.name,units:[{name:'Unit 1',chapters:[]}]}); } });
+  if(d.subjectNames){
+    Object.assign(state.subjectNames=state.subjectNames||{}, d.subjectNames);
+    DATA.subjects.forEach(sb=>{ const o=d.subjectNames[sb.id]; if(o){ if(o.name) sb.name=o.name; if(o.code) sb.code=o.code; } });
+  }
   ents.forEach(en=>{
     if(forced){
       const chap0=entryChapter(en);
@@ -1253,8 +1350,6 @@ function applyImportPayload(d,forced){
     done.push(res);
   });
   Object.assign(state.done,d.done||{}); Object.assign(state.stars,d.stars||{}); Object.assign(state.quiz,d.quiz||{}); Object.assign(state.exams,d.exams||{}); Object.assign(state.hl,d.hl||{});
-  (d.subs||[]).forEach(s=>{ if(!DATA.subjects.some(x=>x.name.toLowerCase()===s.name.toLowerCase())){ (state.subs=state.subs||[]).push(s); DATA.subjects.push({id:s.id,code:s.code,name:s.name,units:[{name:'Unit 1',chapters:[]}]}); } });
-  Object.assign(state.subjectNames=state.subjectNames||{}, d.subjectNames||{});
   Object.assign(state.removedUnits=state.removedUnits||{}, d.removedUnits||{});
   Object.assign(state.addedUnits=state.addedUnits||{}, d.addedUnits||{});
   (d.content||[]).forEach(en=>{ if(!entryChapId(en))return; let res=null; try{ res=mergeChapterEntry(en); }catch(err){}
@@ -1353,11 +1448,14 @@ const CARDS={}, FMITEMS={};
    chapter renders as "Ch undefined" until the next reload. */
 function indexSubject(sub){
   sortUnits(sub);
-  let n=0, cn=0;
+  let cn=0;
   sub.units.forEach((u,ui)=>u.chapters.forEach((ch,ci)=>{
     ch.sub=sub; ch.unit=u; ch.no=++cn;
     ch.lectures.forEach((lec,li)=>{
-      n++; lec.no=n; lec.ch=ch; lec.id=lec.id||ch.id+'-l'+li;
+      /* numbered within the chapter (Lec 1, 2, …), like the lecture PDFs —
+         a running count across the subject made Salaries start at "Lec 20".
+         Display only: progress is keyed by lec.id, which doesn't change. */
+      lec.no=li+1; lec.ch=ch; lec.id=lec.id||ch.id+'-l'+li;
       lec.cards.forEach((cd,cdi)=>{ cd.lec=lec; cd.id=lec.id+'-'+cdi; CARDS[cd.id]=cd;
         if(cd.type==='formula') cd.items.forEach((it,i)=>{it.id=cd.id+'-i'+i; FMITEMS[it.id]={it,cd};}); });
     });
@@ -1506,7 +1604,12 @@ function renderSidebar(){
     <span class="t"><span style="color:var(--gold)">★ Weak topics</span></span></button>
     <button class="chRow${cur.ch==='predict'?' on':''}" id="predictRow" style="margin-bottom:4px">
     <span class="t"><span style="color:var(--teal)">📈 Paper Predictor</span></span></button>`;
+  /* every subject starts with an empty "Unit 1"; once chapters live in named
+     units it only said "No chapters yet", so hide it (a unit you added stays) */
+  const anyCh=sub.units.some(u=>u.chapters.length);
+  const added=((state.addedUnits||{})[sub.id])||[];
   sub.units.forEach(u=>{
+    if(anyCh && !u.chapters.length && u.name==='Unit 1' && !added.includes('Unit 1')) return;
     h+=`<div class="unitLbl" data-unit="${esc(u.name)}">${esc(u.name)}</div>`;
     u.chapters.forEach(ch=>{
       const d=chDone(ch), t=ch.lectures.length, pct=chStepsPct(ch);
@@ -1850,7 +1953,9 @@ const JSON_PROMPT=`I'm using a study-notes app called Paperweight. It imports ch
 
 Rules:
 - One lecture per major section/topic. A short chapter can be a single lecture.
-- "html" and "a" accept only: <p>, <ul>/<ol>/<li>, <b>, <em>, <code>, <table>/<tr>/<th>/<td>, and <div class="work">…</div> for worked calculations in monospace. No other tags, no markdown, no images.
+- "html" and "a" accept only: <p>, <ul>/<ol>/<li>, <b>, <em>, <code>, <table>/<tr>/<th>/<td>, and <div class="work">…</div>. No other tags, no markdown, no images.
+- Worked calculations go in <div class="work">…</div>: one step per line, columns separated by at least two spaces (e.g. "Sales  2,00,000") — the app turns them into a clean table.
+- Wherever the chapter has a classification, a chart or a step-by-step process, add a flow chart at the top of that topic's note card, written as a nested list: <ul class="chart"><li>Main idea<ul><li>Branch :: short detail</li><li>Branch<ul><li>Sub-branch</li></ul></li></ul></li></ul>. "Title :: detail" puts a smaller line inside the box. Copy the source's own charts this way.
 - Write note cards covering every concept and definition of substance — don't summarize away detail.
 - Make a formula card for every formula, and a question card for every practice question, illustration, or worked example, each with its full solution in "a".
 - "tags" is usually ["Theory"] or ["Numerical"].
@@ -1914,7 +2019,7 @@ async function maybeFillAnswer(cd){
     if(!resp.ok||!data.answer) throw new Error(data.error||'Could not generate an answer.');
     state.aiAnswers=state.aiAnswers||{}; state.aiAnswers[cd.id]=data.answer;
     bumpAiUsage();
-    box.innerHTML=data.answer;
+    box.innerHTML=data.answer; upgradeBlocks(box);
   }catch(err){
     box.innerHTML=`<span class="qNoAns">${esc((err&&err.message)||'Couldn’t generate an answer.')} Tap to retry next time you open this.</span>`;
   }
@@ -2167,6 +2272,102 @@ function applyHighlights(root){
     });
   });
 }
+/* ── readable blocks ─────────────────────────────────────────────────
+   Notes arrive as HTML from many places (hand-made JSON, the PDF import, AI
+   answers, the exam-notes generator). Two shapes are upgraded at render time so
+   they read like the teacher's notes, not like code:
+     • <div class="work"> — a worked calculation in plain text. Lines whose
+       columns are split by 2+ spaces become a clean table; other lines stay
+       plain lines. ASCII-art blocks (├── │ …) are left monospace.
+     • <ul class="chart"> — a nested list drawn as a box-and-arrow flow chart
+       ("Title :: detail" puts a smaller detail line inside the box).
+   Then every chart fits itself: top-down when there's room, a vertical tree
+   of boxes when there isn't (a phone, a narrow window, paper). */
+const PW_ART=/[├└│┌┐┘┬┴┼]/;
+const PW_NUM=/^[=\s(−\-+₹]*\d[\d,.]*\s*(%|L|lac|lakh|k|K)?\)?\s*✓?$|^[=\s]*\(?[\d,.]+\)?\s*✓?$|^(nil|—|-)$/i;
+const PW_KEY=/^(GTS|TS|GTI|Gross|Taxable|Total|Net |Net$|Income from|Profit$|Contribution$|Cont$|Tax liability|Tax payable)/i;
+function pwCell(x){ return esc(x).replace(/✓/g,'<span class="ok">✓</span>'); }
+function pwCells(line){ return line.trim().replace(/=\s{2,}/g,'= ').replace(/\s{2,}✓/g,' ✓').split(/\s{2,}/).filter(Boolean); }
+function pwIndent(l){ return l.length-l.replace(/^\s+/,'').length; }
+function pwCalcHTML(text){
+  const blocks=[]; let cur=[];
+  text.replace(/\r/g,'').split('\n').forEach(l=>{ if(l.trim()) cur.push(l); else if(cur.length){ blocks.push(cur); cur=[]; } });
+  if(cur.length) blocks.push(cur);
+  return '<div class="pwc">'+blocks.map((b,bi)=>{
+    const rows=b.map(l=>({ind:pwIndent(l), cells:pwCells(l)}));
+    const multi=rows.filter(r=>r.cells.length>1).length;
+    let h=bi?'<div class="gap"></div>':'';
+    if(multi>=2 && multi*2>=rows.length){
+      const n=Math.max(...rows.map(r=>r.cells.length));
+      h+='<div class="tw"><table>'+rows.map((r,i)=>{
+        const c=r.cells;
+        const hdr=i===0&&c.length>=2&&(/^particular/i.test(c[0])||(c.length===n&&n>2&&!c.slice(1).some(x=>PW_NUM.test(x))));
+        const full=c.length>=n?c:[c[0],...Array(n-c.length).fill(''),...c.slice(1)];
+        const tag=hdr?'th':'td', key=!hdr&&c.length>1&&PW_KEY.test(c[0]);
+        return '<tr'+(key?' class="k"':'')+'>'+full.map((x,j)=>'<'+tag+(j?(PW_NUM.test(x)||x.length<=12?' class="n"':' class="x"'):'')+
+          (j===0&&r.ind?' style="padding-left:'+(Math.min(r.ind,4)*.5).toFixed(1)+'em!important"':'')+'>'+pwCell(x)+'</'+tag+'>').join('')+'</tr>';
+      }).join('')+'</table></div>';
+    } else {
+      h+=b.map(l=>{ const ind=pwIndent(l); return '<div class="ln"'+(ind?' style="padding-left:'+(Math.min(ind,12)*.5).toFixed(1)+'em"':'')+'>'+pwCell(l.trim().replace(/ {2,}/g,'  '))+'</div>'; }).join('');
+    }
+    return h;
+  }).join('')+'</div>';
+}
+function pwNode(li){
+  const sub=[...li.children].find(c=>c.tagName==='UL'||c.tagName==='OL');
+  const clone=li.cloneNode(true); clone.querySelectorAll('ul,ol').forEach(x=>x.remove());
+  const txt=clone.textContent.replace(/\s+/g,' ').trim(), i=txt.indexOf(' :: ');
+  return { t:i>-1?txt.slice(0,i):txt, d:i>-1?txt.slice(i+4):'', kids:sub?[...sub.children].filter(x=>x.tagName==='LI').map(pwNode):[] };
+}
+function pwBox(n,l){ return '<div class="b b'+Math.min(l,3)+'">'+esc(n.t)+(n.d?'<i>'+esc(n.d)+'</i>':'')+'</div>'; }
+function pwKids(n,l){
+  if(!n.kids.length) return '';
+  if(l===0) return '<ul class="h">'+n.kids.map(k=>'<li'+(k.kids.length?' class="c"':'')+'>'+pwBox(k,1)+pwKids(k,1)+'</li>').join('')+'</ul>';
+  return '<ul class="v">'+n.kids.map(k=>'<li>'+pwBox(k,l+1)+pwKids(k,l+1)+'</li>').join('')+'</ul>';
+}
+function pwChartHTML(ul){
+  return [...ul.children].filter(x=>x.tagName==='LI').map(pwNode).map(r=>'<div class="pwf"><div class="t">'+pwBox(r,0)+pwKids(r,0)+'</div></div>').join('');
+}
+function upgradeBlocks(root){
+  if(!root) return;
+  root.querySelectorAll('div.work').forEach(w=>{
+    const tmp=document.createElement('div');
+    tmp.innerHTML=w.innerHTML.replace(/<br\s*\/?>/gi,'\n');
+    const text=tmp.textContent;
+    if(!text.trim() || PW_ART.test(text)) return;       // ASCII art needs its monospace
+    w.outerHTML=pwCalcHTML(text);
+  });
+  root.querySelectorAll('ul.chart,ol.chart').forEach(ul=>{ ul.outerHTML=pwChartHTML(ul); });
+  /* older generated tables could carry a huge first-column indent (source
+     alignment spaces) that forced a phone to scroll sideways — cap it */
+  root.querySelectorAll('.pwc td.n,.pwc th.n').forEach(c=>{     // long text in a value column should wrap
+    const x=c.textContent.trim(); if(x.length>12 && !PW_NUM.test(x)){ c.classList.remove('n'); c.classList.add('x'); }
+  });
+  root.querySelectorAll('.pwc td[style],.pwc th[style]').forEach(c=>{
+    const m=/([\d.]+)em/.exec(c.style.paddingLeft||''); if(m&&+m[1]>2) c.style.setProperty('padding-left','2em','important');
+  });
+  fitCharts(root);
+}
+function fitCharts(root){
+  (root||document).querySelectorAll('.pwf').forEach(p=>{
+    const t=p.querySelector('.t'); if(!t || !p.clientWidth) return;   // hidden (a closed answer) — fitted when opened
+    p.classList.remove('vfit');
+    if(t.getBoundingClientRect().width>p.clientWidth+1) p.classList.add('vfit');
+  });
+}
+let _pwFitT=0;
+function fitChartsSoon(){ clearTimeout(_pwFitT); _pwFitT=setTimeout(()=>fitCharts($('#main')),120); }
+addEventListener('resize',fitChartsSoon);
+if('ResizeObserver' in window){ try{ new ResizeObserver(fitChartsSoon).observe($('#main')); }catch(e){} }
+/* ↑ — back to the lecture list from deep in a long chapter */
+(function(){
+  const b=document.createElement('button');
+  b.id='toTop'; b.textContent='↑'; b.title='Back to the lecture list'; b.setAttribute('aria-label','Back to the lecture list');
+  b.onclick=()=>{ const nav=$('.lecNav'); if(nav) nav.scrollIntoView({behavior:'smooth',block:'center'}); else scrollTo({top:0,behavior:'smooth'}); };
+  document.body.appendChild(b);
+  addEventListener('scroll',()=>b.classList.toggle('show', scrollY>900 && !!cur.ch && typeof cur.ch==='object'),{passive:true});
+})();
+
 /* ── card renderers ── */
 function noteCard(cd){
   return `<div class="card" data-cid="${cd.id}"><div class="cardTop"><div class="cardTitle">${esc(cd.title)}</div>${starBtn(cd.id)}</div><div class="cardBody">${cd.html}</div></div>`;
@@ -2190,6 +2391,7 @@ function questionCard(cd,i){
 
 /* ── chapter view ── */
 function openChapter(ch,tab,noSave){
+  if(ch!==cur.ch) cur.qFilter=null;            // a lecture filter belongs to one chapter
   cur.ch=ch; cur.tab=tab||'notes';
   if(!noSave){ state.view=(ch&&ch.id)?{sub:cur.sub.id,ch:ch.id,tab:cur.tab}:null; save(); }
   renderSubjTabs(); renderSidebar(); renderMain();
@@ -2453,6 +2655,9 @@ function renderMain(){
     </div><div id="tabBody">`;
 
   if(cur.tab==='notes'){
+    /* a long chapter (16 lectures) was one endless scroll — list them up top */
+    if(t>1) h+='<nav class="lecNav" aria-label="Lectures">'+ch.lectures.map(lec=>
+      `<button class="lecJump${lecSteps(lec)===3?' done':''}" data-jump="${lec.id}" title="${esc(lec.title)}"><b>${lec.no}</b><span>${esc(lec.title)}</span></button>`).join('')+'</nav>';
     ch.lectures.forEach(lec=>{
       const d=state.done[lec.id]||{};
       h+=`<div class="lecHead${lecSteps(lec)===3?' allDone':''}" data-cid="${lec.id}"><span class="lecNum">LEC ${lec.no}</span><span class="lecTitle">${esc(lec.title)}</span>
@@ -2461,12 +2666,22 @@ function renderMain(){
         if(cd.type==='note') h+=noteCard(cd);
         if(cd.type==='formula') h+=formulaCard(cd);
       });
+      /* questions live in their own tab — point to this lecture's ones, and
+         don't leave a questions-only section (homework) as an empty heading */
+      const shown=lec.cards.filter(cd=>cd.type==='note'||cd.type==='formula').length;
+      const nq=lec.cards.filter(cd=>cd.type==='question').length;
+      const qWord=nq+' question'+(nq===1?'':'s');
+      if(!shown) h+=nq?`<div class="lecQonly">${qWord} in this section — <button data-qlec="${lec.id}">open them</button></div>`:`<div class="lecQonly">Nothing in this lecture yet.</div>`;
+      else if(nq) h+=`<div class="lecQs"><button data-qlec="${lec.id}">${qWord} on this lecture →</button></div>`;
     });
     if(!t) h+=`<div class="empty">No lectures yet.</div>`;
   }
   if(cur.tab==='questions'){
     h+=`<div class="qGenRow"><button class="setMini" id="qGenBtn">✨ Generate questions</button><span id="qGenStatus" class="setNote" style="margin:0"></span></div>`;
-    h+=qs.length?qs.map((cd,i)=>questionCard(cd,i)).join(''):`<div class="empty"><div class="big">No questions yet</div>They'll collect here, out of the way of your notes.</div>`;
+    const fl=cur.qFilter&&ch.lectures.find(l=>l.id===cur.qFilter);
+    const list=fl?qs.filter(q=>q.lec===fl):qs;
+    if(fl) h+=`<div class="qFilter">Showing <b>Lec ${fl.no} · ${esc(fl.title)}</b> — ${list.length} of ${qs.length} questions <button id="qShowAll">Show all</button></div>`;
+    h+=list.length?list.map(cd=>questionCard(cd,qs.indexOf(cd))).join(''):`<div class="empty"><div class="big">No questions yet</div>They'll collect here, out of the way of your notes.</div>`;
   }
   if(cur.tab==='formulas'){
     h+=fms.length?fms.map(formulaCard).join(''):`<div class="empty"><div class="big">No formulas yet</div>Every formula card in this chapter aggregates here as one sheet.</div>`;
@@ -2474,19 +2689,26 @@ function renderMain(){
   h+='</div>';
   m.innerHTML=h;
 
-  $$('#tabs .tab').forEach(b=>b.onclick=()=>openChapter(ch,b.dataset.tab));
+  $$('#tabs .tab').forEach(b=>b.onclick=()=>{ cur.qFilter=null; openChapter(ch,b.dataset.tab); });
+  $$('#tabBody .lecJump').forEach(b=>b.onclick=()=>{
+    const el=document.querySelector(`.lecHead[data-cid="${b.dataset.jump}"]`);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  $$('#tabBody [data-qlec]').forEach(b=>b.onclick=()=>{ cur.qFilter=b.dataset.qlec; openChapter(ch,'questions'); });
+  const qAll=$('#qShowAll'); if(qAll) qAll.onclick=()=>{ cur.qFilter=null; openChapter(ch,'questions'); };
   const qGenBtn=$('#qGenBtn'); if(qGenBtn) qGenBtn.onclick=()=>generateQuestionsForChapter(ch);
   $$('#tabBody [data-step]').forEach(b=>b.onclick=()=>{
     const id=b.dataset.lec, s=b.dataset.step;
     const d=state.done[id]||(state.done[id]={});
     d[s]=!d[s]; if(!d[s]) delete d[s];
     if(!Object.keys(d).length) delete state.done[id];
-    save(); openChapter(ch,cur.tab);
+    const y=scrollY;                              // ticking a step used to jump you back to the top
+    save(); openChapter(ch,cur.tab); scrollTo({top:y,behavior:'instant'});
   });
   $$('#tabBody .qHead').forEach(b=>{
     const openIt=()=>{
       const card=b.closest('.qCard'); card.classList.toggle('open');
-      if(card.classList.contains('open')) maybeFillAnswer(CARDS[card.dataset.cid], ch);
+      if(card.classList.contains('open')){ maybeFillAnswer(CARDS[card.dataset.cid], ch); fitCharts(card); }
     };
     b.onclick=e=>{ if(e.target.closest('[data-star]'))return; openIt(); };
     b.onkeydown=e=>{
@@ -2494,6 +2716,7 @@ function renderMain(){
       if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openIt(); }
     };
   });
+  upgradeBlocks(m);                              // before highlights, so they re-find the same text
   bindStars(m);
   applyHighlights(m);
   m.querySelectorAll('mark.hlm').forEach(bindMark);
@@ -2611,7 +2834,7 @@ function drawCard(){
       <button class="qzBtn reveal" data-k="reveal">Reveal answer <kbd style="opacity:.6;font-size:11px">space</kbd></button>
       <button class="qzBtn" data-k="skip">Skip</button></div>`;
   const reveal=(skipped)=>{
-    $('#qzAns').innerHTML=`<div class="qzAnsBox">${c.ans}</div>`;
+    $('#qzAns').innerHTML=`<div class="qzAnsBox">${c.ans}</div>`; upgradeBlocks($('#qzAns'));
     $('#qzB1').innerHTML=skipped?`<button class="qzBtn reveal" data-k="next">Next</button>`
       :`<button class="qzBtn right" data-k="right">Right · 1</button>
         <button class="qzBtn partial" data-k="partial">Partial · 2</button>
@@ -2732,7 +2955,12 @@ function prtFms(chs,small,big){
 }
 function prtGo(html){
   prtToggle(false);
-  $('#printRoot').innerHTML=html;
+  const pr=$('#printRoot'); pr.innerHTML=html;
+  /* size the charts for paper: lay the print copy out off-screen at an
+     A4-ish width for a moment so fitCharts can measure it */
+  pr.style.cssText='display:block;position:absolute;left:-10000px;top:0;width:680px';
+  upgradeBlocks(pr);
+  pr.style.cssText='';
   setTimeout(()=>window.print(),60);
 }
 function prtToggle(show){ $('#prtWrap').classList.toggle('show',show); }
@@ -3028,13 +3256,16 @@ const GUIDE=[
    h:'<b>Settings</b> (the ⋯ menu, or the sidebar) has your theme, export a full backup, load a demo chapter to look around, and manage subjects. That corner stack? One sheet per chapter you add.',
    k:'Do a quick <b>Export backup</b> now and then — it\'s your notes and progress in one file.'}
 ];
-const APP_VERSION='1.8';
+const APP_VERSION='1.9';
 const WHATS_NEW=[
-  'Works offline. Open it with no signal and your notes, highlights, questions and quizzes are all there. Add it to your home screen and it opens like a real app.',
-  'Import JSON now asks which subject and unit to file the chapter under, so a hand-made file lands exactly where you want it.',
-  'Settings ▸ Prompt for making a JSON gives you the exact prompt to paste into Claude with a chapter.',
-  'Import a chapter PDF straight from the app, with an optional instruction box — “focus only on the formulas”, “make 10 exam questions”.',
-  'Subjects can be renamed and removed from Settings, and chapters dragged between units and subjects.'
+  'Flow charts. Notes can show real box-and-arrow charts — top-down like your teacher’s when there’s room, a tidy vertical tree on your phone.',
+  'Worked calculations read like tables now, not code — in every chapter you already have, nothing to re-import.',
+  'Long chapters: a lecture list at the top of Notes jumps straight to any lecture, and the ↑ button brings you back to it.',
+  'Lectures are numbered within each chapter (Lec 1, 2, 3…), matching your lecture PDFs.',
+  'Each lecture links to just its own questions, so you can read a lecture and then practise it straight away.',
+  'Ticking a lecture’s steps no longer throws you back to the top of the page.',
+  'A chapter file that brings its own subject (like Management Accounting) lands there straight away, and an empty “Unit 1” no longer clutters the sidebar.',
+  'Fixed: the home-screen icon and the offline copy, which broke when the app moved to its new address.'
 ];
 function showWhatsNew(){
   const g=$('#guide');
@@ -3096,7 +3327,7 @@ async function offlineReady(){
   if(!reg) return {ok:false, why:'Not stored yet. Open the app once with a connection, then reload.'};
   let hit=null;
   try{
-    hit=await caches.match('/paperweight.html') || await caches.match(location.pathname);
+    hit=await caches.match('/') || await caches.match('/index.html') || await caches.match(location.pathname);
   }catch(e){}
   if(!hit) return {ok:false, why:'Worker installed but the page isn’t stored yet — reload once while online.'};
   return {ok:true, why:'Stored on this device. Turn on airplane mode and it still opens.'};

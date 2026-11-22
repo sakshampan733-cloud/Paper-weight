@@ -24,9 +24,10 @@ const CHAPTER_SCHEMA = {
 const EXTRACTION_PROMPT = `You are extracting structured study notes from a chapter PDF for a notes app called Paperweight, which renders your output as note/formula/question cards grouped into lectures.
 
 Split the PDF into one lecture per major section or topic (a short PDF with one topic is a single lecture). For each lecture:
-- Write "note" cards covering every concept, definition, and explanation of substance — don't summarize away detail. Use <p>, <ul>/<ol>, <b>, <em>, <code>, and <table> where the source has tabular data. Put any worked calculation or step-by-step numeric example inside <div class="work">…</div> so it renders in monospace.
+- Write "note" cards covering every concept, definition, and explanation of substance — don't summarize away detail. Use <p>, <ul>/<ol>, <b>, <em>, <code>, and <table> where the source has tabular data. Put any worked calculation or step-by-step numeric example inside <div class="work">…</div>, one step per line with columns separated by at least two spaces (e.g. "Sales  2,00,000") — the app renders it as a clean table.
+- Wherever the chapter has a classification, a chart/diagram or a step-by-step process, start that topic's note card with a flow chart written as a nested list: <ul class="chart"><li>Main idea<ul><li>Branch :: short detail</li><li>Branch<ul><li>Sub-branch</li></ul></li></ul></li></ul> — the app draws it as boxes and arrows ("Title :: detail" puts a smaller line inside the box). Copy the source's own charts this way.
 - Write "formula" cards for every formula in the chapter, one card per logical group of related formulas, with a short label and note for each row.
-- Write "question" cards for every practice question, illustration, or worked example problem in the PDF — question text in "q", the full worked solution in "a" (using <div class="work"> for the arithmetic), "src" only if the PDF names a source/exam, else "", and "tags" like ["Numerical"] or ["Theory"].
+- Write "question" cards for every practice question, illustration, or worked example problem in the PDF — question text in "q", the full worked solution in "a" (using <div class="work"> for the arithmetic, one step per line, columns separated by two or more spaces), "src" only if the PDF names a source/exam, else "", and "tags" like ["Numerical"] or ["Theory"].
 
 Be thorough: this replaces reading the chapter by hand, so don't skip content to keep the output short. Give the chapter a clear, specific "name" (not "Chapter 1" — the actual topic).`;
 
