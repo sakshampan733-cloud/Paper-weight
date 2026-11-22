@@ -1,0 +1,61 @@
+{
+ "about": "Chapters the Paperweight app downloads when it opens. Written by tools/publish_content.py in the notes folder; don't edit by hand.",
+ "updated": "2026-11-22T22:39:21Z",
+ "subjectNames": {
+  "s1": {
+   "name": "Income Tax",
+   "code": "IT"
+  },
+  "s2": {
+   "name": "Management Accounting",
+   "code": "MA"
+  }
+ },
+ "chapters": [
+  {
+   "id": "it-ch01",
+   "subject": "Income Tax",
+   "unit": "Unit 1: Introduction & Basic Concepts",
+   "name": "Introduction — Basic Concepts, Tax Rates, Rebate & Surcharge",
+   "file": "income-tax/chapter-01.json",
+   "hash": "a5a73d10d94bcb9e",
+   "bytes": 165017
+  },
+  {
+   "id": "it-ch02",
+   "subject": "Income Tax",
+   "unit": "Unit 1: Introduction & Basic Concepts",
+   "name": "Scope of Total Income & Residential Status",
+   "file": "income-tax/chapter-02.json",
+   "hash": "3849cdbf81a053b2",
+   "bytes": 87579
+  },
+  {
+   "id": "it-ch03",
+   "subject": "Income Tax",
+   "unit": "Unit 2: Salaries & House Property",
+   "name": "Income from House Property",
+   "file": "income-tax/chapter-03.json",
+   "hash": "21ea85bb5103f6cb",
+   "bytes": 107464
+  },
+  {
+   "id": "it-ch04",
+   "subject": "Income Tax",
+   "unit": "Unit 2: Salaries & House Property",
+   "name": "Income under the head Salaries",
+   "file": "income-tax/chapter-04.json",
+   "hash": "0f4b355872ace781",
+   "bytes": 354795
+  },
+  {
+   "id": "ma-ch01",
+   "subject": "Management Accounting",
+   "unit": "Unit 1",
+   "name": "CVP Analysis — Contribution, P/V Ratio, Break-even Point & Margin of Safety",
+   "file": "management-accounting/chapter-01.json",
+   "hash": "12ebaa42a5532073",
+   "bytes": 70559
+  }
+ ]
+}

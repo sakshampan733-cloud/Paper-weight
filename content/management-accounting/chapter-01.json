@@ -1,0 +1,387 @@
+{
+  "subs": [
+    {
+      "id": "cs-mgmt-acc",
+      "code": "MA",
+      "name": "Management Accounting"
+    }
+  ],
+  "subject": "Management Accounting",
+  "unit": "Unit 1",
+  "chapter": {
+    "id": "ma-ch01",
+    "order": 1,
+    "name": "CVP Analysis — Contribution, P/V Ratio, Break-even Point & Margin of Safety",
+    "lectures": [
+      {
+        "title": "Contribution & Profit Volume Ratio (PVR)",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Flow charts — Profit Volume Ratio & Contribution",
+            "html": "<style>/*pw*/.pwf{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 16px;padding:4px 2px 10px;container-type:inline-size}.pwf ul{list-style:none;margin:0;padding:0}.pwf li{margin:0}.pwf .t{width:max-content;margin:0 auto;display:flex;flex-direction:column;align-items:center}.pwf .b{position:relative;border:1.5px solid var(--line);background:var(--panel2);border-radius:10px;padding:7px 12px;font-size:13.5px;line-height:1.45;color:var(--text);font-weight:600;max-width:240px;box-sizing:border-box}.pwf .b i{display:block;font-style:normal;font-weight:400;font-size:12.5px;color:var(--dim);margin-top:2px}.pwf .b0{border-color:var(--gold);background:var(--gold-bg);font-size:15px;padding:9px 18px;max-width:340px;text-align:center}.pwf .b1{border-color:var(--teal);background:var(--teal-bg)}.pwf .b3{background:var(--panel);font-weight:500}.pwf .h{display:flex;justify-content:center;position:relative;padding-top:14px}.pwf .h::before{content:'';position:absolute;top:0;left:50%;height:14px;border-left:2px solid var(--teal-line)}.pwf .h>li{position:relative;padding:16px 6px 0;display:flex;flex-direction:column;align-items:center}.pwf .h>li::before{content:'';position:absolute;top:0;left:0;right:0;border-top:2px solid var(--teal-line)}.pwf .h>li:first-child::before{left:50%}.pwf .h>li:last-child::before{right:50%}.pwf .h>li:only-child::before{display:none}.pwf .h>li::after{content:'';position:absolute;top:0;left:50%;height:10px;border-left:2px solid var(--teal-line)}.pwf .h>li>.b{text-align:center}.pwf .h>li>.b::before{content:'';position:absolute;top:-7px;left:50%;margin-left:-5px;border:5px solid transparent;border-top:6px solid var(--teal-line);border-bottom:0}.pwf .h>li.c>.b{align-self:stretch;max-width:none}.pwf .v{position:relative;margin:4px 0 0 12px;align-self:stretch}.pwf .v::before{content:'';position:absolute;left:0;top:-4px;height:4px;border-left:2px solid var(--teal-line)}.pwf .v>li{position:relative;padding:6px 0 0 22px}.pwf .v>li::before{content:'';position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--teal-line)}.pwf .v>li:last-child::before{bottom:auto;height:24px}.pwf .v>li::after{content:'';position:absolute;left:0;top:23px;width:14px;border-top:2px solid var(--teal-line)}.pwf .v>li>.b{display:inline-block;max-width:300px;text-align:left}.pwf .v>li>.b::before{content:'';position:absolute;left:-7px;top:12px;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}.pwn{font-size:12.5px;color:var(--dim);margin:-6px 0 14px;padding-left:10px;border-left:3px solid var(--gold-line)}.pwl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 4px;margin:10px 0 14px}.pwl .b{border:1.5px solid var(--teal);background:var(--teal-bg);border-radius:10px;padding:6px 11px;font-size:13.5px;font-weight:600;color:var(--text);line-height:1.4}.pwl .b i{display:block;font-style:normal;font-weight:400;font-size:12px;color:var(--dim)}.pwl .g{border-color:var(--gold);background:var(--gold-bg)}.pwl .a{color:var(--teal);font-weight:700;font-size:17px;padding:0 3px}.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/@container (max-width:450px){.pwf.w450 .t{width:auto;align-items:flex-start}.pwf.w450 .b0{text-align:left}.pwf.w450 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w450 .h::before{left:0;top:-4px;height:4px}.pwf.w450 .h>li{display:block;padding:6px 0 0 22px}.pwf.w450 .h>li::before,.pwf.w450 .h>li:first-child::before,.pwf.w450 .h>li:last-child::before,.pwf.w450 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w450 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w450 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w450 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w450 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}@container (max-width:550px){.pwf.w550 .t{width:auto;align-items:flex-start}.pwf.w550 .b0{text-align:left}.pwf.w550 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w550 .h::before{left:0;top:-4px;height:4px}.pwf.w550 .h>li{display:block;padding:6px 0 0 22px}.pwf.w550 .h>li::before,.pwf.w550 .h>li:first-child::before,.pwf.w550 .h>li:last-child::before,.pwf.w550 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w550 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w550 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w550 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w550 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}@container (max-width:950px){.pwf.w950 .t{width:auto;align-items:flex-start}.pwf.w950 .b0{text-align:left}.pwf.w950 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w950 .h::before{left:0;top:-4px;height:4px}.pwf.w950 .h>li{display:block;padding:6px 0 0 22px}.pwf.w950 .h>li::before,.pwf.w950 .h>li:first-child::before,.pwf.w950 .h>li:last-child::before,.pwf.w950 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w950 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w950 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w950 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w950 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w950\"><div class=\"t\"><div class=\"b b0\">Profit Volume Ratio<i>Profit ÷ Sales</i></div><ul class=\"h\"><li><div class=\"b b1\">Contribution</div></li><li><div class=\"b b1\">Profit Volume Ratio (PVR)</div></li><li><div class=\"b b1\">Break Even Point</div></li><li><div class=\"b b1\">Margin of Safety</div></li><li><div class=\"b b1\">Desired Sales</div></li><li><div class=\"b b1\">Income Statement</div></li></ul></div></div><p class=\"pwn\">Sales = VC + FC + Profit, where VC + FC = TC (total cost).</p><div class=\"pwf w450\"><div class=\"t\"><div class=\"b b0\">Sales</div><ul class=\"h\"><li><div class=\"b b1\">Variable Cost (VC)</div></li><li><div class=\"b b1\">Contribution<i>Sales − VC</i></div><ul class=\"h\"><li><div class=\"b b2\">Fixed Cost (FC)</div></li><li><div class=\"b b2\">Profit</div></li></ul></li></ul></div></div><p class=\"pwn\">Contribution covers fixed cost first; whatever is left is profit → Cont = FC + Profit.</p><p><b>Income statement (marginal format)</b></p><div class=\"pwl\"><div class=\"b\">Sales</div><span class=\"a\">→</span><div class=\"b\">− Variable cost</div><span class=\"a\">→</span><div class=\"b\">= Contribution</div><span class=\"a\">→</span><div class=\"b\">− Fixed cost</div><span class=\"a\">→</span><div class=\"b\">= EBIT (Profit)</div><span class=\"a\">→</span><div class=\"b\">− Interest</div><span class=\"a\">→</span><div class=\"b\">= PBT</div><span class=\"a\">→</span><div class=\"b\">− Tax</div><span class=\"a\">→</span><div class=\"b g\">= PAT</div></div><div class=\"pwf w550\"><div class=\"t\"><div class=\"b b0\">Contribution</div><ul class=\"h\"><li><div class=\"b b1\">Business earns profit<i>Cont = FC + Profit</i></div></li><li><div class=\"b b1\">No profit no loss<i>Cont = FC</i></div></li><li><div class=\"b b1\">Business making loss<i>Cont = FC − Loss</i></div></li></ul></div></div>"
+          },
+          {
+            "type": "note",
+            "title": "The basic equation",
+            "html": "<p>Every sale is split into three parts:</p><div class=\"pwc\"><div class=\"ln\">Sales = VC + FC + Profit</div><div class=\"ln\" style=\"padding-left:5.0em\">└ VC + FC = TC (total cost)</div></div><ul><li><b>VC</b> — variable cost: changes with the units sold.</li><li><b>FC</b> — fixed cost: stays the same whatever the sales.</li><li><b>TC</b> — total cost = VC + FC.</li><li>So <b>Profit = Sales − TC</b>.</li></ul><p>Everything in this chapter — contribution, P/V ratio, break-even point, margin of safety, desired sales and the income statement — comes out of this one equation.</p>"
+          },
+          {
+            "type": "note",
+            "title": "Contribution",
+            "html": "<p>Contribution is what is left from sales after paying the variable cost. It first covers the fixed cost; the balance is profit.</p><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Sales = VC + FC + Profit</td><td class=\"n\"></td></tr><tr class=\"k\"><td>Cont</td><td class=\"n\">= Sales − VC</td></tr><tr class=\"k\"><td>Cont</td><td class=\"x\">= FC + Profit</td></tr><tr><td>Cont % = 100 − VC %</td><td class=\"n\"></td></tr></table></div></div><p><b>Special cases</b></p><ul><li>Where the business does <b>not earn profit</b> (no profit no loss): <b>Cont = FC</b></li><li>Where the business is <b>making a loss</b>: <b>Cont = FC − Loss</b></li></ul>"
+          },
+          {
+            "type": "note",
+            "title": "Income statement (as drawn in class)",
+            "html": "<div class=\"pwc\"><div class=\"tw\"><table><tr><th>Income Statement</th><th class=\"n\">₹</th><th class=\"n\">Example</th><th class=\"n\">%</th></tr><tr><td>Sales</td><td class=\"n\">xxx</td><td class=\"n\">100</td><td class=\"n\">100</td></tr><tr><td>(−) VC</td><td class=\"n\">xxx</td><td class=\"n\">90</td><td class=\"n\">70%</td></tr><tr class=\"k\"><td>Contribution</td><td class=\"n\">xxx</td><td class=\"n\">10</td><td class=\"n\">30%</td></tr><tr><td>(−) FC</td><td class=\"n\"></td><td class=\"n\">xxx</td><td class=\"n\">30</td></tr><tr><td>EBIT (Profit)</td><td class=\"n\"></td><td class=\"n\">xxx</td><td class=\"n\">(20)</td></tr><tr><td>(−) Interest</td><td class=\"n\"></td><td class=\"n\"></td><td class=\"n\">xxx</td></tr><tr><td>PBT</td><td class=\"n\"></td><td class=\"n\"></td><td class=\"n\">xxx</td></tr><tr><td>(−) Tax</td><td class=\"n\"></td><td class=\"n\"></td><td class=\"n\">xxx</td></tr><tr><td>PAT</td><td class=\"n\"></td><td class=\"n\"></td><td class=\"n\">xxx</td></tr></table></div></div><p>Class example: sales 100, VC 90 → contribution 10; fixed cost 30 → EBIT is a loss of (20). When VC is 70% of sales, contribution is 30%.</p>"
+          },
+          {
+            "type": "formula",
+            "title": "Contribution",
+            "items": [
+              {
+                "l": "Contribution",
+                "f": "Sales − VC",
+                "n": "Cont = FC + Profit"
+              },
+              {
+                "l": "Contribution (from FC)",
+                "f": "FC + Profit",
+                "n": "No profit no loss → Cont = FC; loss → Cont = FC − Loss"
+              },
+              {
+                "l": "Contribution %",
+                "f": "100 − VC %",
+                "n": "Same as P/V ratio"
+              },
+              {
+                "l": "Basic equation",
+                "f": "Sales = VC + FC + Profit",
+                "n": "VC + FC = TC"
+              }
+            ]
+          },
+          {
+            "type": "note",
+            "title": "Profit Volume Ratio (PVR / P/V ratio)",
+            "html": "<style>@container (max-width:1000px){.pwf.w1000 .t{width:auto;align-items:flex-start}.pwf.w1000 .b0{text-align:left}.pwf.w1000 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1000 .h::before{left:0;top:-4px;height:4px}.pwf.w1000 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1000 .h>li::before,.pwf.w1000 .h>li:first-child::before,.pwf.w1000 .h>li:last-child::before,.pwf.w1000 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1000 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1000 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1000 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1000 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><p>The P/V ratio shows contribution as a percentage of sales.</p><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Sales = 100</td><td class=\"n\"></td><td class=\"n\"></td></tr><tr><td>(−) VC = 80</td><td class=\"n\"></td><td class=\"n\"></td></tr><tr class=\"k\"><td>Cont</td><td class=\"n\">20</td><td class=\"n\">(cont %)</td></tr><tr><td>(−) FC</td><td class=\"n\"></td><td class=\"n\">5</td></tr><tr class=\"k\"><td>Profit</td><td class=\"n\"></td><td class=\"n\">15</td></tr></table></div><div class=\"gap\"></div><div class=\"ln\">PVR = Cont (₹) ÷ Sales × 100</div><div class=\"ln\">Eg = 20 ÷ 100 × 100 = 20%</div></div><div class=\"pwf w1000\"><div class=\"t\"><div class=\"b b0\">P/V Ratio (PVR) — 5 formulas</div><ul class=\"h\"><li><div class=\"b b1\">① Cont (₹) ÷ Sales × 100</div></li><li><div class=\"b b1\">② Cont %</div></li><li><div class=\"b b1\">③ 100 − VC %</div></li><li><div class=\"b b1\">④ Cont per unit ÷ Sales per unit × 100</div></li><li><div class=\"b b1\">⑤ Change in profit ÷ Change in sales × 100<i>when two years' total cost and sales are given</i></div></li></ul></div></div><p>Remember: Cont = Sales − VC.</p>"
+          },
+          {
+            "type": "note",
+            "title": "Which P/V ratio formula to use",
+            "html": "<style>@container (max-width:1100px){.pwf.w1100 .t{width:auto;align-items:flex-start}.pwf.w1100 .b0{text-align:left}.pwf.w1100 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1100 .h::before{left:0;top:-4px;height:4px}.pwf.w1100 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1100 .h>li::before,.pwf.w1100 .h>li:first-child::before,.pwf.w1100 .h>li:last-child::before,.pwf.w1100 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1100 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1100 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1100 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1100 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><p>Pick the formula from what the question gives you (each line points to the class question that used it):</p><div class=\"pwf w1100\"><div class=\"t\"><div class=\"b b0\">Find PVR — what is given?</div><ul class=\"h\"><li><div class=\"b b1\">Contribution &amp; sales<i>Cont ÷ Sales × 100 (Q2 i, ii)</i></div></li><li><div class=\"b b1\">Ratio of VC to sales<i>100 − VC % (Q2 iii)</i></div></li><li><div class=\"b b1\">Profit, FC &amp; sales<i>Cont = FC + Profit, then Cont ÷ Sales × 100 (Q2 iv)</i></div></li><li><div class=\"b b1\">Two years' sales &amp; total cost<i>Δ Profit ÷ Δ Sales × 100 (Q2 v)</i></div></li><li><div class=\"b b1\">SP &amp; VC per unit<i>CPU ÷ SPU × 100 (Q3)</i></div></li></ul></div></div>"
+          },
+          {
+            "type": "formula",
+            "title": "P/V ratio",
+            "items": [
+              {
+                "l": "PVR ①",
+                "f": "Cont (₹) ÷ Sales × 100",
+                "n": "Eg 20 ÷ 100 × 100 = 20%"
+              },
+              {
+                "l": "PVR ②",
+                "f": "Cont %",
+                "n": ""
+              },
+              {
+                "l": "PVR ③",
+                "f": "100 − VC %",
+                "n": "VC % = ratio of variable cost to sales"
+              },
+              {
+                "l": "PVR ④",
+                "f": "Cont per unit ÷ Sales per unit × 100",
+                "n": "CPU ÷ SPU × 100"
+              },
+              {
+                "l": "PVR ⑤",
+                "f": "Change in profit ÷ Change in sales × 100",
+                "n": "When two years' total cost and sales are given"
+              }
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q1. Calculate contribution in each of the following independent situations: (i) Fixed cost Rs. 8,000, profit Rs. 5,600 (ii) Variable cost Rs. 7,000, sales Rs. 11,000.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">(i)  Cont = FC + Profit</div><div class=\"ln\" style=\"padding-left:5.0em\">= 8,000 + 5,600</div><div class=\"ln\" style=\"padding-left:5.0em\">= 13,600</div><div class=\"gap\"></div><div class=\"ln\">(ii) Cont = Sales − VC</div><div class=\"ln\" style=\"padding-left:5.0em\">= 11,000 − 7,000</div><div class=\"ln\" style=\"padding-left:5.0em\">= 4,000</div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q2. Calculate P/V ratio in each of the following independent situations: (i) Variable cost Rs. 60, Contribution Rs. 40 (ii) Sales Rs. 20, variable cost Rs. 15 (iii) Ratio of variable cost to sales 84% (iv) Profit Rs. 5,000; Sales Rs. 25,000; Fixed cost Rs. 8,000 (v) Year I Sales Rs. 50,000, Total cost Rs. 40,000; Year II Sales Rs. 60,000, Total cost Rs. 45,000.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">(i) VC = 60, Cont = 40</div><div class=\"ln\">Sales = VC + FC + Profit  (FC + Profit = Cont)</div><div class=\"ln\">Sales = 60 + 40 = 100</div><div class=\"ln\">PVR = Cont ÷ Sales × 100 = 40 ÷ 100 × 100 = 40%</div><div class=\"gap\"></div><div class=\"ln\">(ii) Cont = Sales − VC = 20 − 15 = 5</div><div class=\"ln\">PVR = 5 ÷ 20 × 100 = 25%</div><div class=\"gap\"></div><div class=\"ln\">(iii) PVR = 100 − VC %</div><div class=\"ln\" style=\"padding-left:5.0em\">= 100 − 84</div><div class=\"ln\" style=\"padding-left:5.0em\">= 16%</div><div class=\"gap\"></div><div class=\"ln\">(iv) PVR = Cont ÷ Sales × 100</div><div class=\"ln\">Cont = 5,000 + 8,000 = 13,000</div><div class=\"ln\">PVR = 13,000 ÷ 25,000 × 100 = 52%</div></div><div class=\"pwc\"><div class=\"tw\"><table><tr><th>(v)</th><th class=\"n\">Sales</th><th class=\"n\">TC</th><th class=\"n\">Profit</th></tr><tr><td>Year I</td><td class=\"n\">50,000</td><td class=\"n\">40,000</td><td class=\"x\">50,000 − 40,000 = 10,000</td></tr><tr><td>Year II</td><td class=\"n\">60,000</td><td class=\"n\">45,000</td><td class=\"x\">60,000 − 45,000 = 15,000</td></tr></table></div><div class=\"gap\"></div><div class=\"ln\">Δ in profit = 15,000 − 10,000 = 5,000</div><div class=\"ln\">Δ in sales = 60k − 50k = 10,000</div><div class=\"ln\">PVR = Δ in Profit ÷ Δ in Sales × 100 = 5,000 ÷ 10,000 × 100 = 50%</div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q3 (class work — PVR). Following data is given: Total fixed cost = Rs. 12,000; Selling price = Rs. 12 per unit; Variable cost = Rs. 9 per unit. Calculate the P/V ratio.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">CPU = 12 − 9 = 3</div><div class=\"ln\">PVR = CPU ÷ SPU × 100</div><div class=\"ln\" style=\"padding-left:2.0em\">= 3 ÷ 12 × 100 = 25%</div></div>",
+            "src": "Class work",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "What is contribution? Write its formulas, including the no-profit-no-loss and loss cases.",
+            "a": "<p>Contribution is sales minus variable cost; it covers fixed cost and the balance is profit.</p><ul><li>Cont = Sales − VC</li><li>Cont = FC + Profit</li><li>Cont % = 100 − VC %</li><li>No profit no loss: Cont = FC</li><li>Loss: Cont = FC − Loss</li></ul>",
+            "src": "Lecture 1",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Write the five formulas of the P/V ratio.",
+            "a": "<ol><li>Cont (₹) ÷ Sales × 100</li><li>Cont %</li><li>100 − VC %</li><li>Cont per unit ÷ Sales per unit × 100</li><li>Change in profit ÷ Change in sales × 100 (when two years' total cost and sales are given)</li></ol>",
+            "src": "Lecture 1",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Break Even Point (BEP) & Desired Sales",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Flow charts — Break Even Point",
+            "html": "<style>@container (max-width:400px){.pwf.w400 .t{width:auto;align-items:flex-start}.pwf.w400 .b0{text-align:left}.pwf.w400 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w400 .h::before{left:0;top:-4px;height:4px}.pwf.w400 .h>li{display:block;padding:6px 0 0 22px}.pwf.w400 .h>li::before,.pwf.w400 .h>li:first-child::before,.pwf.w400 .h>li:last-child::before,.pwf.w400 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w400 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w400 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w400 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w400 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}@container (max-width:600px){.pwf.w600 .t{width:auto;align-items:flex-start}.pwf.w600 .b0{text-align:left}.pwf.w600 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w600 .h::before{left:0;top:-4px;height:4px}.pwf.w600 .h>li{display:block;padding:6px 0 0 22px}.pwf.w600 .h>li::before,.pwf.w600 .h>li:first-child::before,.pwf.w600 .h>li:last-child::before,.pwf.w600 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w600 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w600 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w600 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w600 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Unclear in the PDF:</b> In the example one arrow goes from sales 2,000 up to 2,500 and one down to 1,800. Only 1,800 was worked; this chart labels 2,500 as “above BEP”.</p><div class=\"pwf w400\"><div class=\"t\"><div class=\"b b0\">Break Even Point (BEP)<i>No Profit or No Loss</i></div><ul class=\"h\"><li><div class=\"b b1\">Chart</div></li><li class=c><div class=\"b b1\">Formula</div><ul class=\"v\"><li><div class=\"b b2\">Sales = VC + FC</div></li><li><div class=\"b b2\">Sales = TC</div></li><li><div class=\"b b2\">BEP (₹) = FC ÷ PVR</div></li><li><div class=\"b b2\">BEP (units) = FC ÷ CPU</div></li><li><div class=\"b b2\">BEP (₹) = BEP (units) × SP</div></li></ul></li></ul></div></div><p class=\"pwn\">CPU = contribution per unit. Desired sales = (FC + Profit) ÷ PVR (₹) or ÷ CPU (units).</p><div class=\"pwf w600\"><div class=\"t\"><div class=\"b b0\">Sales 2,000<i>at BEP — VC 1,200 (60%), FC 800</i></div><ul class=\"h\"><li><div class=\"b b1\">Sales go up<i>2,500 → above BEP</i></div></li><li><div class=\"b b1\">Sales at BEP<i>Cont 800 = FC 800 → 0</i></div></li><li><div class=\"b b1\">Sales fall<i>1,800 → Cont 720 − FC 800 = (80) loss</i></div></li></ul></div></div><p><b>Desired sales</b></p><div class=\"pwl\"><div class=\"b\">FC + Desired profit</div><span class=\"a\">→</span><div class=\"b\">÷ PVR  (or ÷ CPU)</div><span class=\"a\">→</span><div class=\"b g\">= Desired sales (₹ or units)</div></div>"
+          },
+          {
+            "type": "note",
+            "title": "Break Even Point — meaning",
+            "html": "<p>Break-even point is the level of sales at which there is <b>no profit or no loss</b>: contribution exactly equals fixed cost.</p><div class=\"pwc\"><div class=\"ln\">Sales = VC + FC</div><div class=\"ln\">Sales = TC</div></div><p>It can be shown by a <b>chart</b> or found by a <b>formula</b>.</p><p><b>Class example</b></p><div class=\"pwc\"><div class=\"ln\">Sales = 2,000;  VC = 1,200 (60%);  FC = 800</div><div class=\"gap\"></div><div class=\"tw\"><table><tr><td style=\"padding-left:2.0em!important\">At BEP</td><td class=\"n\"></td><td class=\"n\">Sales fall</td></tr><tr><td>Sales</td><td class=\"n\">2,000</td><td class=\"n\">1,800</td></tr><tr><td>(−) VC</td><td class=\"n\">1,200</td><td class=\"n\">1,080</td></tr><tr class=\"k\"><td>Cont</td><td class=\"n\">800</td><td class=\"n\">720</td></tr><tr><td>(−) FC</td><td class=\"n\">800</td><td class=\"n\">800</td></tr><tr class=\"k\"><td>Profit</td><td class=\"n\">0</td><td class=\"n\">(80) Loss</td></tr></table></div></div><p>At sales of 2,000 the contribution (800) just covers the fixed cost (800). When sales fall to 1,800, VC falls with it (60%), contribution drops to 720 and there is a loss of 80.</p>"
+          },
+          {
+            "type": "note",
+            "title": "BEP formulas & desired sales",
+            "html": "<ol><li>Sales = VC + FC</li><li>Sales = TC</li><li>BEP (₹) = FC ÷ PVR</li><li>BEP (unit) = FC ÷ CPU, where CPU = contribution per unit</li></ol><div class=\"pwc\"><div class=\"ln\">Sales = VC + [Profit + FC]</div><div class=\"ln\">BEP (₹) = BEP (unit) × SP</div><div class=\"ln\">Desired sales = (FC + Profit) ÷ PVR / CPU</div></div><p>For desired sales the target profit is added to fixed cost: divide by PVR for sales in ₹, by CPU for sales in units.</p>"
+          },
+          {
+            "type": "formula",
+            "title": "Break-even point & desired sales",
+            "items": [
+              {
+                "l": "BEP (₹)",
+                "f": "FC ÷ PVR",
+                "n": "PVR as a decimal, e.g. 40% → 0.4"
+              },
+              {
+                "l": "BEP (units)",
+                "f": "FC ÷ CPU",
+                "n": "CPU = contribution per unit = SP − VC per unit"
+              },
+              {
+                "l": "BEP (₹) from units",
+                "f": "BEP (units) × SP",
+                "n": ""
+              },
+              {
+                "l": "At BEP",
+                "f": "Sales = VC + FC = TC",
+                "n": "No profit or no loss; Cont = FC"
+              },
+              {
+                "l": "Desired sales",
+                "f": "(FC + Profit) ÷ PVR (₹) or ÷ CPU (units)",
+                "n": "Sales needed to earn a target profit"
+              }
+            ]
+          },
+          {
+            "type": "note",
+            "title": "Changes in SP, VC and FC — effect on BEP",
+            "html": "<style>@container (max-width:800px){.pwf.w800 .t{width:auto;align-items:flex-start}.pwf.w800 .b0{text-align:left}.pwf.w800 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w800 .h::before{left:0;top:-4px;height:4px}.pwf.w800 .h>li{display:block;padding:6px 0 0 22px}.pwf.w800 .h>li::before,.pwf.w800 .h>li:first-child::before,.pwf.w800 .h>li:last-child::before,.pwf.w800 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w800 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w800 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w800 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w800 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><p>From Q7: change one item at a time and recompute PVR, then BEP = FC ÷ PVR.</p><div class=\"pwf w800\"><div class=\"t\"><div class=\"b b0\">Q7 — what happens to BEP?<i>Sales 2,00,000 · VC 1,20,000 · FC 30,000 · PVR 40% · BEP 75,000</i></div><ul class=\"h\"><li><div class=\"b b1\">SP reduced 10%<i>sales 1,80,000, VC same → Cont 60,000 → PVR 33.33% → BEP 90,000</i></div></li><li><div class=\"b b1\">VC increases 10%<i>VC 1,32,000 → Cont 68,000 → PVR 34% → BEP 88,235</i></div></li><li><div class=\"b b1\">FC increases 10%<i>FC 33,000, PVR still 40% → BEP 82,500</i></div></li></ul></div></div><p>A change in selling price or variable cost changes the PVR; a change in fixed cost leaves PVR the same and changes BEP directly.</p>"
+          },
+          {
+            "type": "note",
+            "title": "Units sold drop vs selling price drop",
+            "html": "<style>@container (max-width:550px){.pwf.w550 .t{width:auto;align-items:flex-start}.pwf.w550 .b0{text-align:left}.pwf.w550 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w550 .h::before{left:0;top:-4px;height:4px}.pwf.w550 .h>li{display:block;padding:6px 0 0 22px}.pwf.w550 .h>li::before,.pwf.w550 .h>li:first-child::before,.pwf.w550 .h>li:last-child::before,.pwf.w550 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w550 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w550 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w550 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w550 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Looks like a slip:</b> “Sales drop → 10%” is worked as (5,000 − 50) = 4,950 units — 50 is 1% of 5,000; 10% would be 500 (4,500 units).</p><div class=\"pwf w550\"><div class=\"t\"><div class=\"b b0\">Sales fall — two different cases<i>5,000 units · SP 5 · VC 3 → sales 25,000, VC 15,000</i></div><ul class=\"h\"><li><div class=\"b b1\">Units sold drop<i>sales and VC both fall (units × SP, units × VC) → 4,950 × 5 = 24,750 · 4,950 × 3 = 14,850</i></div></li><li><div class=\"b b1\">Selling price drops 10%<i>SP 5 − 0.5 = 4.5 → sales 4.5 × 5,000 = 22,500 · VC stays 5,000 × 3 = 15,000</i></div></li></ul></div></div><div class=\"pwc\"><div class=\"tw\"><table><tr><th>Unit 5,000 sold;</th><th class=\"n\">SP 5;</th><th class=\"n\">VC 3</th></tr><tr><td>→ Sales = 25,000</td><td class=\"n\"></td><td class=\"n\"></td></tr><tr><td style=\"padding-left:1.0em!important\">VC</td><td class=\"n\"></td><td class=\"n\">= 15,000</td></tr></table></div><div class=\"gap\"></div><div class=\"ln\">Sales drop → 10%:</div><div class=\"ln\">Sales (5,000 − 50) = 4,950</div><div class=\"ln\">Sales = 4,950 × 5 = 24,750</div><div class=\"ln\">VC  = 4,950 × 3 = 14,850</div><div class=\"gap\"></div><div class=\"ln\"># Selling price 10% decrease:</div><div class=\"ln\">SP = 5 − 0.5 = 4.5</div><div class=\"ln\">VC = 3</div><div class=\"ln\">Sales = 4.5 × 5,000 = 22,500</div><div class=\"ln\">VC  = 5,000 × 3 = 15,000</div></div><p>When fewer units are sold, both sales and variable cost go down. When only the selling price falls, the same units are sold, so variable cost does not change — only sales (and contribution) fall.</p>"
+          },
+          {
+            "type": "question",
+            "q": "Q4. The following data is given: Fixed cost = Rs. 12,000 (total); Selling price = Rs. 15 per unit; Variable cost = Rs. 9 per unit. Calculate (a) Profit at a sales level of Rs. 2,10,000 (b) Sales to earn a profit of Rs. 75,000 (c) Break even point in rupees (d) Break even point in units.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">FC = 12,000;  SP = 15;  VC = 9  → Cont = 6</div><div class=\"gap\"></div><div class=\"ln\">(c) BEP (₹) = FC ÷ PVR</div><div class=\"ln\">PVR = Cont ÷ Sales × 100 = 6 ÷ 15 × 100 = 40%</div><div class=\"ln\">BEP = 12,000 ÷ 0.4 = ₹30,000</div><div class=\"gap\"></div><div class=\"ln\">(d) BEP (unit) = FC ÷ CPU = 12,000 ÷ 6 = 2,000</div><div class=\"ln\">BEP (₹) = BEP (unit) × SP = 2,000 × 15 = 30,000</div></div><div class=\"pwc\"><div class=\"tw\"><table><tr><td>(a)</td><td class=\"n\">Sales</td><td class=\"n\">2,10,000</td></tr><tr><td style=\"padding-left:2.0em!important\">(−) VC 60%</td><td class=\"n\"></td><td class=\"n\">1,26,000</td></tr><tr class=\"k\"><td style=\"padding-left:2.0em!important\">Cont</td><td class=\"n\"></td><td class=\"n\">84,000</td></tr><tr><td style=\"padding-left:2.0em!important\">(−) FC</td><td class=\"n\"></td><td class=\"n\">12,000</td></tr><tr class=\"k\"><td style=\"padding-left:2.0em!important\">Profit</td><td class=\"n\"></td><td class=\"n\">72,000</td></tr></table></div></div><div class=\"pwc\"><div class=\"ln\">(b) D.S. = (FC + Profit) ÷ PVR</div><div class=\"ln\" style=\"padding-left:4.5em\">= (12,000 + 75,000) ÷ 0.4</div><div class=\"ln\" style=\"padding-left:4.5em\">= 2,17,500</div><div class=\"gap\"></div><div class=\"tw\"><table><tr><td>Check:</td><td class=\"n\">Sales</td><td class=\"n\">2,17,500</td></tr><tr><td style=\"padding-left:2.0em!important\">(−) VC 60%</td><td class=\"n\"></td><td class=\"n\">1,30,500</td></tr><tr class=\"k\"><td style=\"padding-left:2.0em!important\">Cont</td><td class=\"n\"></td><td class=\"n\">87,000</td></tr><tr><td style=\"padding-left:2.0em!important\">(−) FC</td><td class=\"n\"></td><td class=\"n\">12,000</td></tr><tr class=\"k\"><td style=\"padding-left:2.0em!important\">Profit</td><td class=\"n\"></td><td class=\"n\">75,000</td></tr></table></div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q6. Given: Break-even point = Rs. 30,000; Profit = Rs. 1,500; Fixed cost = Rs. 6,000. What is the amount of variable cost?",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Missing in the PDF:</b> Q5 isn't in the notes — they go from Q4 straight to Q6. Was it skipped in class, or is a page missing?</p><div class=\"pwc\"><div class=\"ln\">BEP (₹) = FC ÷ PVR</div><div class=\"ln\">30,000 = 6,000 ÷ PVR</div><div class=\"ln\">PVR = 6,000 ÷ 30,000 = 20%</div><div class=\"gap\"></div><div class=\"ln\">Cont = FC + Profit = 6,000 + 1,500 = 7,500</div><div class=\"gap\"></div><div class=\"ln\">Cont % = PVR %</div><div class=\"ln\">VC = 100 − PVR = 100 − 20 = 80%</div><div class=\"ln\">Sales = 7,500 × 100 ÷ 20 = 37,500</div><div class=\"ln\">VC = 37,500 × 80% = 30,000</div><div class=\"gap\"></div><div class=\"ln\">or directly:  VC = 7,500 × 80 ÷ 20 = 30,000</div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q7. The following information is given: Sales = Rs. 2,00,000; Variable cost = Rs. 1,20,000; Fixed cost = Rs. 30,000. Find (a) Break-even point (b) New break-even point if selling price is reduced by 10% (c) New break-even point if variable cost increases by 10% (d) New break-even point if fixed cost increases by 10%. (B.Com. Madurai Kamaraj)",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Unclear in the PDF:</b> In (b) the new sales is written “18000” on the board — read as 1,80,000 (the working only adds up with that).</p><div class=\"pwc\"><div class=\"ln\">(a) BEP (₹) = FC ÷ PVR</div><div class=\"ln\">PVR = Cont ÷ Sales × 100</div><div class=\"ln\">Cont = 2L − 1.2L = 80,000</div><div class=\"ln\">PVR = 80,000 ÷ 2,00,000 × 100 = 40%</div><div class=\"ln\">BEP = 30,000 ÷ 0.4 = 75,000</div></div><div class=\"pwc\"><div class=\"ln\">(b) New sales = 2,00,000 − 20,000 = 1,80,000</div><div class=\"ln\" style=\"padding-left:2.0em\">VC  1,20,000</div><div class=\"ln\" style=\"padding-left:2.0em\">Cont  60,000</div><div class=\"ln\">PVR = 60,000 ÷ 1,80,000 × 100 = 33.33%</div><div class=\"ln\">BEP = 30,000 ÷ 0.333 = 90,000</div></div><div class=\"pwc\"><div class=\"ln\">(c) Sales = 2,00,000</div><div class=\"ln\" style=\"padding-left:2.0em\">VC = 1,20,000 + 10% 12,000 = 1,32,000</div><div class=\"ln\" style=\"padding-left:2.0em\">Cont = 68,000</div><div class=\"ln\">PVR = 68,000 ÷ 2,00,000 × 100 = 34%</div><div class=\"ln\">BEP = 30,000 ÷ 0.34 = 88,235</div></div><div class=\"pwc\"><div class=\"ln\">(d) New FC = 30,000 + 3,000 = 33,000</div><div class=\"ln\">PVR = 80,000 ÷ 2,00,000 × 100 = 40%</div><div class=\"ln\">BEP = FC ÷ PVR = 33,000 ÷ 0.4 = 82,500</div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q8. Given: Break-even point = 9,000 units; Variable cost per unit = Rs. 75; Fixed expenses = Rs. 2,70,000; Selling price per unit = Rs. 100. What is the selling price per unit to bring B.E. point down to 9,000 units?",
+            "a": "<p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Not solved in class:</b> No working in the notes. Also, as printed it gives BEP = 9,000 units and asks for the selling price that brings BEP down to 9,000 units (with FC 2,70,000, VC 75 and SP 100 the current BEP is 10,800 units).</p><p><b>Not solved in class</b> — the question was shown but no working is in the notes. Tell me if you want it worked out.</p>",
+            "src": "Class question (unsolved)",
+            "tags": [
+              "Numerical",
+              "Not solved in class"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q9. You are given the following data: Fixed expenses = Rs. 4,000; Break-even point = Rs. 10,000. Calculate (i) P/V ratio (ii) Profit when sales are Rs. 20,000 (iii) New break-even point if selling price is reduced by 20%.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">(i) PVR = Cont ÷ Sales × 100</div><div class=\"ln\">BEP = FC ÷ PVR</div><div class=\"ln\">10,000 = 4,000 ÷ PVR</div><div class=\"ln\">PVR = 4,000 ÷ 10,000 × 100 = 40%</div></div><div class=\"pwc\"><div class=\"tw\"><table><tr><td>(ii)</td><td class=\"n\">Sales</td><td class=\"n\">20,000</td></tr><tr><td style=\"padding-left:2.0em!important\">(−) VC (100 − 40) 60%</td><td class=\"n\"></td><td class=\"n\">12,000</td></tr><tr class=\"k\"><td style=\"padding-left:2.0em!important\">Cont</td><td class=\"n\"></td><td class=\"n\">8,000</td></tr><tr><td style=\"padding-left:2.0em!important\">(−) FC</td><td class=\"n\"></td><td class=\"n\">4,000</td></tr><tr class=\"k\"><td style=\"padding-left:2.0em!important\">Profit</td><td class=\"n\"></td><td class=\"n\">4,000</td></tr></table></div></div><div class=\"pwc\"><div class=\"tw\"><table><tr><th>(iii) Let sales = 100;</th><th class=\"n\">VC = 60</th><th class=\"x\">[VC = 100 − PVR (cont %)]</th></tr><tr><td>New sales = 80</td><td class=\"n\"></td><td class=\"n\"></td></tr><tr><td>VC</td><td class=\"n\"></td><td class=\"n\">= 60</td></tr><tr class=\"k\"><td>Cont</td><td class=\"n\"></td><td class=\"n\">= 20</td></tr><tr><td>PVR = 20 ÷ 80 × 100 = 25%</td><td class=\"n\"></td><td class=\"n\"></td></tr><tr><td>BEP = 4,000 ÷ 0.25 = 16,000</td><td class=\"n\"></td><td class=\"n\"></td></tr></table></div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "What is the break-even point? Write its formulas.",
+            "a": "<p>The level of sales at which there is no profit or no loss (contribution = fixed cost).</p><ul><li>Sales = VC + FC</li><li>Sales = TC</li><li>BEP (₹) = FC ÷ PVR</li><li>BEP (unit) = FC ÷ CPU</li><li>BEP (₹) = BEP (unit) × SP</li></ul>",
+            "src": "Lecture 2",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Margin of Safety (MOS)",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Flow charts — Margin of Safety",
+            "html": "<style>@container (max-width:400px){.pwf.w400 .t{width:auto;align-items:flex-start}.pwf.w400 .b0{text-align:left}.pwf.w400 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w400 .h::before{left:0;top:-4px;height:4px}.pwf.w400 .h>li{display:block;padding:6px 0 0 22px}.pwf.w400 .h>li::before,.pwf.w400 .h>li:first-child::before,.pwf.w400 .h>li:last-child::before,.pwf.w400 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w400 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w400 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w400 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w400 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}@container (max-width:1100px){.pwf.w1100 .t{width:auto;align-items:flex-start}.pwf.w1100 .b0{text-align:left}.pwf.w1100 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1100 .h::before{left:0;top:-4px;height:4px}.pwf.w1100 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1100 .h>li::before,.pwf.w1100 .h>li:first-child::before,.pwf.w1100 .h>li:last-child::before,.pwf.w1100 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1100 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1100 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1100 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1100 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w400\"><div class=\"t\"><div class=\"b b0\">Actual Sales<i>12,000 (100%)</i></div><ul class=\"h\"><li><div class=\"b b1\">Break-even sales<i>10,000 → no profit no loss</i></div></li><li><div class=\"b b1\">Margin of Safety<i>12,000 − 10,000 = 2,000</i></div></li></ul></div></div><p class=\"pwn\">BEP % + MOS % = 100.</p><div class=\"pwl\"><div class=\"b\">Actual sales 12,000</div><span class=\"a\">→</span><div class=\"b\">− BEP sales 10,000</div><span class=\"a\">→</span><div class=\"b g\">= MOS 2,000</div></div><div class=\"pwf w1100\"><div class=\"t\"><div class=\"b b0\">Margin of Safety (MOS)<i>MOS = AS − BES</i></div><ul class=\"h\"><li><div class=\"b b1\">① MOS = Actual sales − BEP (₹)</div></li><li><div class=\"b b1\">② MOS % = 100 − BEP %</div></li><li><div class=\"b b1\">③ MOS = Profit ÷ PVR</div></li><li><div class=\"b b1\">④ MOS = Profit ÷ CPU</div></li><li><div class=\"b b1\">⑤ MOS (unit) = Actual sales (unit) − BEP (unit)</div></li></ul></div></div><p class=\"pwn\">AS = actual sales, BES = break-even sales.</p>"
+          },
+          {
+            "type": "note",
+            "title": "Margin of Safety — meaning",
+            "html": "<p>Margin of safety is the sales <b>above the break-even point</b> — how far sales can fall before the business starts making a loss.</p><div class=\"pwc\"><div class=\"ln\">MOS = AS − BES</div><div class=\"gap\"></div><div class=\"ln\">BEP = 10,000  → no profit no loss</div><div class=\"ln\">Sales 10,000 → profit 0</div><div class=\"ln\">Actual sales 12,000 − 10,000 = 2,000 → MOS</div></div>"
+          },
+          {
+            "type": "note",
+            "title": "MOS formulas",
+            "html": "<ol><li>MOS = Actual sales − BEP (₹)</li><li>MOS % = 100 − BEP %</li><li>MOS = Profit ÷ PVR</li><li>MOS = Profit ÷ CPU</li><li>MOS (unit) = Actual sales (unit) − BEP (unit)</li></ol><p>Turned around (used in Q11 and Q12): <b>BEP % = 100 − MOS %</b>, <b>BEP (₹) = Sales × BEP %</b>, <b>BEP = AS − MOS</b>.</p>"
+          },
+          {
+            "type": "formula",
+            "title": "Margin of safety",
+            "items": [
+              {
+                "l": "MOS (₹)",
+                "f": "Actual sales − BEP (₹)",
+                "n": "MOS = AS − BES"
+              },
+              {
+                "l": "MOS %",
+                "f": "100 − BEP %",
+                "n": "MOS (₹) = Sales × MOS %"
+              },
+              {
+                "l": "MOS from profit (₹)",
+                "f": "Profit ÷ PVR",
+                "n": "PVR as a decimal"
+              },
+              {
+                "l": "MOS from profit (units)",
+                "f": "Profit ÷ CPU",
+                "n": ""
+              },
+              {
+                "l": "MOS (units)",
+                "f": "Actual sales (units) − BEP (units)",
+                "n": ""
+              },
+              {
+                "l": "BEP from MOS",
+                "f": "BEP % = 100 − MOS %;  BEP (₹) = Sales × BEP %",
+                "n": "BEP = AS − MOS (₹ or units)"
+              }
+            ]
+          },
+          {
+            "type": "note",
+            "title": "Which formula? — MOS and BEP",
+            "html": "<style>@container (max-width:1000px){.pwf.w1000 .t{width:auto;align-items:flex-start}.pwf.w1000 .b0{text-align:left}.pwf.w1000 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1000 .h::before{left:0;top:-4px;height:4px}.pwf.w1000 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1000 .h>li::before,.pwf.w1000 .h>li:first-child::before,.pwf.w1000 .h>li:last-child::before,.pwf.w1000 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1000 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1000 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1000 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1000 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}@container (max-width:1700px){.pwf.w1700 .t{width:auto;align-items:flex-start}.pwf.w1700 .b0{text-align:left}.pwf.w1700 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1700 .h::before{left:0;top:-4px;height:4px}.pwf.w1700 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1700 .h>li::before,.pwf.w1700 .h>li:first-child::before,.pwf.w1700 .h>li:last-child::before,.pwf.w1700 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1700 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1700 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1700 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1700 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w1000\"><div class=\"t\"><div class=\"b b0\">Find MOS — what is given? (Q10)</div><ul class=\"h\"><li><div class=\"b b1\">BEP % &amp; actual sales<i>MOS % = 100 − BEP %, MOS (₹) = Sales × MOS %</i></div></li><li><div class=\"b b1\">Actual units &amp; BEP units<i>MOS (unit) = AS − BEP</i></div></li><li><div class=\"b b1\">BEP % only<i>MOS % = 100 − BEP %</i></div></li><li><div class=\"b b1\">PVR &amp; profit<i>MOS = Profit ÷ PVR</i></div></li><li><div class=\"b b1\">CPU &amp; profit<i>MOS (unit) = Profit ÷ CPU</i></div></li></ul></div></div><div class=\"pwf w1700\"><div class=\"t\"><div class=\"b b0\">Find BEP — what is given? (Q12)</div><ul class=\"h\"><li><div class=\"b b1\">FC &amp; PVR<i>BEP (₹) = FC ÷ PVR</i></div></li><li><div class=\"b b1\">FC &amp; CPU<i>BEP (unit) = FC ÷ CPU</i></div></li><li><div class=\"b b1\">MOS % only<i>BEP % = 100 − MOS %</i></div></li><li><div class=\"b b1\">FC &amp; VC-to-sales ratio<i>Cont % = 100 − VC % = PVR, then FC ÷ PVR</i></div></li><li><div class=\"b b1\">Actual sales &amp; MOS %<i>BEP % = 100 − MOS %, BEP (₹) = Sales × BEP %</i></div></li><li><div class=\"b b1\">Profit, MOS % &amp; VC %<i>MOS ÷ 100 = Profit ÷ PVR → Sales → BEP % → BEP</i></div></li><li><div class=\"b b1\">Actual sales &amp; MOS (₹)<i>BEP = AS − MOS (₹)</i></div></li><li><div class=\"b b1\">Actual units &amp; MOS units<i>BEP = AS (unit) − MOS (unit)</i></div></li></ul></div></div>"
+          },
+          {
+            "type": "note",
+            "title": "★ Chapter so far — how everything connects",
+            "html": "<style>@container (max-width:650px){.pwf.w650 .t{width:auto;align-items:flex-start}.pwf.w650 .b0{text-align:left}.pwf.w650 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w650 .h::before{left:0;top:-4px;height:4px}.pwf.w650 .h>li{display:block;padding:6px 0 0 22px}.pwf.w650 .h>li::before,.pwf.w650 .h>li:first-child::before,.pwf.w650 .h>li:last-child::before,.pwf.w650 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w650 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w650 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w650 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w650 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><p>One chart for lectures 1–3: everything grows out of <b>Sales = VC + FC + Profit</b>.</p><div class=\"pwf w650\"><div class=\"t\"><div class=\"b b0\">Sales = VC + FC + Profit</div><ul class=\"h\"><li><div class=\"b b1\">Contribution<i>Sales − VC = FC + Profit</i></div><ul class=\"h\"><li class=c><div class=\"b b2\">P/V Ratio<i>Cont ÷ Sales × 100 = 100 − VC %</i></div><ul class=\"v\"><li><div class=\"b b3\">BEP (₹)<i>FC ÷ PVR</i></div></li><li><div class=\"b b3\">MOS (₹)<i>Actual sales − BEP = Profit ÷ PVR</i></div></li><li><div class=\"b b3\">Desired sales (₹)<i>(FC + Profit) ÷ PVR</i></div></li></ul></li><li class=c><div class=\"b b2\">Contribution per unit (CPU)<i>SP − VC per unit</i></div><ul class=\"v\"><li><div class=\"b b3\">BEP (units)<i>FC ÷ CPU</i></div></li><li><div class=\"b b3\">MOS (units)<i>Actual units − BEP units = Profit ÷ CPU</i></div></li><li><div class=\"b b3\">Desired sales (units)<i>(FC + Profit) ÷ CPU</i></div></li></ul></li></ul></li></ul></div></div><p class=\"pwn\">BEP % + MOS % = 100 · BEP (₹) = BEP (units) × SP</p>"
+          },
+          {
+            "type": "question",
+            "q": "Q10. Calculate margin of safety in each of the following independent situations: (i) Break even point 40%, Actual sales Rs. 40,000 (ii) Actual sales – 40,000 units, Break-even point 25,000 units (iii) Break-even point – 75% (iv) P/V ratio 40%, Profit Rs. 35,000 (v) Contribution per unit Rs. 20, Profit Rs. 15,000.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Unclear in the PDF:</b> In (v) the profit is written “1500” on the board — read as 15,000 (the question says 15,000).</p><div class=\"pwc\"><div class=\"ln\">(i) MOS % = 100 − 40% = 60%</div><div class=\"ln\">MOS (₹) = Sales × MOS %</div><div class=\"ln\" style=\"padding-left:4.0em\">= 40,000 × 60% = 24,000</div><div class=\"gap\"></div><div class=\"ln\">(ii) MOS (unit) = AS − BEP</div><div class=\"ln\" style=\"padding-left:6.0em\">= 40,000 − 25,000</div><div class=\"ln\" style=\"padding-left:6.0em\">= 15,000 unit</div><div class=\"gap\"></div><div class=\"ln\">(iii) MOS (%) = 100 − BEP %</div><div class=\"ln\" style=\"padding-left:6.0em\">= 100 − 75%</div><div class=\"ln\" style=\"padding-left:6.0em\">= 25%</div><div class=\"gap\"></div><div class=\"ln\">(iv) MOS = Profit ÷ PVR = 35,000 ÷ 0.4 = 87,500</div><div class=\"gap\"></div><div class=\"ln\">(v) MOS (unit) = Profit ÷ CPU = 15,000 ÷ 20 = 750</div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q11. The profit/volume ratio of Escorts Ltd. is 50% and the margin of safety is 40%. You are required to work out the net profit and the break-even point if sales volume is Rs. 10,00,000.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">Sales = 10,00,000</div><div class=\"ln\">BEP % = 100 − MOS %</div><div class=\"ln\">BEP = 100 − 40% = 60%</div><div class=\"gap\"></div><div class=\"ln\">BEP (₹) = Sales × BEP %</div><div class=\"ln\" style=\"padding-left:4.0em\">= 10,00,000 × 60 ÷ 100 = 6,00,000</div><div class=\"gap\"></div><div class=\"ln\">BEP = FC ÷ PVR</div><div class=\"ln\">6,00,000 = FC ÷ 0.5</div><div class=\"ln\">FC = 3,00,000</div><div class=\"gap\"></div><div class=\"ln\">Net Profit = Cont − FC</div><div class=\"ln\">Cont = 10,00,000 × 50% = 5L</div><div class=\"ln\">Profit = 5L − 3L = 2,00,000</div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Q12. Calculate break-even point in each of the following independent situations: (i) Fixed cost Rs. 10,000; P/V ratio 50% (ii) Fixed cost Rs. 15,000; Contribution Rs. 3 per unit (iii) Margin of safety – 20% (iv) Fixed cost Rs. 9,000; Variable cost to sales ratio = 60% (v) Actual sales Rs. 50,000; Margin of safety 30% (vi) Profit Rs. 30,000; Margin of safety 20%; Variable cost is 70% of sales (vii) Margin of safety Rs. 70,000; Actual sales Rs. 4,00,000 (viii) Actual sales 10,000 units; Margin of safety 2,500 units.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Unclear in the PDF:</b> In (vi) “20 PVR = 300000” is read as 30,00,000; and 1,50,000 is labelled “PVR (₹)” — it works as the total contribution in ₹ (Sales = 1,50,000 × 100 ÷ 30). Kept the teacher's label.</p><div class=\"pwc\"><div class=\"ln\">(i) BEP (₹) = FC ÷ PVR = 10,000 ÷ 0.5 = 20,000</div><div class=\"gap\"></div><div class=\"ln\">(ii) BEP (unit) = FC ÷ CPU = 15,000 ÷ 3 = 5,000</div><div class=\"gap\"></div><div class=\"ln\">(iii) BEP (%) = 100 − MOS %</div><div class=\"ln\" style=\"padding-left:6.0em\">= 100 − 20% = 80%</div><div class=\"gap\"></div><div class=\"ln\">(iv) BEP (₹) = FC ÷ PVR</div><div class=\"ln\">Cont % = PVR</div><div class=\"ln\">Cont % = 100 − VC % = 100 − 60 = 40%</div><div class=\"ln\">BEP = 9,000 ÷ 0.4 = 22,500</div><div class=\"gap\"></div><div class=\"ln\">(v) BEP % = 100 − MOS %</div><div class=\"ln\" style=\"padding-left:4.5em\">= 100 − 30% = 70%</div><div class=\"ln\">BEP (₹) = Sales × BEP % = 50,000 × 70% = 35,000</div></div><div class=\"pwc\"><div class=\"ln\">(vi) MOS ÷ 100 = Profit ÷ PVR</div><div class=\"ln\">20 ÷ 100 = 30,000 ÷ PVR</div><div class=\"ln\">20 PVR = 30,00,000</div><div class=\"ln\">PVR = 30,00,000 ÷ 20 = 1,50,000</div><div class=\"gap\"></div><div class=\"ln\">PVR % = 100 − VC %</div><div class=\"ln\" style=\"padding-left:3.0em\">= 100 − 70 = 30%</div><div class=\"ln\">Sales = PVR (₹) × 100 ÷ PVR %</div><div class=\"ln\" style=\"padding-left:3.0em\">= 1,50,000 × 100 ÷ 30 = 5,00,000</div><div class=\"gap\"></div><div class=\"ln\">BEP % = 100 − MOS % = 100 − 20% = 80%</div><div class=\"ln\">BEP (₹) = Sales × BEP % = 5,00,000 × 80% = 4L</div></div><div class=\"pwc\"><div class=\"ln\">(vii) BEP = AS − MOS (₹)</div><div class=\"ln\" style=\"padding-left:5.0em\">= 4,00,000 − 70,000</div><div class=\"ln\" style=\"padding-left:5.0em\">= 3,30,000</div><div class=\"gap\"></div><div class=\"ln\">(viii) BEP = AS (unit) − MOS (unit)</div><div class=\"ln\" style=\"padding-left:5.5em\">= 10,000 − 2,500</div><div class=\"ln\" style=\"padding-left:5.5em\">= 7,500 unit</div></div>",
+            "src": "Class question",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "What is margin of safety? Write its formulas.",
+            "a": "<p>The excess of actual sales over break-even sales: MOS = AS − BES.</p><ul><li>MOS = Actual sales − BEP (₹)</li><li>MOS % = 100 − BEP %</li><li>MOS = Profit ÷ PVR</li><li>MOS = Profit ÷ CPU</li><li>MOS (unit) = Actual sales (unit) − BEP (unit)</li></ul>",
+            "src": "Lecture 3",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

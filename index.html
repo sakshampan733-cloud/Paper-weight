@@ -732,7 +732,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
 #printRoot{display:none}
 @media print{
   body{background:#fff!important}
-  #topbar,#app,#palWrap,#quizWrap,#prtWrap,#pdfWrap,#paperWrap,#jsonWrap,#jsonManualWrap,#promptWrap{display:none!important}
+  #topbar,#app,#palWrap,#quizWrap,#prtWrap,#jsonWrap,#jsonManualWrap,#promptWrap{display:none!important}
   #printRoot{display:block; font-family:Georgia,'Times New Roman',serif; color:#111; font-size:11.5pt; line-height:1.55}
   #printRoot .pHead{margin-bottom:16pt; border-bottom:2pt solid #111; padding-bottom:8pt}
   #printRoot .pCrumb{font-size:9pt; letter-spacing:.12em; text-transform:uppercase; color:#555; margin-bottom:4pt}
@@ -847,7 +847,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   <div id="brand">Paper<em>weight</em></div>
   <nav id="subjTabs" aria-label="Subjects"></nav>
   <div id="topRight">
-    <span id="offlineFlag" title="No connection — your notes still work, but Claude features are paused">Offline</span>
+    <span id="offlineFlag" title="No connection — everything still works">Offline</span>
     <button class="topBtn" id="hlBtn" title="Highlighter — turn on, then drag across any text">✍<span>Highlight</span></button>
     <button class="topBtn" id="palBtn" aria-label="Search"><svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span>Search</span> <kbd>⌘K</kbd></button>
     <button class="topBtn" id="quizLaunch">◆ <span>Quiz</span></button>
@@ -902,22 +902,6 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   <div id="prt">
     <div class="setupLbl">Print / Save as PDF</div>
     <div id="prtList"></div>
-  </div>
-</div>
-
-<!-- PDF import -->
-<div id="pdfWrap">
-  <div class="pdfSheet">
-    <div class="setupLbl">Import a chapter PDF</div>
-    <div id="pdfBody"></div>
-  </div>
-</div>
-
-<!-- Past-paper upload (Paper Predictor) -->
-<div id="paperWrap">
-  <div class="pdfSheet">
-    <div class="setupLbl">Upload a past exam paper</div>
-    <div id="paperBody"></div>
   </div>
 </div>
 
@@ -1117,9 +1101,9 @@ body.sheetOpen #pwStack{opacity:0}
 .impChap{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--faint);margin-top:5px;line-height:1.3}
 .impChap b{color:var(--dim);font-weight:500}
 .impChap button{color:var(--red);font-size:12px;line-height:1;padding:2px 4px}
-/* ── PDF import sheet ── */
-#pdfWrap,#paperWrap,#jsonWrap,#jsonManualWrap,#promptWrap{position:fixed; inset:0; z-index:100; display:none; background:rgba(5,7,10,.55); backdrop-filter:blur(3px)}
-#pdfWrap.show,#paperWrap.show,#jsonWrap.show,#jsonManualWrap.show,#promptWrap.show{display:flex; align-items:flex-start; justify-content:center; padding-top:12vh}
+/* ── import sheets ── */
+#jsonWrap,#jsonManualWrap,#promptWrap{position:fixed; inset:0; z-index:100; display:none; background:rgba(5,7,10,.55); backdrop-filter:blur(3px)}
+#jsonWrap.show,#jsonManualWrap.show,#promptWrap.show{display:flex; align-items:flex-start; justify-content:center; padding-top:12vh}
 #promptText{width:100%; min-height:230px; font-family:var(--mono); font-size:12px; line-height:1.55; padding:11px 12px; border-radius:8px; border:1px solid var(--line2); background:var(--bg2); color:var(--body2); resize:vertical}
 .pdfSheet{width:440px; max-width:92vw; max-height:78vh; overflow-y:auto; background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:20px 18px; box-shadow:0 24px 70px rgba(0,0,0,.55)}
 .pdfSheet .setupLbl{padding:0 0 12px}
@@ -1130,50 +1114,15 @@ body.sheetOpen #pwStack{opacity:0}
 .pdfOptional{text-transform:none; letter-spacing:0}
 .pdfUsage{font-size:12px; color:var(--faint); margin-bottom:14px}
 .pdfBtns{display:flex; gap:10px; justify-content:flex-end}
-.pdfSpinner{text-align:center; padding:30px 8px}
-.pdfSpinner .pdfEmoji{font-size:26px}
-.pdfSpinner .pdfMsg{margin-top:12px; font-size:14px; color:var(--text)}
-.pdfSpinner .pdfSub{margin-top:6px; font-size:12px; color:var(--faint); line-height:1.5}
-.qGenRow{display:flex; align-items:center; gap:10px; margin-bottom:16px}
 .qNoAns{color:var(--faint); font-style:italic}
-.predTier{margin:22px 0 0; border-left:3px solid var(--line2); padding-left:14px}
-.predTier.pt-confirmed{border-left-color:var(--green)}
-.predTier.pt-likely{border-left-color:var(--teal)}
-.predTier.pt-wildcard{border-left-color:var(--gold)}
-.predTier.pt-unlikely{border-left-color:var(--faint)}
-.predTierHead{font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--dim); margin-bottom:10px}
-.pt-confirmed .predTierHead{color:var(--green)} .pt-likely .predTierHead{color:var(--teal)}
-.pt-wildcard .predTierHead{color:var(--gold)} .pt-unlikely .predTierHead{color:var(--faint)}
-.predItem{background:var(--panel); border:1px solid var(--line-soft); border-radius:var(--r-sm); padding:12px 14px; margin-bottom:8px; overflow-wrap:anywhere}
-.predTopic{font-size:12px; color:var(--faint); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px}
-.predQ{font-size:14px; color:var(--text); margin-bottom:6px}
-.predWhy{font-size:12.5px; color:var(--dim); line-height:1.5}
 </style>
 <script>
 /* ═══════════ ENGINE — never edited when adding chapters ═══════════ */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-/* backend that holds the Anthropic key — fill in after deploying to Vercel */
-const API_BASE='https://paper-weight-three.vercel.app/api';
-const EXTRACT_API_URL=API_BASE+'/extract';
-const QUESTIONS_API_URL=API_BASE+'/questions';
-const PAPER_API_URL=API_BASE+'/paper';
-const PREDICT_API_URL=API_BASE+'/predict';
-// The AI features need your passcode (set as PAPERWEIGHT_PASS in Vercel). Asked once per device, then remembered.
-async function apiFetch(url,opts={}){
-  const send=()=>fetch(url,{...opts,headers:{...(opts.headers||{}),'X-Paperweight-Pass':localStorage.getItem('pw-pass')||''}});
-  let resp=await send();
-  if(resp.status===401){
-    const p=prompt('Paperweight passcode (the one you set in Vercel). Asked once on this device.');
-    if(!p) return resp;
-    localStorage.setItem('pw-pass',p.trim());
-    resp=await send();
-    if(resp.status===401) localStorage.removeItem('pw-pass');
-  }
-  return resp;
-}
-const PDF_MONTHLY_CAP=20;
-const PAPER_MONTHLY_CAP=10;
+/* 1.11 removed the AI features, and with them every call to a server that held an
+   API key. Clear the passcode an older version may have saved on this device. */
+try{ localStorage.removeItem('pw-pass'); }catch(e){}
 
 /* persistence (works when opened locally; silently in-memory otherwise) */
 let state={done:{},stars:{},quiz:{},exams:{},hl:{},content:[],view:null,sideHid:false,hlmode:false,hlColor:'y'};
@@ -1368,8 +1317,8 @@ function addUnit(subId, name){
   return true;
 }
 
-/* the one place chapter/backup JSON gets merged in — used by both the
-   file-picker import and the PDF-import flow, so they can't drift apart.
+/* the one place chapter/backup JSON gets merged in — used by the file-picker
+   imports and by notes sync, so they can't drift apart.
    `forced` ({subject, unit, chapterId}) overrides whatever filing the file
    itself claims, so the subject/unit you pick in the UI always wins. It is
    applied only to directly-supplied chapters, never to a backup's own
@@ -1482,7 +1431,7 @@ function reorderChapter(chapterId, refChapterId, placeBefore){
   return true;
 }
 
-function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',pdfUsage:state.pdfUsage||null,subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},aiAnswers:state.aiAnswers||{},aiUsage:state.aiUsage||null,pastPapers:state.pastPapers||{},paperUsage:state.paperUsage||null,lastPrediction:state.lastPrediction||null,cols:state.cols||'auto'})); return true; }catch(e){ return false; } }
+function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},aiAnswers:state.aiAnswers||{},cols:state.cols||'auto',syncOff:!!state.syncOff,contentHashes:state.contentHashes||{},syncSkip:state.syncSkip||[]})); return true; }catch(e){ return false; } }
 function toast(msg,ms){
   let el=document.getElementById('toastBox');
   if(!el){ el=document.createElement('div'); el.id='toastBox'; document.body.appendChild(el); }
@@ -1652,10 +1601,8 @@ function renderSidebar(){
   const sub=cur.sub;
   let h=`<button class="chRow${!cur.ch?' on':''}" id="ovRow">
     <span class="t"><span>◈ ${esc(sub.code)} overview</span></span></button>
-    <button class="chRow${cur.ch==='weak'?' on':''}" id="weakRow">
-    <span class="t"><span style="color:var(--gold)">★ Weak topics</span></span></button>
-    <button class="chRow${cur.ch==='predict'?' on':''}" id="predictRow" style="margin-bottom:4px">
-    <span class="t"><span style="color:var(--teal)">📈 Paper Predictor</span></span></button>`;
+    <button class="chRow${cur.ch==='weak'?' on':''}" id="weakRow" style="margin-bottom:4px">
+    <span class="t"><span style="color:var(--gold)">★ Weak topics</span></span></button>`;
   /* every subject starts with an empty "Unit 1"; once chapters live in named
      units it only said "No chapters yet", so hide it (a unit you added stays) */
   const anyCh=sub.units.some(u=>u.chapters.length);
@@ -1681,7 +1628,6 @@ function renderSidebar(){
     if(e.target.closest('.chGrip')) return;
     if(b.id==='ovRow'){ openChapter(null,'notes'); }
     else if(b.id==='weakRow'){ openChapter('weak','notes'); }
-    else if(b.id==='predictRow'){ openChapter('predict','notes'); }
     else if(b.id==='setRow'){ openChapter('settings','notes'); }
     else openChapter(allChapters(cur.sub).find(c=>c.id===b.dataset.cid),'notes');
     closeSideIfDrawer();
@@ -1689,29 +1635,8 @@ function renderSidebar(){
   $$('#sidebar .chGrip').forEach(g=>g.addEventListener('pointerdown',startChapterDrag));
 }
 
-/* ── PDF import — sends a chapter PDF to the backend, imports the JSON it
-   returns through the same applyImportPayload() path as a manual import ── */
-function pdfCurrentMonth(){ return new Date().toISOString().slice(0,7); }
-function pdfUsageInfo(){
-  const ym=pdfCurrentMonth();
-  const u=state.pdfUsage;
-  return (u&&u.ym===ym) ? u : {ym,count:0};
-}
-function pdfUsageHTML(){
-  const u=pdfUsageInfo();
-  return u.count>=PDF_MONTHLY_CAP
-    ? `${u.count}/${PDF_MONTHLY_CAP} used this month — resets on the 1st`
-    : `${u.count}/${PDF_MONTHLY_CAP} used this month`;
-}
-function bumpPdfUsage(){
-  const ym=pdfCurrentMonth();
-  if(!state.pdfUsage||state.pdfUsage.ym!==ym) state.pdfUsage={ym,count:0};
-  state.pdfUsage.count++;
-  save();
-}
-/* ── shared import-target pickers (subject / unit / existing-chapter) ──
-   Used by both the PDF sheet and the JSON sheet, so the two filing paths
-   can't drift apart. `t` is a {sub, unit, chap} holder the caller owns. */
+/* ── import-target pickers (subject / unit / existing-chapter) for the
+   manual JSON sheet. `t` is a {sub, unit, chap} holder the caller owns. */
 function normalizeTarget(t){
   if(!DATA.subjects.length) return null;
   if(!t.sub || !DATA.subjects.some(s=>s.id===t.sub)) t.sub=DATA.subjects[0].id;
@@ -1745,90 +1670,6 @@ function bindTargetFields(t,ids,rerender){
   $('#'+ids.chap).onchange=e=>{ t.chap=e.target.value; };
 }
 
-let pdfTarget={sub:null,unit:null,chap:''}, pdfAbort=null, pdfPickedPrompt='', pdfPickedQCount='';
-const PDF_IDS={sub:'pdfSub',unit:'pdfUnit',chap:'pdfChap'};
-function pdfFormHTML(){
-  if(!DATA.subjects.length) return '<div class="setNote">Add a subject first.</div>';
-  const capped=pdfUsageInfo().count>=PDF_MONTHLY_CAP;
-  return `
-    ${targetFieldsHTML(pdfTarget,PDF_IDS)}
-    <div class="pdfField"><label>Chapter PDF</label><input type="file" id="pdfFile" accept="application/pdf,.pdf"></div>
-    <div class="pdfField"><label>Instructions for this import <span class="pdfOptional">(optional)</span></label>
-      <textarea id="pdfPrompt" rows="2" placeholder="e.g. “emphasize the diagrams”, “skip the case studies”, “focus only on the formulas”" maxlength="2000">${esc(pdfPickedPrompt||'')}</textarea></div>
-    <div class="pdfField"><label>Also generate exam questions <span class="pdfOptional">(optional)</span></label>
-      <input type="number" id="pdfQCount" min="0" max="30" step="1" placeholder="0" value="${pdfPickedQCount||''}"></div>
-    <div class="pdfUsage">${pdfUsageHTML()}</div>
-    ${capped?'<div class="setNote" style="color:var(--red); margin-top:-8px">Monthly cap reached — try again next month.</div>':''}
-    <div class="pdfBtns">
-      <button class="setMini" id="pdfCancel">Cancel</button>
-      <button class="setMini" id="pdfGo" style="border-color:var(--gold-line); color:var(--gold)"${capped?' disabled':''}>Extract &amp; import</button>
-    </div>`;
-}
-function pdfRenderForm(){ $('#pdfBody').innerHTML=pdfFormHTML(); pdfBindForm(); }
-function pdfBindForm(){
-  bindTargetFields(pdfTarget,PDF_IDS,pdfRenderForm);
-  $('#pdfPrompt').oninput=e=>{ pdfPickedPrompt=e.target.value; };
-  $('#pdfQCount').oninput=e=>{ pdfPickedQCount=e.target.value; };
-  $('#pdfCancel').onclick=()=>pdfToggle(false);
-  $('#pdfGo').onclick=pdfSubmit;
-}
-function pdfToggle(show){
-  $('#pdfWrap').classList.toggle('show',!!show);
-  if(show) pdfRenderForm();
-  else if(pdfAbort){ pdfAbort.abort(); pdfAbort=null; }
-}
-function pdfShowLoading(){
-  $('#pdfBody').innerHTML=`<div class="pdfSpinner">
-    <div class="pdfEmoji">📄</div>
-    <div class="pdfMsg">Reading your PDF and asking Claude to structure it…</div>
-    <div class="pdfSub">Usually 10–30s, longer for dense chapters. Don’t close this.</div>
-    <button class="setMini" id="pdfCancelLoad" style="margin-top:16px">Cancel</button>
-  </div>`;
-  $('#pdfCancelLoad').onclick=()=>{ if(pdfAbort) pdfAbort.abort(); };
-}
-function pdfSubmit(){
-  if(blockedOffline('reading a PDF')) return;
-  const sub=DATA.subjects.find(s=>s.id===pdfTarget.sub);
-  const unit=pdfTarget.unit;
-  const chapId=$('#pdfChap').value||null;
-  const file=$('#pdfFile').files[0];
-  if(!file) return toast('Choose a PDF first.');
-  if(!/\.pdf$/i.test(file.name) && file.type!=='application/pdf') return toast('That doesn’t look like a PDF.');
-  if(file.size>3.5*1024*1024) return toast('That PDF is too large for the backend (~3.5MB limit) — try a smaller export.',4500);
-  if(pdfUsageInfo().count>=PDF_MONTHLY_CAP) return toast('Monthly cap reached — resets on the 1st.');
-
-  const reader=new FileReader();
-  reader.onload=async()=>{
-    const b64=String(reader.result||'').split(',')[1]||'';
-    const body={pdfBase64:b64};
-    const customPrompt=(pdfPickedPrompt||'').trim();
-    if(customPrompt) body.customPrompt=customPrompt;
-    const qCount=parseInt(pdfPickedQCount,10);
-    if(qCount>0) body.questionCount=Math.min(30,qCount);
-    pdfShowLoading();
-    const ctrl=new AbortController(); pdfAbort=ctrl;
-    const bail=setTimeout(()=>ctrl.abort(),60000);
-    try{
-      const resp=await apiFetch(EXTRACT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:ctrl.signal});
-      const data=await resp.json().catch(()=>({}));
-      if(!resp.ok) throw new Error(data.error||('Extraction failed ('+resp.status+')'));
-      if(!data.chapter) throw new Error('Claude didn’t return a chapter — try again.');
-      const {done,stored}=applyImportPayload({subject:sub.id, unit, chapter:Object.assign({},data.chapter,{id:chapId||undefined})});
-      if(!stored){ toast('Imported, but this device’s storage is full — export a backup and remove an old chapter.',5000); pdfToggle(false); return; }
-      bumpPdfUsage();
-      const res=done[0];
-      toast((res&&res.updated?'Chapter updated':'Chapter added')+' — reloading');
-      setTimeout(()=>location.reload(),900);
-    }catch(err){
-      const msg=(err&&err.name==='AbortError')?'Took too long — try again.':((err&&err.message)||'Something went wrong.');
-      toast(msg,4500);
-      pdfRenderForm();
-    }finally{
-      clearTimeout(bail); pdfAbort=null;
-    }
-  };
-  reader.readAsDataURL(file);
-}
 
 /* ── JSON import — two separate, deliberately non-overlapping flows.
    "Auto" (jsonWrap) is for files that already carry their own {subject,
@@ -1895,7 +1736,7 @@ function jsonFormHTML(){
   return `
     <div class="pdfField"><label>Chapter JSON file(s)</label><input type="file" id="jsonFile" accept=".json,application/json" multiple></div>
     <div class="setNote" id="jsonFileNote" style="display:none"></div>
-    <div class="pdfUsage">Free — no Claude call, so this doesn’t touch your monthly cap. Pick as many files as you like; each goes to the subject and unit it names. A file that doesn’t name one is skipped — use <b>Import JSON manually</b> for those.</div>
+    <div class="pdfUsage">Pick as many files as you like; each goes to the subject and unit it names. A file that doesn’t name one is skipped — use <b>Import JSON manually</b> for those.</div>
     <div class="pdfBtns">
       <button class="setMini" id="jsonCancel">Cancel</button>
       <button class="setMini" id="jsonGo" style="border-color:var(--gold-line); color:var(--gold)">Import</button>
@@ -1950,7 +1791,7 @@ function jsonManualFormHTML(){
   return `
     ${targetFieldsHTML(jsonManualTarget,JSON_MANUAL_IDS)}
     <div class="pdfField"><label>Chapter JSON file(s)</label><input type="file" id="jsonmFile" accept=".json,application/json" multiple></div>
-    <div class="pdfUsage">Free — no Claude call, so this doesn’t touch your monthly cap. The subject/unit above is used for every file you pick here, even if a file already declares its own. Need the JSON? Settings ▸ Prompt for making a JSON.</div>
+    <div class="pdfUsage">The subject/unit above is used for every file you pick here, even if a file already declares its own. Need the JSON? Settings ▸ Prompt for making a JSON.</div>
     <div class="pdfBtns">
       <button class="setMini" id="jsonmCancel">Cancel</button>
       <button class="setMini" id="jsonmGo" style="border-color:var(--gold-line); color:var(--gold)">Import</button>
@@ -2041,212 +1882,6 @@ function promptToggle(show){
   };
 }
 
-/* ── AI question generation — per-chapter "Generate questions" and the
-   lazy tap-to-reveal answer fill, both via api/questions.js. A small
-   separate cap (not PDF_MONTHLY_CAP) since these are single small calls,
-   not whole-document extraction. ── */
-const AI_MONTHLY_CAP=100;
-function aiUsageInfo(){
-  const ym=pdfCurrentMonth();
-  const u=state.aiUsage;
-  return (u&&u.ym===ym) ? u : {ym,count:0};
-}
-function bumpAiUsage(){
-  const ym=pdfCurrentMonth();
-  if(!state.aiUsage||state.aiUsage.ym!==ym) state.aiUsage={ym,count:0};
-  state.aiUsage.count++;
-  save();
-}
-async function maybeFillAnswer(cd){
-  if(!cd || effectiveAnswer(cd)) return;
-  if(aiUsageInfo().count>=AI_MONTHLY_CAP) return;
-  const box=document.querySelector(`.qCard[data-cid="${cd.id}"] .qAnsInner`);
-  if(!box) return;
-  if(isOffline()){ box.innerHTML='<span class="qNoAns">No answer saved, and you’re offline — reopen this when you have a connection.</span>'; return; }
-  box.innerHTML='<span class="qNoAns">Generating an answer…</span>';
-  try{
-    const cards=cd.lec.ch.lectures.flatMap(l=>l.cards);
-    const resp=await apiFetch(QUESTIONS_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'answer',question:cd.q,cards})});
-    const data=await resp.json().catch(()=>({}));
-    if(!resp.ok||!data.answer) throw new Error(data.error||'Could not generate an answer.');
-    state.aiAnswers=state.aiAnswers||{}; state.aiAnswers[cd.id]=data.answer;
-    bumpAiUsage();
-    box.innerHTML=data.answer; upgradeBlocks(box);
-  }catch(err){
-    box.innerHTML=`<span class="qNoAns">${esc((err&&err.message)||'Couldn’t generate an answer.')} Tap to retry next time you open this.</span>`;
-  }
-}
-async function generateQuestionsForChapter(ch){
-  if(blockedOffline('generating questions')) return;
-  if(aiUsageInfo().count>=AI_MONTHLY_CAP){ toast('Monthly AI question cap reached — resets on the 1st.'); return; }
-  const countStr=(prompt('How many questions should Claude generate from these notes?','5')||'').trim();
-  if(!countStr) return;
-  const count=Math.min(20,Math.max(1,parseInt(countStr,10)||0));
-  if(!count) return toast('Enter a number.');
-  const notes=ch.lectures.flatMap(l=>l.cards).filter(c=>c.type==='note');
-  if(!notes.length) return toast('No notes in this chapter to generate questions from.');
-  const status=$('#qGenStatus'), btn=$('#qGenBtn');
-  if(status) status.textContent='Generating…';
-  if(btn) btn.disabled=true;
-  try{
-    const resp=await apiFetch(QUESTIONS_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'generate',count,cards:notes})});
-    const data=await resp.json().catch(()=>({}));
-    if(!resp.ok||!Array.isArray(data.questions)) throw new Error(data.error||'Could not generate questions.');
-    bumpAiUsage();
-    const genLec={title:'AI-generated practice questions', cards:data.questions.map(q=>Object.assign({type:'question'},q))};
-    ch.lectures.push(genLec);
-    /* persist: patch the matching entry in state.content directly, same chapter id */
-    const entry=(state.content||[]).find(en=>entryChapId(en)===ch.id);
-    if(entry) entryChapter(entry).lectures.push({title:genLec.title, cards:genLec.cards});
-    save();
-    toast(`${data.questions.length} question${data.questions.length===1?'':'s'} added — reloading`);
-    setTimeout(()=>location.reload(),900);
-  }catch(err){
-    toast((err&&err.message)||'Could not generate questions.',4500);
-    if(status) status.textContent='';
-    if(btn) btn.disabled=false;
-  }
-}
-
-/* ── Paper Predictor — per-subject. Upload past papers (tagged by term) →
-   api/paper.js extracts each paper's question list → api/predict.js
-   categorizes across a subject's papers into four tiers. Its own monthly cap
-   (PAPER_MONTHLY_CAP), separate from PDF import. ── */
-function paperUsageInfo(){
-  const ym=pdfCurrentMonth();
-  const u=state.paperUsage;
-  return (u&&u.ym===ym) ? u : {ym,count:0};
-}
-function bumpPaperUsage(){
-  const ym=pdfCurrentMonth();
-  if(!state.paperUsage||state.paperUsage.ym!==ym) state.paperUsage={ym,count:0};
-  state.paperUsage.count++;
-  save();
-}
-function subjectPapers(subId){ return (state.pastPapers&&state.pastPapers[subId])||[]; }
-const PRED_TIERS=[['confirmed','Confirmed','pt-confirmed'],['likely','Likely','pt-likely'],['wildcard','Wildcard','pt-wildcard'],['unlikely','Unlikely / skip','pt-unlikely']];
-function renderPredictor(m){
-  const sub=cur.sub, papers=subjectPapers(sub.id);
-  const capped=paperUsageInfo().count>=PAPER_MONTHLY_CAP;
-  let h=`<div class="crumb"><b>${esc(sub.code)}</b> · Paper Predictor</div>
-    <h1 class="chTitle">Paper Predictor</h1>
-    <p class="focusLine" style="margin-top:-6px">Upload past exam papers for <b>${esc(sub.name)}</b>, tagged by term. The predictor looks only at your own uploaded papers for this subject.</p>
-    <div class="setLine"><span>Uploaded papers<em>${papers.length} paper${papers.length===1?'':'s'} · ${paperUsageInfo().count}/${PAPER_MONTHLY_CAP} uploads this month</em></span>
-      <button class="setMini" id="paperAddBtn"${capped?' disabled':''}>Upload paper</button></div>`;
-  if(papers.length){
-    h+='<div class="setBlk"><div class="setupLbl">Papers</div>'+papers.map((p,i)=>
-      `<div class="setLine"><span>${esc(p.fileName||'Paper')}<em>Term ${esc(String(p.term))} · ${p.questions.length} question${p.questions.length===1?'':'s'}</em></span>
-        <button class="setMini danger" data-rmpaper="${i}">Remove</button></div>`).join('')+'</div>';
-    h+=`<div class="setLine" style="border:none; padding-top:18px"><span>Predict likely questions<em>Analyze patterns across the papers above.</em></span>
-      <button class="setMini" id="predictGoBtn" style="border-color:var(--teal-line); color:var(--teal)">Predict</button></div>`;
-  } else {
-    h+=`<div class="empty"><div class="big">No papers yet</div>Upload a past paper or two, then Predict.</div>`;
-  }
-  h+=`<div id="predictOut"></div>`;
-  m.innerHTML=h;
-  const addBtn=$('#paperAddBtn'); if(addBtn) addBtn.onclick=()=>paperToggle(true);
-  $$('#main [data-rmpaper]').forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.rmpaper;
-    (state.pastPapers[sub.id]||[]).splice(i,1); save(); renderPredictor(m);
-  });
-  const predBtn=$('#predictGoBtn'); if(predBtn) predBtn.onclick=()=>runPrediction(sub);
-  if(state.lastPrediction&&state.lastPrediction.subId===sub.id) renderPredictionTiers(state.lastPrediction.tiers);
-}
-function renderPredictionTiers(tiers){
-  const out=$('#predictOut'); if(!out||!tiers) return;
-  out.innerHTML=PRED_TIERS.map(([key,label,cls])=>{
-    const items=tiers[key]||[];
-    if(!items.length) return '';
-    return `<div class="predTier ${cls}"><div class="predTierHead">${label} · ${items.length}</div>`+
-      items.map(it=>`<div class="predItem"><div class="predTopic">${esc(it.topic||'')}</div>
-        <div class="predQ">${esc(it.question||'')}</div>
-        <div class="predWhy">${esc(it.rationale||'')}</div></div>`).join('')+`</div>`;
-  }).join('')||'<div class="setNote">No predictions came back — try more papers.</div>';
-}
-async function runPrediction(sub){
-  if(blockedOffline('predicting a paper')) return;
-  const papers=subjectPapers(sub.id);
-  if(!papers.length) return toast('Upload at least one paper first.');
-  const btn=$('#predictGoBtn'); if(btn){ btn.disabled=true; btn.textContent='Analyzing…'; }
-  try{
-    const payload=papers.map(p=>({term:p.term, questions:p.questions}));
-    const resp=await apiFetch(PREDICT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({papers:payload})});
-    const data=await resp.json().catch(()=>({}));
-    if(!resp.ok||!data.tiers) throw new Error(data.error||'Prediction failed.');
-    state.lastPrediction={subId:sub.id, tiers:data.tiers}; save();
-    renderPredictionTiers(data.tiers);
-  }catch(err){
-    toast((err&&err.message)||'Prediction failed.',4500);
-  }finally{
-    if(btn){ btn.disabled=false; btn.textContent='Predict'; }
-  }
-}
-let paperPickedTerm='1', paperAbort=null;
-function paperToggle(show){
-  $('#paperWrap').classList.toggle('show',!!show);
-  if(show) paperRenderForm();
-  else if(paperAbort){ paperAbort.abort(); paperAbort=null; }
-}
-function paperRenderForm(){
-  const capped=paperUsageInfo().count>=PAPER_MONTHLY_CAP;
-  $('#paperBody').innerHTML=`
-    <div class="pdfField"><label>Term</label><select id="paperTerm">${[1,2,3,4].map(t=>`<option value="${t}"${String(t)===paperPickedTerm?' selected':''}>Term ${t}</option>`).join('')}</select></div>
-    <div class="pdfField"><label>Past paper PDF</label><input type="file" id="paperFile" accept="application/pdf,.pdf"></div>
-    <div class="pdfUsage">${paperUsageInfo().count}/${PAPER_MONTHLY_CAP} uploads this month</div>
-    ${capped?'<div class="setNote" style="color:var(--red); margin-top:-8px">Monthly cap reached — try again next month.</div>':''}
-    <div class="pdfBtns">
-      <button class="setMini" id="paperCancel">Cancel</button>
-      <button class="setMini" id="paperGo" style="border-color:var(--teal-line); color:var(--teal)"${capped?' disabled':''}>Extract &amp; add</button>
-    </div>`;
-  $('#paperTerm').onchange=e=>{ paperPickedTerm=e.target.value; };
-  $('#paperCancel').onclick=()=>paperToggle(false);
-  $('#paperGo').onclick=paperSubmit;
-}
-function paperShowLoading(){
-  $('#paperBody').innerHTML=`<div class="pdfSpinner">
-    <div class="pdfEmoji">📈</div>
-    <div class="pdfMsg">Reading the paper and pulling out its questions…</div>
-    <div class="pdfSub">Usually 10–30s. Don’t close this.</div>
-    <button class="setMini" id="paperCancelLoad" style="margin-top:16px">Cancel</button>
-  </div>`;
-  $('#paperCancelLoad').onclick=()=>{ if(paperAbort) paperAbort.abort(); };
-}
-function paperSubmit(){
-  if(blockedOffline('reading a paper')) return;
-  const sub=cur.sub;
-  const term=paperPickedTerm;
-  const file=$('#paperFile').files[0];
-  if(!file) return toast('Choose a PDF first.');
-  if(!/\.pdf$/i.test(file.name) && file.type!=='application/pdf') return toast('That doesn’t look like a PDF.');
-  if(file.size>3.5*1024*1024) return toast('That PDF is too large for the backend (~3.5MB limit).',4500);
-  if(paperUsageInfo().count>=PAPER_MONTHLY_CAP) return toast('Monthly cap reached — resets on the 1st.');
-  const reader=new FileReader();
-  reader.onload=async()=>{
-    const b64=String(reader.result||'').split(',')[1]||'';
-    paperShowLoading();
-    const ctrl=new AbortController(); paperAbort=ctrl;
-    const bail=setTimeout(()=>ctrl.abort(),60000);
-    try{
-      const resp=await apiFetch(PAPER_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pdfBase64:b64}),signal:ctrl.signal});
-      const data=await resp.json().catch(()=>({}));
-      if(!resp.ok) throw new Error(data.error||('Extraction failed ('+resp.status+')'));
-      if(!Array.isArray(data.questions)) throw new Error('Claude didn’t return any questions — try again.');
-      state.pastPapers=state.pastPapers||{}; state.pastPapers[sub.id]=state.pastPapers[sub.id]||[];
-      state.pastPapers[sub.id].push({term, fileName:file.name, questions:data.questions});
-      bumpPaperUsage();
-      paperToggle(false);
-      toast(`Added — ${data.questions.length} question${data.questions.length===1?'':'s'} from a Term ${term} paper`);
-      renderPredictor($('#main'));
-    }catch(err){
-      const msg=(err&&err.name==='AbortError')?'Took too long — try again.':((err&&err.message)||'Something went wrong.');
-      toast(msg,4500);
-      paperRenderForm();
-    }finally{
-      clearTimeout(bail); paperAbort=null;
-    }
-  };
-  reader.readAsDataURL(file);
-}
 
 /* ── stars & done ── */
 function starBtn(id){ return `<button class="starBtn${state.stars[id]?' on':''}" data-star="${id}" title="Mark as weak topic">${state.stars[id]?'★':'☆'}</button>`; }
@@ -2438,7 +2073,7 @@ function questionCard(cd,i){
     <div class="qHead" role="button" tabindex="0"><span class="qNum">Q${i+1}</span>
       <span class="qText">${esc(cd.q)}<span class="qTags">${tags}</span></span>
       ${starBtn(cd.id)}<span class="qChev">▶</span></div>
-    <div class="qAns"><div class="qAnsInner">${ans||'<span class="qNoAns">No answer yet — tap to generate one.</span>'}</div></div></div>`;
+    <div class="qAns"><div class="qAnsInner">${ans||'<span class="qNoAns">No answer in the notes yet.</span>'}</div></div></div>`;
 }
 
 /* ── chapter view ── */
@@ -2486,7 +2121,15 @@ function settingsHTML(){
     <div class="setBlk"><div class="setupLbl">Offline</div>
       <div class="setLine"><span>Works without a connection<em id="offReadyNote">Checking…</em></span>
         <span class="setNote" style="margin:0" id="offReadyFlag">…</span></div>
-      <div class="setNote">Your notes, questions, quizzes, highlights and JSON import all work in airplane mode. Only the Claude features (Import PDF, AI answers, Paper Predictor) need a connection.</div></div>
+      <div class="setNote">Everything works in airplane mode: notes, questions, quizzes, highlights and JSON import. New notes download the next time you’re online.</div></div>
+
+    <div class="setBlk"><div class="setupLbl">Notes sync</div>
+      <div class="setLine"><span>Download new and corrected notes<em>Only chapters that changed come down. Your ticks, stars and highlights stay.</em></span>
+        <span class="setSeg"><button data-sync="on" class="${state.syncOff?'':'on'}">On</button><button data-sync="off" class="${state.syncOff?'on':''}">Off</button></span></div>
+      <div class="setLine"><span>Check now<em id="syncNote">${syncNoteText()}</em></span>
+        <button class="setMini" id="syncBtn">Check now</button></div>
+      ${(state.syncSkip||[]).length?`<div class="setLine"><span>Chapters you removed<em>${state.syncSkip.length} won’t download again.</em></span>
+        <button class="setMini" id="syncUnskip">Bring back</button></div>`:''}</div>
 
     <div class="setBlk"><div class="setupLbl">Chapters</div>${chapters}</div>
 
@@ -2496,9 +2139,6 @@ function settingsHTML(){
       <div class="setNote" style="margin-top:0">Rename a unit, or delete an empty one. A unit holding chapters can't be deleted — remove or move its chapters first.</div>${units}</div>
 
     <div class="setBlk"><div class="setupLbl">Your work</div>
-      ${isOffline()?`<div class="setNote" style="color:var(--gold); margin-top:0">You’re offline. Notes, highlights, quizzes and JSON import all work — only the Claude features below are paused.</div>`:''}
-      <div class="setLine"><span>Import PDF<em>Send a chapter PDF straight to Claude — ${pdfUsageHTML()}.</em></span>
-        <button class="setMini" id="pdfBtn"${isOffline()?' disabled':''}>Import PDF</button></div>
       <div class="setLine"><span>Export a backup<em>Notes, chapters and progress in one file.</em></span>
         <button class="setMini" id="expBtn">Export</button></div>
       <div class="setLine"><span>Import JSON<em>Files that name their own subject and unit, or a backup. Drop in as many as you like.</em></span>
@@ -2544,11 +2184,19 @@ function renderMain(){
   renderStack();
   if(ch==='settings'){
     m.innerHTML=settingsHTML();
-    $$('#main .setSeg button').forEach(b=>b.onclick=()=>setTheme(b.dataset.th));
+    $$('#main [data-th]').forEach(b=>b.onclick=()=>setTheme(b.dataset.th));
+    $$('#main [data-sync]').forEach(b=>b.onclick=()=>{
+      state.syncOff=b.dataset.sync==='off'; save(); renderMain();
+      if(!state.syncOff) syncContent();
+    });
+    $('#syncBtn').onclick=()=>{ $('#syncNote').textContent='Checking…'; syncContent({manual:true}); };
+    const unskip=$('#syncUnskip');
+    if(unskip) unskip.onclick=()=>{ state.syncSkip=[]; save(); renderMain(); syncContent({manual:true}); };
     $$('#main [data-cols]').forEach(b=>b.onclick=()=>setCols(b.dataset.cols));
     $$('#main [data-rmch]').forEach(b=>b.onclick=()=>{
       if(b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='Sure?'; setTimeout(()=>{b.dataset.armed='0';b.textContent='Remove';},2600); return; }
       state.content=(state.content||[]).filter(en=>entryChapId(en)!==b.dataset.rmch);
+      state.syncSkip=[...new Set([...(state.syncSkip||[]), b.dataset.rmch])];   // and it stays removed
       save(); toast('Removed — reloading'); setTimeout(()=>location.reload(),700);
     });
     $$('#main [data-rensub]').forEach(b=>b.onclick=()=>{
@@ -2577,7 +2225,6 @@ function renderMain(){
       toast('Unit added — reloading'); setTimeout(()=>location.reload(),700);
     });
     reportOfflineReady();
-    $('#pdfBtn').onclick=()=>pdfToggle(true);
     $('#expBtn').onclick=()=>{
       const blob=new Blob([JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,subs:state.subs||[],subjectNames:state.subjectNames||{},removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},content:state.content||[]},null,1)],{type:'application/json'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='sem5-backup.json'; a.click();
@@ -2627,7 +2274,6 @@ function renderMain(){
     $$('#main .revGo').forEach(b=>b.onclick=()=>jumpTo(CARDS[b.dataset.cid]));
     scrollTo(0,0); return;
   }
-  if(ch==='predict'){ renderPredictor(m); scrollTo(0,0); return; }
   if(!ch){
     const sub=cur.sub, chs=allChapters(sub);
     const lecT=chs.reduce((a,c)=>a+c.lectures.length,0), lecD=chs.reduce((a,c)=>a+chDone(c),0);
@@ -2664,7 +2310,6 @@ function renderMain(){
         <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:14px">
           <button class="setMini" id="emptyImp" style="border-color:var(--gold-line); color:var(--gold)">Import JSON</button>
           <button class="setMini" id="emptyImpMan">Import manually</button>
-          <button class="setMini" id="emptyPdf"${isOffline()?' disabled':''}>Import PDF</button>
         </div></div>`;
     }
     m.innerHTML=h;
@@ -2691,10 +2336,9 @@ function renderMain(){
       save(); buildPalIndex();
       cur.sub=DATA.subjects[0]; openChapter(null,'notes');
     };
-    const eImp=$('#emptyImp'), eImpMan=$('#emptyImpMan'), ePdf=$('#emptyPdf');
+    const eImp=$('#emptyImp'), eImpMan=$('#emptyImpMan');
     if(eImp) eImp.onclick=()=>jsonToggle(true);
     if(eImpMan) eImpMan.onclick=()=>jsonManualToggle(true);
-    if(ePdf) ePdf.onclick=()=>pdfToggle(true);
     scrollTo(0,0);
     return;
   }
@@ -2740,7 +2384,6 @@ function renderMain(){
     if(!t) h+=`<div class="empty">No lectures yet.</div>`;
   }
   if(cur.tab==='questions'){
-    h+=`<div class="qGenRow"><button class="setMini" id="qGenBtn">✨ Generate questions</button><span id="qGenStatus" class="setNote" style="margin:0"></span></div>`;
     const fl=cur.qFilter&&ch.lectures.find(l=>l.id===cur.qFilter);
     const list=fl?qs.filter(q=>q.lec===fl):qs;
     if(fl) h+=`<div class="qFilter">Showing <b>Lec ${fl.no} · ${esc(fl.title)}</b> — ${list.length} of ${qs.length} questions <button id="qShowAll">Show all</button></div>`;
@@ -2764,7 +2407,6 @@ function renderMain(){
   });
   $$('#tabBody [data-qlec]').forEach(b=>b.onclick=()=>{ cur.qFilter=b.dataset.qlec; openChapter(ch,'questions'); });
   const qAll=$('#qShowAll'); if(qAll) qAll.onclick=()=>{ cur.qFilter=null; openChapter(ch,'questions'); };
-  const qGenBtn=$('#qGenBtn'); if(qGenBtn) qGenBtn.onclick=()=>generateQuestionsForChapter(ch);
   $$('#tabBody [data-step]').forEach(b=>b.onclick=()=>{
     const id=b.dataset.lec, s=b.dataset.step;
     const d=state.done[id]||(state.done[id]={});
@@ -2776,7 +2418,7 @@ function renderMain(){
   $$('#tabBody .qHead').forEach(b=>{
     const openIt=()=>{
       const card=b.closest('.qCard'); card.classList.toggle('open');
-      if(card.classList.contains('open')){ maybeFillAnswer(CARDS[card.dataset.cid], ch); fitCharts(card); }
+      if(card.classList.contains('open')) fitCharts(card);
     };
     b.onclick=e=>{ if(e.target.closest('[data-star]'))return; openIt(); };
     b.onkeydown=e=>{
@@ -3312,8 +2954,6 @@ applyHlMode();
 
 $('#prtWrap').onclick=e=>{ if(e.target.id==='prtWrap')prtToggle(false); };
 $('#palWrap').onclick=e=>{ if(e.target.id==='palWrap')palToggle(false); };
-$('#pdfWrap').onclick=e=>{ if(e.target.id==='pdfWrap')pdfToggle(false); };
-$('#paperWrap').onclick=e=>{ if(e.target.id==='paperWrap')paperToggle(false); };
 $('#jsonWrap').onclick=e=>{ if(e.target.id==='jsonWrap')jsonToggle(false); };
 $('#jsonManualWrap').onclick=e=>{ if(e.target.id==='jsonManualWrap')jsonManualToggle(false); };
 $('#promptWrap').onclick=e=>{ if(e.target.id==='promptWrap')promptToggle(false); };
@@ -3325,8 +2965,8 @@ const GUIDE=[
    h:'Your notes, questions and formulas for the semester — all in one place, all on your phone, working offline. Nothing to sign into.',
    k:'Everything lives on <b>this device</b>. No account, no cloud, no subscription.'},
   {e:'📥', t:'How chapters get in',
-   h:'You don\'t type notes here. Tap <b>Settings ▸ Import PDF</b>, pick a subject and unit, and upload a chapter PDF — Claude reads it and the app rebuilds itself around the new chapter.',
-   k:'Prefer doing it by hand? <b>Settings ▸ Import</b> still takes a pasted <code>.json</code> file the same way.'},
+   h:'You don\'t type notes here. New and corrected chapters <b>download by themselves</b>: open the app with a connection and they\'re there, with your ticks, stars and highlights kept.',
+   k:'Got a chapter file of your own? <b>⋯ ▸ Import JSON</b> adds it.'},
   {e:'🗂️', t:'Finding your way',
    h:'The <b>subject tabs</b> up top switch subjects. The <b>sidebar</b> lists that subject\'s chapters — tap one to open it. Each chapter has <b>Notes</b>, <b>Questions</b> and <b>Formulas</b>.',
    k:'Every imported chapter appears in the sidebar automatically, grouped by unit.'},
@@ -3340,19 +2980,13 @@ const GUIDE=[
    h:'<b>Settings</b> (the ⋯ menu, or the sidebar) has your theme, export a full backup, load a demo chapter to look around, and manage subjects. That corner stack? One sheet per chapter you add.',
    k:'Do a quick <b>Export backup</b> now and then — it\'s your notes and progress in one file.'}
 ];
-const APP_VERSION='1.10';
+const APP_VERSION='1.11';
 const WHATS_NEW=[
-  'Wide screens: cards now fill the whole screen in columns. Settings ▸ Layout lets you pick Auto, 1, 2 or 3.',
+  'Notes update themselves: new and corrected chapters download when you open the app, or come back to it, with a connection. Your ticks, stars and highlights stay. Settings ▸ Notes sync.',
+  'The AI features are gone (Import PDF, AI answers, ✨ Generate questions, Paper Predictor). The app no longer talks to any AI service or uses an API key.',
+  'Wide screens: cards fill the whole screen in columns. Settings ▸ Layout lets you pick Auto, 1, 2 or 3.',
   'Phones: bigger buttons for your thumb, a proper search icon, and nothing floating over what you’re reading.',
-  'A ⚑ To check tab in a chapter collects everything flagged for you to confirm against the lecture.',
-  'Flow charts. Notes can show real box-and-arrow charts — top-down like your teacher’s when there’s room, a tidy vertical tree on your phone.',
-  'Worked calculations read like tables now, not code — in every chapter you already have, nothing to re-import.',
-  'Long chapters: a lecture list at the top of Notes jumps straight to any lecture, and the ↑ button brings you back to it.',
-  'Lectures are numbered within each chapter (Lec 1, 2, 3…), matching your lecture PDFs.',
-  'Each lecture links to just its own questions, so you can read a lecture and then practise it straight away.',
-  'Ticking a lecture’s steps no longer throws you back to the top of the page.',
-  'A chapter file that brings its own subject (like Management Accounting) lands there straight away, and an empty “Unit 1” no longer clutters the sidebar.',
-  'Fixed: the home-screen icon and the offline copy, which broke when the app moved to its new address.'
+  'A ⚑ To check tab in a chapter collects everything flagged for you to confirm against the lecture.'
 ];
 function showWhatsNew(){
   const g=$('#guide');
@@ -3394,10 +3028,8 @@ function showGuide(force){
 
 /* ── offline support ───────────────────────────────────────────────
    Notes, highlights, progress and quizzes are all localStorage, so they
-   already work with no network. Two things are added here: the service
-   worker (so the page itself opens offline and installs to the home
-   screen), and one honest gate in front of the Claude-backed features,
-   which genuinely cannot work offline. ── */
+   already work with no network. The service worker adds the rest: the
+   page itself opens offline and installs to the home screen. ── */
 function isOffline(){ return navigator.onLine===false; }
 /* Is the app actually usable in airplane mode right now? A registered
    worker isn't enough — the shell has to be sitting in the cache, which
@@ -3429,12 +3061,6 @@ function reportOfflineReady(){
     flag.style.color=r.ok?'var(--teal)':'var(--gold)';
   }).catch(()=>{ note.textContent='Could not check.'; flag.textContent='—'; });
 }
-/* Guard an AI action. Returns true (and toasts) when it can't run. */
-function blockedOffline(what){
-  if(!isOffline()) return false;
-  toast(`You’re offline — ${what} needs a connection. Your notes still work.`,4000);
-  return true;
-}
 function renderOfflineFlag(){
   const el=$('#offlineFlag'); if(!el) return;
   el.classList.toggle('on',isOffline());
@@ -3446,6 +3072,141 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
     navigator.serviceWorker.register('/sw.js').catch(()=>{ /* offline-first is a bonus, never a hard requirement */ });
   });
 }
+
+/* ── notes sync ─────────────────────────────────────────────────────
+   The chapter files live in the app's own repo under /content/, listed in
+   /content/index.json with a short hash of each file. Every time the app
+   opens (or comes back to the front) with a connection, it reads that list
+   and downloads only the chapters whose hash changed, then files them
+   through applyImportPayload(), the same path as Import JSON. Same chapter
+   id = replaced in place, so ticks, stars, quiz marks and highlights stay.
+   A chapter you moved keeps the subject, unit and position you gave it; one
+   you removed in Settings stays removed (state.syncSkip). Nothing is saved
+   when nothing changed. ── */
+const SYNC_LIST='/content/index.json';
+let syncBusy=false, syncInfo=null;          // syncInfo: last check this session {at, ok, n, msg}
+function syncFetch(url,ms){
+  const ctrl=new AbortController(), tm=setTimeout(()=>ctrl.abort(),ms||15000);
+  return fetch(url,{cache:'no-store',signal:ctrl.signal}).finally(()=>clearTimeout(tm));
+}
+async function syncHash(buf){
+  if(!(window.crypto&&crypto.subtle)) return null;   // only over https/localhost; skip the check elsewhere
+  const d=new Uint8Array(await crypto.subtle.digest('SHA-256',buf));
+  return [...d].map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+function findChapter(id){
+  for(const s of DATA.subjects) for(const u of s.units){ const c=u.chapters.find(x=>x.id===id); if(c) return c; }
+  return null;
+}
+async function syncContent(opts){
+  const manual=!!(opts&&opts.manual);
+  if(syncBusy) return {skipped:'busy'};
+  if(state.syncOff&&!manual) return {skipped:'off'};
+  if(!location.protocol.startsWith('http')) return {skipped:'file'};
+  if(isOffline()){ if(manual) toast('You’re offline — check again when you have a connection.'); return {skipped:'offline'}; }
+  syncBusy=true;
+  const out={updated:[],added:[],same:0,failed:0};
+  try{
+    const r=await syncFetch(SYNC_LIST+'?t='+Date.now());
+    if(!r.ok) throw new Error('list '+r.status);
+    const man=await r.json();
+    const list=(Array.isArray(man.chapters)?man.chapters:[]).filter(c=>c&&c.id&&c.file);
+    const hashes=state.contentHashes||{}, skip=state.syncSkip||[];
+    const todo=list.filter(c=>!skip.includes(c.id) && (hashes[c.id]!==c.hash || !findChapter(c.id)));
+    const got=await Promise.all(todo.map(async c=>{
+      try{
+        const fr=await syncFetch('/content/'+c.file+'?h='+encodeURIComponent(c.hash||''),30000);
+        if(!fr.ok) return null;
+        const buf=await fr.arrayBuffer();
+        const h=await syncHash(buf);
+        if(h&&c.hash&&h!==c.hash) return null;              // half-deployed or stale copy: try again next open
+        return {c, d:JSON.parse(new TextDecoder().decode(buf))};
+      }catch(e){ return null; }
+    }));
+    let dirty=false;
+    /* a subject still called "(rename me)" takes the name the list gives it, but only when a
+       chapter is about to land there and no other subject already has that name */
+    const wanted=new Set(got.filter(Boolean).map(g=>String(g.d.subject||'').toLowerCase()));
+    Object.entries(man.subjectNames||{}).forEach(([id,o])=>{
+      const sb=DATA.subjects.find(s=>s.id===id);
+      if(!sb||!o||!o.name||!/\(rename me\)/i.test(sb.name)||!wanted.has(String(o.name).toLowerCase())) return;
+      if(DATA.subjects.some(s=>s.name.toLowerCase()===String(o.name).toLowerCase())) return;
+      sb.name=o.name; if(o.code) sb.code=o.code;
+      (state.subjectNames=state.subjectNames||{})[id]={name:o.name, code:o.code||sb.code};
+      dirty=true;
+    });
+    got.forEach((g,i)=>{
+      if(!g){ out.failed++; return; }
+      const {c,d}=g, fileChap=entryChapter(d);
+      if(!fileChap||!Array.isArray(fileChap.lectures)||fileChap.id!==c.id){ out.failed++; return; }
+      const have=findChapter(c.id);
+      const oldEn=(state.content||[]).find(en=>entryChapId(en)===c.id);
+      const oldChap=oldEn&&entryChapter(oldEn);
+      if(have&&oldChap&&oldChap.name===fileChap.name&&JSON.stringify(oldChap.lectures)===JSON.stringify(fileChap.lectures)){
+        (state.contentHashes=state.contentHashes||{})[c.id]=c.hash; out.same++; dirty=true; return;   // already identical (e.g. imported by hand)
+      }
+      let payload=d;
+      if(have){
+        const chap=Object.assign({},fileChap); delete chap.subject; delete chap.unit;
+        if(typeof have.order==='number') chap.order=have.order; else delete chap.order;
+        payload={subject:have.sub.id, unit:have.unit.name, chapter:chap};
+      }
+      const res=applyImportPayload(payload);
+      if(!res.done.length){ out.failed++; return; }
+      if(!res.stored){ out.failed++; out.full=true; return; }
+      (state.contentHashes=state.contentHashes||{})[c.id]=c.hash; dirty=true;
+      const ch=findChapter(c.id);
+      (have?out.updated:out.added).push(ch?`${ch.sub.code} Ch ${ch.no}`:fileChap.name);
+    });
+    if(dirty) save();
+    const n=out.updated.length+out.added.length;
+    syncInfo={at:Date.now(), ok:true, n, failed:out.failed};
+    if(n){
+      refreshAfterSync();
+      const bits=[];
+      if(out.updated.length) bits.push('Notes updated: '+out.updated.join(', '));
+      if(out.added.length) bits.push('New: '+out.added.join(', '));
+      toast(bits.join(' · '),5000);
+    } else if(out.full) toast('New notes came in, but this device’s storage is full — remove an old chapter in Settings.',6000);
+    else if(manual) toast(out.failed?'Couldn’t download every chapter — try again in a minute.':'Your notes are up to date.');
+  }catch(e){
+    syncInfo={at:Date.now(), ok:false, n:0};
+    if(manual) toast('Couldn’t reach the notes — try again in a minute.');
+  }finally{
+    syncBusy=false;
+    if(cur.ch==='settings'&&$('#syncNote')) $('#syncNote').textContent=syncNoteText();
+  }
+  return out;
+}
+/* show what came in without a reload: the merge replaced chapter objects, so re-find the
+   one you're reading by id and redraw it where you were. Overlays (What's new, search, the
+   import sheets) sit on top of #main, so redrawing under them is fine; a quiz redraws the
+   page itself when it closes, and a highlight stroke in progress gets a moment to finish. */
+function refreshAfterSync(){
+  if(hlStroke){ setTimeout(refreshAfterSync,1500); return; }
+  buildPalIndex();
+  cur.sub=DATA.subjects.find(s=>s.id===(cur.sub&&cur.sub.id))||DATA.subjects[0];
+  if(cur.ch&&typeof cur.ch==='object') cur.ch=findChapter(cur.ch.id)||null;
+  if($('#quizWrap').classList.contains('show')){ renderSubjTabs(); renderSidebar(); return; }
+  const y=scrollY;
+  openChapter(cur.ch,cur.tab,true);
+  scrollTo({top:y,behavior:'instant'});
+}
+function syncNoteText(){
+  if(state.syncOff) return 'Off — chapters only change when you import them.';
+  if(syncBusy) return 'Checking…';
+  if(!syncInfo) return 'Checks every time you open the app with a connection.';
+  const mins=Math.round((Date.now()-syncInfo.at)/60000);
+  const when=mins<1?'just now':mins<60?mins+' min ago':Math.round(mins/60)+' h ago';
+  if(!syncInfo.ok) return 'Last check '+when+' couldn’t reach the notes.';
+  return 'Checked '+when+' — '+(syncInfo.n?syncInfo.n+(syncInfo.n===1?' chapter':' chapters')+' updated':'up to date')+'.';
+}
+/* the app also catches up when it comes back online, or back to the front after a while
+   (a home-screen app on a phone can sit open for days without ever reloading) */
+addEventListener('online',()=>{ if(!syncInfo||!syncInfo.ok) syncContent(); });
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&syncInfo&&Date.now()-syncInfo.at>10*60*1000) syncContent();
+});
 
 /* ── boot: restore last view ── */
 buildPalIndex();
@@ -3459,6 +3220,7 @@ renderOfflineFlag();
   if(!ch) ch=allChapters(cur.sub)[0]||null;
   openChapter(ch,(state.view&&state.view.tab)||'notes',true);
   showGuide(false); showWhatsNew();
+  setTimeout(()=>syncContent(),400);         // after the first paint, never in its way
 })();
 </script>
 <!-- jarvis-sync:start (master copy lives in the jarvis repo: jarvis/hub_client.html) -->

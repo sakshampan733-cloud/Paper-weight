@@ -9,14 +9,15 @@
  *                         CSS already declares local fallbacks, so a miss
  *                         degrades to Georgia/system rather than breaking.
  *   icons/manifest        cache-first.
- *   /api/* (Claude calls) never touched — always straight to the network. They
- *                         can't work offline by definition, and a cached POST
- *                         response would be actively wrong.
+ *   /content/* (notes)    never touched — the app asks for these with no-store
+ *                         to see if a chapter changed, so a cached copy would
+ *                         hide every update. The notes themselves live in
+ *                         localStorage, so offline still has them.
  *
  * Bump CACHE_VERSION when the precache list changes; old caches are dropped on
  * activate.
  */
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const SHELL_CACHE = 'pw-shell-' + CACHE_VERSION;
 const ASSET_CACHE = 'pw-assets-' + CACHE_VERSION;
 
@@ -87,12 +88,12 @@ async function networkFirstWithTimeout(request, cacheName) {
 
 self.addEventListener('fetch', (event) => {
   const req = event.request;
-  if (req.method !== 'GET') return; // POSTs to /api/* go straight through
+  if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
 
-  // Claude calls must never be served from cache.
-  if (url.origin === self.location.origin && url.pathname.startsWith('/api/')) return;
+  // notes sync: always the network (see above)
+  if (url.origin === self.location.origin && url.pathname.startsWith('/content/')) return;
 
   if (req.mode === 'navigate' || (req.destination === 'document' && url.origin === self.location.origin)) {
     event.respondWith(networkFirstWithTimeout(req, SHELL_CACHE));

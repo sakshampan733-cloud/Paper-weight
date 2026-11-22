@@ -1,0 +1,563 @@
+{
+  "subject": "Income Tax",
+  "unit": "Unit 2: Salaries & House Property",
+  "chapter": {
+    "id": "it-ch03",
+    "order": 3,
+    "name": "Income from House Property",
+    "lectures": [
+      {
+        "title": "Income from House Property — Basis of Charge, Deemed Owners & Annual Value",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Sections covered (Income-tax Act 2025)",
+            "html": "<style>/*pw*/.pwf{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 16px;padding:4px 2px 10px;container-type:inline-size}.pwf ul{list-style:none;margin:0;padding:0}.pwf li{margin:0}.pwf .t{width:max-content;margin:0 auto;display:flex;flex-direction:column;align-items:center}.pwf .b{position:relative;border:1.5px solid var(--line);background:var(--panel2);border-radius:10px;padding:7px 12px;font-size:13.5px;line-height:1.45;color:var(--text);font-weight:600;max-width:240px;box-sizing:border-box}.pwf .b i{display:block;font-style:normal;font-weight:400;font-size:12.5px;color:var(--dim);margin-top:2px}.pwf .b0{border-color:var(--gold);background:var(--gold-bg);font-size:15px;padding:9px 18px;max-width:340px;text-align:center}.pwf .b1{border-color:var(--teal);background:var(--teal-bg)}.pwf .b3{background:var(--panel);font-weight:500}.pwf .h{display:flex;justify-content:center;position:relative;padding-top:14px}.pwf .h::before{content:'';position:absolute;top:0;left:50%;height:14px;border-left:2px solid var(--teal-line)}.pwf .h>li{position:relative;padding:16px 6px 0;display:flex;flex-direction:column;align-items:center}.pwf .h>li::before{content:'';position:absolute;top:0;left:0;right:0;border-top:2px solid var(--teal-line)}.pwf .h>li:first-child::before{left:50%}.pwf .h>li:last-child::before{right:50%}.pwf .h>li:only-child::before{display:none}.pwf .h>li::after{content:'';position:absolute;top:0;left:50%;height:10px;border-left:2px solid var(--teal-line)}.pwf .h>li>.b{text-align:center}.pwf .h>li>.b::before{content:'';position:absolute;top:-7px;left:50%;margin-left:-5px;border:5px solid transparent;border-top:6px solid var(--teal-line);border-bottom:0}.pwf .h>li.c>.b{align-self:stretch;max-width:none}.pwf .v{position:relative;margin:4px 0 0 12px;align-self:stretch}.pwf .v::before{content:'';position:absolute;left:0;top:-4px;height:4px;border-left:2px solid var(--teal-line)}.pwf .v>li{position:relative;padding:6px 0 0 22px}.pwf .v>li::before{content:'';position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--teal-line)}.pwf .v>li:last-child::before{bottom:auto;height:24px}.pwf .v>li::after{content:'';position:absolute;left:0;top:23px;width:14px;border-top:2px solid var(--teal-line)}.pwf .v>li>.b{display:inline-block;max-width:300px;text-align:left}.pwf .v>li>.b::before{content:'';position:absolute;left:-7px;top:12px;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}.pwn{font-size:12.5px;color:var(--dim);margin:-6px 0 14px;padding-left:10px;border-left:3px solid var(--gold-line)}.pwl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 4px;margin:10px 0 14px}.pwl .b{border:1.5px solid var(--teal);background:var(--teal-bg);border-radius:10px;padding:6px 11px;font-size:13.5px;font-weight:600;color:var(--text);line-height:1.4}.pwl .b i{display:block;font-style:normal;font-weight:400;font-size:12px;color:var(--dim)}.pwl .g{border-color:var(--gold);background:var(--gold-bg)}.pwl .a{color:var(--teal);font-weight:700;font-size:17px;padding:0 3px}.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/@container (max-width:1200px){.pwf.w1200 .t{width:auto;align-items:flex-start}.pwf.w1200 .b0{text-align:left}.pwf.w1200 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1200 .h::before{left:0;top:-4px;height:4px}.pwf.w1200 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1200 .h>li::before,.pwf.w1200 .h>li:first-child::before,.pwf.w1200 .h>li:last-child::before,.pwf.w1200 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1200 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1200 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1200 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1200 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w1200\"><div class=\"t\"><div class=\"b b0\">House Property — Sections 20 to 25</div><ul class=\"h\"><li><div class=\"b b1\">20<i>income from house property</i></div></li><li><div class=\"b b1\">21<i>determination of annual value</i></div></li><li><div class=\"b b1\">22<i>deductions</i></div></li><li><div class=\"b b1\">23<i>arrears &amp; unrealised rent</i></div></li><li><div class=\"b b1\">24<i>property owned by co-owners</i></div></li><li><div class=\"b b1\">25<i>interpretation — deemed owner</i></div></li></ul></div></div><table><tr><th>Sec</th><th>Topic</th></tr><tr><td>20</td><td>Income from house property (charge)</td></tr><tr><td>21</td><td>Determination of annual value</td></tr><tr><td>22</td><td>Deductions from income from house property</td></tr><tr><td>23</td><td>Arrears of rent and unrealised rent received subsequently</td></tr><tr><td>24</td><td>Property owned by co-owners</td></tr><tr><td>25</td><td>Interpretation — deemed owner</td></tr></table><p>Rent from a house is taxed under the 3rd head, <b>Income from House Property (IHP)</b>, in the hands of the <b>owner</b> (real or deemed) — not the tenant. If Mr Ram owns a house and lets it to Mr Mohan, Ram pays tax under IHP; if Mohan sublets it, Mohan's income is <b>Other Sources</b>, not IHP.</p>"
+          },
+          {
+            "type": "note",
+            "title": "Basis of charge — Section 20",
+            "html": "<style>@container (max-width:700px){.pwf.w700 .t{width:auto;align-items:flex-start}.pwf.w700 .b0{text-align:left}.pwf.w700 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w700 .h::before{left:0;top:-4px;height:4px}.pwf.w700 .h>li{display:block;padding:6px 0 0 22px}.pwf.w700 .h>li::before,.pwf.w700 .h>li:first-child::before,.pwf.w700 .h>li:last-child::before,.pwf.w700 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w700 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w700 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w700 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w700 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w700\"><div class=\"t\"><div class=\"b b0\">Section 20 — taxable under 'Income from House Property' when</div><ul class=\"h\"><li><div class=\"b b1\">Building or land appurtenant</div></li><li><div class=\"b b1\">Assessee is the owner</div></li><li><div class=\"b b1\">Not used for his own business / profession</div></li></ul></div></div><p>The <b>annual value</b> of any property consisting of <b>buildings or lands appurtenant thereto</b>, of which the assessee is the <b>owner</b>, is chargeable under the head “Income from house property”.</p><p><b>Exception:</b> the portion of a property used <b>by the owner for his own business or profession</b> (whose profits are taxable) is <b>not</b> taxed as house property.</p><p>Three conditions: (1) building or land appurtenant to it, (2) assessee is the owner, (3) not used for own business/profession.</p>"
+          },
+          {
+            "type": "note",
+            "title": "Ownership — real owner vs deemed owner (Sec 25)",
+            "html": "<style>@container (max-width:600px){.pwf.w600 .t{width:auto;align-items:flex-start}.pwf.w600 .b0{text-align:left}.pwf.w600 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w600 .h::before{left:0;top:-4px;height:4px}.pwf.w600 .h>li{display:block;padding:6px 0 0 22px}.pwf.w600 .h>li::before,.pwf.w600 .h>li:first-child::before,.pwf.w600 .h>li:last-child::before,.pwf.w600 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w600 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w600 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w600 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w600 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w600\"><div class=\"t\"><div class=\"b b0\">Ownership of the property</div><ul class=\"h\"><li><div class=\"b b1\">Real owner<i>property stands in his name</i></div></li><li class=c><div class=\"b b1\">Deemed owner<i>Sec 25</i></div><ul class=\"v\"><li><div class=\"b b2\">① Transfer to a spouse</div></li><li><div class=\"b b2\">② Transfer to a minor child</div></li><li><div class=\"b b2\">③ Holder of an impartible estate</div></li><li><div class=\"b b2\">④ Member of a co-operative society</div></li><li><div class=\"b b2\">⑤ Person in possession of a property</div></li><li><div class=\"b b2\">⑥ Person having right in a property for not less than 12 years</div></li></ul></li></ul></div></div><p><b>Real owner</b> — the person in whose name the property legally stands. <b>Deemed owners</b>:</p><ol><li><b>Transfer to spouse</b> without adequate consideration (not under an agreement to live apart) → transferor is deemed owner. E.g. Mr X transfers house to wife without consideration, let at ₹5L p.a. → <b>husband</b> taxable. But transfer to a <b>divorced</b> wife (or under agreement to live apart) → the <b>wife</b> is taxable.</li><li><b>Transfer to a minor child</b> without adequate consideration → transferor is deemed owner (e.g. minor child gets rent ₹9L → <b>father</b> taxable). Exception: transfer to a <b>minor married daughter</b> → the <b>daughter</b> is taxable.</li><li><b>Holder of an impartible estate</b> — deemed owner of all properties in the estate.</li><li><b>Member of a co-operative society / company / AOP</b> to whom a flat is allotted → deemed owner.</li><li><b>Person in possession</b> of a property under part-performance of a contract (possession taken, price paid, registration pending) → deemed owner.</li><li><b>Person having a right in a property for not less than 12 years</b> (lease of 12+ years) → deemed owner.</li></ol>"
+          },
+          {
+            "type": "note",
+            "title": "Composite rent",
+            "html": "<style>@container (max-width:600px){.pwf.w600 .t{width:auto;align-items:flex-start}.pwf.w600 .b0{text-align:left}.pwf.w600 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w600 .h::before{left:0;top:-4px;height:4px}.pwf.w600 .h>li{display:block;padding:6px 0 0 22px}.pwf.w600 .h>li::before,.pwf.w600 .h>li:first-child::before,.pwf.w600 .h>li:last-child::before,.pwf.w600 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w600 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w600 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w600 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w600 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w600\"><div class=\"t\"><div class=\"b b0\">Composite rent<i>rent for the house + services / other assets</i></div><ul class=\"h\"><li><div class=\"b b1\">House + services<i>lift, water, electricity, watch &amp; ward, AC → split: house → IHP · services → Other Sources</i></div></li><li class=c><div class=\"b b1\">House + machinery / furniture</div><ul class=\"v\"><li><div class=\"b b2\">Letting separable<i>house → IHP · rest → PGBP / Other Sources</i></div></li><li><div class=\"b b2\">Inseparable<i>whole → PGBP / Other Sources</i></div></li></ul></li></ul></div></div><p>Rent charged for the house plus facilities/services or other assets:</p><ul><li><b>House + services</b> (lift, water, electricity, watch &amp; ward, AC): split — house portion → <b>IHP</b>; services portion → <b>Other Sources</b>.</li><li><b>House + machinery/plant/furniture</b>: if letting is <b>separable</b>, house portion → IHP and the rest → PGBP or Other Sources; if <b>inseparable</b>, the whole → PGBP or Other Sources.</li></ul>"
+          },
+          {
+            "type": "note",
+            "title": "Annual value (Sec 21) — the four values",
+            "html": "<style>@container (max-width:500px){.pwf.w500 .t{width:auto;align-items:flex-start}.pwf.w500 .b0{text-align:left}.pwf.w500 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w500 .h::before{left:0;top:-4px;height:4px}.pwf.w500 .h>li{display:block;padding:6px 0 0 22px}.pwf.w500 .h>li::before,.pwf.w500 .h>li:first-child::before,.pwf.w500 .h>li:last-child::before,.pwf.w500 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w500 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w500 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w500 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w500 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w500\"><div class=\"t\"><div class=\"b b0\">Annual Value<i>Sec 21</i></div><ul class=\"h\"><li><div class=\"b b1\">MV<i>municipal value</i></div></li><li><div class=\"b b1\">FR<i>fair rent</i></div></li><li><div class=\"b b1\">SR<i>standard rent</i></div></li><li><div class=\"b b1\">AR<i>actual rent</i></div></li></ul></div></div><p><b>Computation of income from house property</b></p><div class=\"pwl\"><div class=\"b\">Higher of MV &amp; FR</div><span class=\"a\">→</span><div class=\"b\">Lower of that &amp; SR = Expected rent (ER)</div><span class=\"a\">→</span><div class=\"b\">Higher of ER &amp; AR = GAV</div><span class=\"a\">→</span><div class=\"b\">− Municipal tax = NAV</div><span class=\"a\">→</span><div class=\"b\">− 30% std. deduction − interest (Sec 22)</div><span class=\"a\">→</span><div class=\"b g\">= Income from house property</div></div><ul><li><b>Municipal Value (MV)</b> — value fixed by the municipality (e.g. MCD) for levying municipal tax.</li><li><b>Fair Rent (FR)</b> — rent a similar property in the same locality would fetch.</li><li><b>Standard Rent (SR)</b> — maximum rent fixed under the Rent Control Act (court order); the owner cannot legally charge more.</li><li><b>Actual Rent (AR)</b> — rent received/receivable for the let-out period.</li></ul>"
+          },
+          {
+            "type": "formula",
+            "title": "Format — Computation of Income from House Property",
+            "items": [
+              {
+                "l": "Step 1",
+                "f": "Higher of MV and FR",
+                "n": "= FR₁"
+              },
+              {
+                "l": "Step 2 — Expected Rent (ER)",
+                "f": "Lower of FR₁ and SR",
+                "n": "If no SR, ER = FR₁"
+              },
+              {
+                "l": "Step 3 — Gross Annual Value (GAV)",
+                "f": "Higher of ER and AR",
+                "n": "Vacancy rule applies"
+              },
+              {
+                "l": "Step 4 — Net Annual Value (NAV)",
+                "f": "GAV − Municipal tax paid by owner during the year",
+                "n": ""
+              },
+              {
+                "l": "Step 5 — Sec 22(1)(a)",
+                "f": "Standard deduction 30% of NAV",
+                "n": ""
+              },
+              {
+                "l": "Step 6 — Sec 22(1)(b)",
+                "f": "Interest on borrowed capital",
+                "n": ""
+              },
+              {
+                "l": "Income from House Property",
+                "f": "NAV − 30% − interest",
+                "n": ""
+              }
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Explain the deemed owners of a house property under Section 25.",
+            "a": "<ol><li>Individual transferring house to spouse (other than under agreement to live apart) or to a minor child (other than a married daughter) without adequate consideration.</li><li>Holder of an impartible estate.</li><li>Member of a co-operative society/company/AOP to whom a building is allotted.</li><li>Person in possession under part-performance of a contract.</li><li>Person acquiring rights (lease) in a building for 12 years or more.</li></ol>",
+            "src": "",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Mr X transfers his property to his divorced wife without adequate consideration; she receives rent of ₹2,00,000. Who is taxable? What if he transfers it to his (non-divorced) wife and it is let at ₹5,00,000 p.a.?",
+            "a": "<p>Divorced wife — she is the owner → <b>wife</b> is taxable. Transfer to existing wife without adequate consideration → husband is <b>deemed owner</b> → <b>husband</b> is taxable.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Mr X transfers his house to his minor child without adequate consideration (rent ₹9,00,000). Who is taxable? What if it is transferred to his minor married daughter (rent ₹2,00,000 p.m.)?",
+            "a": "<p>Minor child → <b>father</b> (deemed owner). Minor <b>married daughter</b> → exception → <b>daughter</b> is taxable.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Theory"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "What is composite rent and how is it taxed?",
+            "a": "<p>Rent covering the house plus services or other assets. Services: house portion → IHP, service portion → Other Sources. Machinery/furniture: separable letting → split (IHP + PGBP/Other Sources); inseparable → entire amount under PGBP/Other Sources.</p>",
+            "src": "",
+            "tags": [
+              "Theory"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Gross Annual Value & Municipal Tax",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Gross Annual Value (GAV)",
+            "html": "<div class=\"pwc\"><div class=\"ln\">FR₁ = higher of MV and FR</div><div class=\"ln\">ER  = lower of FR₁ and SR  (no SR → ER = FR₁)</div><div class=\"ln\">GAV = higher of ER and AR</div></div>"
+          },
+          {
+            "type": "note",
+            "title": "Municipal tax (MT)",
+            "html": "<style>@container (max-width:550px){.pwf.w550 .t{width:auto;align-items:flex-start}.pwf.w550 .b0{text-align:left}.pwf.w550 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w550 .h::before{left:0;top:-4px;height:4px}.pwf.w550 .h>li{display:block;padding:6px 0 0 22px}.pwf.w550 .h>li::before,.pwf.w550 .h>li:first-child::before,.pwf.w550 .h>li:last-child::before,.pwf.w550 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w550 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w550 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w550 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w550 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w550\"><div class=\"t\"><div class=\"b b0\">Municipal Tax (MT)</div><ul class=\"h\"><li class=c><div class=\"b b1\">MT paid by owner<i>allowed</i></div><ul class=\"v\"><li><div class=\"b b2\">(i) On paid basis</div></li><li><div class=\"b b2\">(ii) Self-occupied → MT not allowed</div></li><li><div class=\"b b2\">(iii) Any amount paid by owner → allowed</div></li></ul></li><li><div class=\"b b1\">MT paid by tenant<i>not allowed</i></div></li></ul></div></div><p>Municipal tax pays for roads, parks, sewage and garbage collection. Deduction from GAV:</p><ul><li><b>Paid by owner</b> → allowed, on <b>paid basis</b> — only if actually paid during the tax year (1-4-2026 to 31-3-2027), whether it relates to the current, previous or a future year.</li><li><b>Paid by tenant</b> → not allowed.</li><li>Due but <b>not paid</b> → not allowed.</li><li><b>Self-occupied</b> property → not allowed (NAV is nil).</li><li>Shared payment → only the owner's part. E.g. MT ₹4,000, half paid by tenant → deduct ₹2,000: NAV = 3,00,000 − 2,000 = 2,98,000.</li></ul>"
+          },
+          {
+            "type": "question",
+            "q": "A resident of Delhi owns six houses. MV / FR / SR / AR: I 2,00,000 / 2,40,000 / N.A. / 1,80,000; II 2,40,000 / 3,00,000 / 2,40,000 / 3,60,000; III 3,60,000 / 4,00,000 / 5,00,000 / 4,80,000; IV 4,20,000 / 4,20,000 / 3,00,000 / 3,60,000; V 4,80,000 / 5,00,000 / N.A. / 5,40,000; VI 4,50,000 / 5,00,000 / 5,00,000 / 4,20,000. Compute GAV.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><th>House</th><th class=\"x\">FR₁(higher MV,FR)</th><th class=\"x\">ER(lower FR₁,SR)</th><th class=\"n\">AR</th><th class=\"n\">GAV</th></tr><tr><td>I</td><td class=\"n\">2,40,000</td><td class=\"n\">2,40,000</td><td class=\"n\">1,80,000</td><td class=\"n\">2,40,000</td></tr><tr><td>II</td><td class=\"n\">3,00,000</td><td class=\"n\">2,40,000</td><td class=\"n\">3,60,000</td><td class=\"n\">3,60,000</td></tr><tr><td>III</td><td class=\"n\">4,00,000</td><td class=\"n\">4,00,000</td><td class=\"n\">4,80,000</td><td class=\"n\">4,80,000</td></tr><tr><td>IV</td><td class=\"n\">4,20,000</td><td class=\"n\">3,00,000</td><td class=\"n\">3,60,000</td><td class=\"n\">3,60,000</td></tr><tr><td>V</td><td class=\"n\">5,00,000</td><td class=\"n\">5,00,000</td><td class=\"n\">5,40,000</td><td class=\"n\">5,40,000</td></tr><tr><td>VI</td><td class=\"n\">5,00,000</td><td class=\"n\">5,00,000</td><td class=\"n\">4,20,000</td><td class=\"n\">5,00,000</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "X owns three houses in Delhi. House I: 2 units, MV 1,20,000, FR 1,50,000, SR 1,30,000, rent ₹70,000 per unit p.a., MT ₹12,000 due but not paid. House II: 1 unit, MV 72,000, FR 75,000, SR 80,000, rent ₹84,000, MT ₹8,000 for last year paid this year and ₹9,000 current year due not paid. House III: 3 units, MV 60,000, FR 75,000, SR 72,000, rent ₹21,000 per unit, MT ₹60,000 paid (includes ₹54,000 advance for next 9 years). Compute annual value for TY 2026-27.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td style=\"padding-left:2.0em!important\">House I</td><td class=\"n\"></td><td class=\"n\">House II</td><td class=\"n\">House III</td></tr><tr><td>MV</td><td class=\"n\">1,20,000</td><td class=\"n\">72,000</td><td class=\"n\">60,000</td></tr><tr><td>FR</td><td class=\"n\">1,50,000</td><td class=\"n\">75,000</td><td class=\"n\">75,000</td></tr><tr><td>FR₁ (higher)</td><td class=\"n\">1,50,000</td><td class=\"n\">75,000</td><td class=\"n\">75,000</td></tr><tr><td>SR</td><td class=\"n\">1,30,000</td><td class=\"n\">80,000</td><td class=\"n\">72,000</td></tr><tr><td>ER (lower)</td><td class=\"n\">1,30,000</td><td class=\"n\">75,000</td><td class=\"n\">72,000</td></tr><tr><td>AR</td><td class=\"n\">1,40,000</td><td class=\"n\">84,000</td><td class=\"n\">63,000</td></tr><tr><td>GAV (higher)</td><td class=\"n\">1,40,000</td><td class=\"n\">84,000</td><td class=\"n\">72,000</td></tr><tr><td>Less: MT paid</td><td class=\"n\">0</td><td class=\"n\">(8,000)</td><td class=\"n\">(60,000)</td></tr><tr><td>NAV</td><td class=\"n\">1,40,000</td><td class=\"n\">76,000</td><td class=\"n\">12,000</td></tr></table></div></div><p>MT is allowed only when paid by the owner during the year: House I's ₹12,000 unpaid → nil; House II's ₹8,000 paid this year allowed, unpaid ₹9,000 not; House III's ₹60,000 paid during the year is allowed in full (as done in class).</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "When is municipal tax deductible from GAV?",
+            "a": "<p>Only when it is <b>borne and actually paid by the owner</b> during the tax year (any year's tax). Not allowed if paid by tenant, if due but unpaid, or for a self-occupied house.</p>",
+            "src": "",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Section 22 — Different Situations (Self-occupied, Let-out, Vacancy, Part SO, DLO)",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Six situations",
+            "html": "<style>@container (max-width:1400px){.pwf.w1400 .t{width:auto;align-items:flex-start}.pwf.w1400 .b0{text-align:left}.pwf.w1400 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1400 .h::before{left:0;top:-4px;height:4px}.pwf.w1400 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1400 .h>li::before,.pwf.w1400 .h>li:first-child::before,.pwf.w1400 .h>li:last-child::before,.pwf.w1400 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1400 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1400 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1400 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1400 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w1400\"><div class=\"t\"><div class=\"b b0\">Sec 22 — Different Situations</div><ul class=\"h\"><li><div class=\"b b1\">1. Self-occupied<i>NAV = 0 · MT paid ✗</i></div></li><li><div class=\"b b1\">2. Let out full year<i>normal manner</i></div></li><li><div class=\"b b1\">3. Let out part of year, vacant part<i>ER vs AR (vacancy rule)</i></div></li><li><div class=\"b b1\">4. Let out part, self-occupied part of year<i>normal manner (e.g. 4 LO, 8 SO)</i></div></li><li><div class=\"b b1\">5. Self-occupied &amp; let out on the basis of area<i>% basis (e.g. 70% | 30%)</i></div></li><li><div class=\"b b1\">6. More than two houses self-occupied<i>two SO · rest deemed to be let out (DLO)</i></div></li></ul></div></div><ol><li><b>Self-occupied full year</b> → NAV = 0; MT not allowed.</li><li><b>Let out full year</b> → normal computation.</li><li><b>Let out part of year, vacant part</b> → vacancy rule.</li><li><b>Let out part, self-occupied part of year</b> → treated as let-out for the year (normal manner).</li><li><b>Part self-occupied, part let out by area</b> → split everything in the area ratio (e.g. 60% SO / 40% LO).</li><li><b>More than two houses self-occupied</b> → any <b>two</b> treated as self-occupied; the rest are <b>Deemed to be Let Out (DLO)</b> — GAV = ER, AR = 0.</li></ol>"
+          },
+          {
+            "type": "note",
+            "title": "Vacancy rule (let out part of year, vacant part)",
+            "html": "<style>@container (max-width:600px){.pwf.w600 .t{width:auto;align-items:flex-start}.pwf.w600 .b0{text-align:left}.pwf.w600 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w600 .h::before{left:0;top:-4px;height:4px}.pwf.w600 .h>li{display:block;padding:6px 0 0 22px}.pwf.w600 .h>li::before,.pwf.w600 .h>li:first-child::before,.pwf.w600 .h>li:last-child::before,.pwf.w600 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w600 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w600 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w600 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w600 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w600\"><div class=\"t\"><div class=\"b b0\">Let out part of year, vacant part of year</div><ul class=\"h\"><li><div class=\"b b1\">AR ≥ ER<i>GAV = AR</i></div></li><li><div class=\"b b1\">AR &lt; ER because of vacancy<i>GAV = AR</i></div></li><li><div class=\"b b1\">AR &lt; ER for other reasons (low rent)<i>GAV = ER</i></div></li></ul></div></div><ul><li>AR = rent for the let-out months only.</li><li>If AR ≥ ER → GAV = AR.</li><li>If AR &lt; ER <b>because of vacancy</b> (i.e. the full-year rent would have been ≥ ER) → GAV = AR.</li><li>If AR &lt; ER for other reasons (rent itself is low) → GAV = ER.</li></ul>"
+          },
+          {
+            "type": "question",
+            "q": "Case 1 — Mr X's house in Delhi: MV ₹2L, FR ₹3L, MT ₹10K; self-occupied for the full year. Compute IHP.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>NAV of self-occupied house</td><td class=\"n\">0</td></tr><tr class=\"k\"><td>Income from house property</td><td class=\"n\">0</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Case 2 — MV ₹2L, FR ₹3L, MT ₹10K, let out full year at ₹20,000 p.m. Compute NAV.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>FR₁ (higher of 2L, 3L)</td><td class=\"n\">3,00,000</td></tr><tr><td>SR</td><td class=\"n\">N.A.</td></tr><tr><td>ER</td><td class=\"n\">3,00,000</td></tr><tr><td>AR (20,000 × 12)</td><td class=\"n\">2,40,000</td></tr><tr><td>GAV (higher)</td><td class=\"n\">3,00,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(10,000)</td></tr><tr><td>NAV</td><td class=\"n\">2,90,000</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Let out part, vacant part: MV ₹2L, FR ₹3L, SR ₹2,80,000, MT ₹50K. (i) Rent ₹40K p.m., let 10 months; (ii) ₹40K p.m., let 5 months; (iii) ₹2,000 p.m., let 5 months. Compute NAV.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">ER = lower of (higher of 2L,3L) and 2.8L = 2,80,000</div><div class=\"gap\"></div><div class=\"tw\"><table><tr><th>(i)</th><th class=\"x\">AR 40,000 × 10 = 4,00,000 &gt; ER</th><th class=\"x\">GAV 4,00,000 − MT 50,000 = 3,50,000</th></tr><tr><td>(ii) AR 40,000 × 5</td><td class=\"n\"></td><td class=\"x\">= 2,00,000 &lt; ER due to vacancy (full year 4.8L)</td></tr><tr><td style=\"padding-left:2.0em!important\">GAV = AR 2,00,000 − 50,000</td><td class=\"n\"></td><td class=\"n\">= 1,50,000</td></tr><tr><td>(iii)AR 2,000 × 5 = 10,000; even full year 24,000 &lt; ER → not vacancy</td><td class=\"n\"></td><td class=\"n\"></td></tr><tr><td style=\"padding-left:2.0em!important\">GAV = ER 2,80,000 − 50,000</td><td class=\"n\"></td><td class=\"n\">= 2,30,000</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "MV ₹3L, FR ₹4L. Find GAV if (a) rent ₹20,000 p.m. let 4 months; (b) ₹50K p.m. let 4 months; (c) ₹50K p.m. let 9 months.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"ln\">ER = 4,00,000</div><div class=\"ln\">(a) AR 80,000; full-year rent 2.4L &lt; ER (low rent) → GAV 4,00,000</div><div class=\"ln\">(b) AR 2,00,000; full-year 6L &gt; ER → shortfall due to vacancy → GAV 2,00,000</div><div class=\"ln\">(c) AR 4,50,000 &gt; ER → GAV 4,50,000</div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Case 4 — R's house in Delhi: MV ₹1,00,000, FR ₹1,20,000. Self-occupied 1.4.2026–31.7.2026; let out from 1.8.2026 at ₹9,000 p.m. MT paid ₹20,000. Compute annual value for TY 2026-27.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>MV</td><td class=\"n\">1,00,000</td></tr><tr><td>FR</td><td class=\"n\">1,20,000</td></tr><tr><td>SR</td><td class=\"n\">N.A.</td></tr><tr><td>ER</td><td class=\"n\">1,20,000</td></tr><tr><td>AR (9,000 × 8)</td><td class=\"n\">72,000</td></tr><tr><td>GAV (higher)</td><td class=\"n\">1,20,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(20,000)</td></tr><tr><td>NAV</td><td class=\"n\">1,00,000</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Case 5 — MV ₹1,00,000, FR ₹1,80,000, SR ₹1,20,000, MT ₹20,000, rent ₹10,000 p.m. for the let-out part, repairs ₹15,000, ground rent ₹1,000 p.m. 60% of the area is self-occupied and 40% let out. Compute NAV.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td style=\"padding-left:2.0em!important\">60% SO</td><td class=\"n\"></td><td class=\"n\">40% LO</td></tr><tr><td>MV</td><td class=\"n\">60,000</td><td class=\"n\">40,000</td></tr><tr><td>FR</td><td class=\"n\">1,08,000</td><td class=\"n\">72,000</td></tr><tr><td>FR₁</td><td class=\"n\">1,08,000</td><td class=\"n\">72,000</td></tr><tr><td>SR</td><td class=\"n\">72,000</td><td class=\"n\">48,000</td></tr><tr><td>ER</td><td class=\"n\">—</td><td class=\"n\">48,000</td></tr><tr><td>AR (10,000 × 12)</td><td class=\"n\">—</td><td class=\"n\">1,20,000</td></tr><tr><td>GAV</td><td class=\"n\">0</td><td class=\"n\">1,20,000</td></tr><tr><td>Less: MT (40%)</td><td class=\"n\">0</td><td class=\"n\">(8,000)</td></tr><tr><td>NAV</td><td class=\"n\">0</td><td class=\"n\">1,12,000</td></tr><tr><td>Less: 30% std deduction</td><td class=\"n\"></td><td class=\"n\">(33,600)</td></tr><tr><td>IHP</td><td class=\"n\"></td><td class=\"n\">78,400</td></tr></table></div></div><p>Repairs and ground rent are <b>not</b> deductible — the 30% standard deduction covers all such expenses.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Case 6 — X has three self-occupied houses. MV/FR/SR/MT paid: I 60,000/72,000/—/6,000; II 90,000/1,20,000/1,00,000/9,000; III 72,000/80,000/—/7,000. Which two should be self-occupied to minimise tax?",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><th>If DLO:</th><th class=\"n\">H1</th><th class=\"n\">H2</th><th class=\"n\">H3</th></tr><tr><td>ER</td><td class=\"n\">72,000</td><td class=\"n\">1,00,000</td><td class=\"n\">80,000</td></tr><tr><td>Less MT</td><td class=\"n\">(6,000)</td><td class=\"n\">(9,000)</td><td class=\"n\">(7,000)</td></tr><tr><td>NAV</td><td class=\"n\">66,000</td><td class=\"n\">91,000</td><td class=\"n\">73,000</td></tr></table></div><div class=\"gap\"></div><div class=\"ln\">Option A: H1, H2 SO; H3 DLO → 73,000</div><div class=\"ln\">Option B: H1, H3 SO; H2 DLO → 91,000</div><div class=\"ln\">Option C: H2, H3 SO; H1 DLO → 66,000  ← minimum</div></div><p>Treat <b>House II and III</b> as self-occupied and House I as deemed let out (NAV ₹66,000; after 30% deduction IHP = ₹46,200).</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Deductions u/s 22 — Standard Deduction & Interest on Borrowed Capital",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Section 22 deductions",
+            "html": "<style>@container (max-width:550px){.pwf.w550 .t{width:auto;align-items:flex-start}.pwf.w550 .b0{text-align:left}.pwf.w550 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w550 .h::before{left:0;top:-4px;height:4px}.pwf.w550 .h>li{display:block;padding:6px 0 0 22px}.pwf.w550 .h>li::before,.pwf.w550 .h>li:first-child::before,.pwf.w550 .h>li:last-child::before,.pwf.w550 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w550 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w550 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w550 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w550 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w550\"><div class=\"t\"><div class=\"b b0\">Section 22 deductions</div><ul class=\"h\"><li><div class=\"b b1\">22(1)(a) Standard deduction<i>30% of NAV · nothing else (repairs, insurance, ground rent ✗)</i></div></li><li><div class=\"b b1\">22(1)(b) Interest on borrowed capital<i>purchase, construction, repair, reconstruction</i></div></li></ul></div></div><ul><li><b>22(1)(a) Standard deduction</b> — 30% of NAV (let-out / DLO). Nothing else (repairs, insurance, ground rent) is deductible.</li><li><b>22(1)(b) Interest on borrowed capital</b> for purchase, construction, repair or reconstruction of the house.</li></ul>"
+          },
+          {
+            "type": "note",
+            "title": "Interest on borrowing — limits",
+            "html": "<style>@container (max-width:550px){.pwf.w550 .t{width:auto;align-items:flex-start}.pwf.w550 .b0{text-align:left}.pwf.w550 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w550 .h::before{left:0;top:-4px;height:4px}.pwf.w550 .h>li{display:block;padding:6px 0 0 22px}.pwf.w550 .h>li::before,.pwf.w550 .h>li:first-child::before,.pwf.w550 .h>li:last-child::before,.pwf.w550 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w550 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w550 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w550 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w550 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}@container (max-width:1450px){.pwf.w1450 .t{width:auto;align-items:flex-start}.pwf.w1450 .b0{text-align:left}.pwf.w1450 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1450 .h::before{left:0;top:-4px;height:4px}.pwf.w1450 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1450 .h>li::before,.pwf.w1450 .h>li:first-child::before,.pwf.w1450 .h>li:last-child::before,.pwf.w1450 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1450 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1450 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1450 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1450 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w550\"><div class=\"t\"><div class=\"b b0\">Sec 22(b) — Interest on Borrowings</div><ul class=\"h\"><li class=c><div class=\"b b1\">Self Occupied<i>old regime allowed · new regime not allowed</i></div><ul class=\"v\"><li><div class=\"b b2\">Before 1-4-1999</div><ul class=\"v\"><li><div class=\"b b3\">Repair<i>30,000</i></div></li><li><div class=\"b b3\">Construction<i>30,000</i></div></li></ul></li><li><div class=\"b b2\">After 1-4-1999</div><ul class=\"v\"><li><div class=\"b b3\">Repair<i>30,000</i></div></li><li><div class=\"b b3\">Construction<i>2,00,000</i></div></li></ul></li></ul></li><li><div class=\"b b1\">Let Out<i>no limit · old or new regime allowed</i></div></li></ul></div></div><div class=\"pwf w1450\"><div class=\"t\"><div class=\"b b0\">Interest — notes</div><ul class=\"h\"><li><div class=\"b b1\">New loan taken to repay old loan<i>allowed</i></div></li><li><div class=\"b b1\">Interest on interest<i>not allowed</i></div></li><li><div class=\"b b1\">Interest paid outside India<i>allowed only if TDS deducted</i></div></li><li><div class=\"b b1\">Commission, brokerage, late fee<i>not allowed</i></div></li><li><div class=\"b b1\">Self-occupied<i>max deduction 30,000 or 2,00,000</i></div></li><li><div class=\"b b1\">New regime<i>interest on self-occupied not allowed</i></div></li></ul></div></div><table><tr><th>Property</th><th>Loan for</th><th>Limit</th></tr><tr><td rowspan=\"2\">Self-occupied (old regime only; NAV = 0)</td><td>Loan before 1-4-1999 (repair/construction)</td><td>₹30,000</td></tr><tr><td>Loan after 1-4-1999: repair ₹30,000; purchase/construction</td><td>₹2,00,000</td></tr><tr><td>Let out</td><td>Any</td><td><b>No limit</b> — full interest, old or new regime</td></tr></table><ul><li>New regime: interest on <b>self-occupied</b> property <b>not allowed</b>.</li><li>Interest on a new loan taken to repay an old loan → allowed.</li><li>Interest on unpaid interest → not allowed.</li><li>Interest payable outside India → allowed only if TDS deducted.</li><li>Commission, brokerage, late fees → not allowed.</li></ul>"
+          },
+          {
+            "type": "formula",
+            "title": "IHP quick formulas",
+            "items": [
+              {
+                "l": "Self-occupied (old)",
+                "f": "IHP = 0 − interest (max 30,000 / 2,00,000)",
+                "n": "Gives a loss"
+              },
+              {
+                "l": "Self-occupied (new)",
+                "f": "IHP = 0",
+                "n": "No interest allowed"
+              },
+              {
+                "l": "Let out",
+                "f": "IHP = NAV − 30% NAV − full interest",
+                "n": "Both regimes"
+              }
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Self-occupied house (GAV 0, MT ₹50K). Loan taken after 1-4-1999 for purchase. Compute IHP under old and new regimes if interest is (a) ₹15,000 (b) ₹2,50,000 (c) ₹2,00,000.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td style=\"padding-left:2.0em!important\">Old</td><td class=\"n\"></td><td class=\"n\">New</td></tr><tr><td>NAV</td><td class=\"n\">0</td><td class=\"n\">0</td></tr><tr><td>(a) Int 15,000</td><td class=\"n\">(15,000)</td><td class=\"n\">0</td></tr><tr><td>(b) Int 2,50,000 (2,00,000) cap</td><td class=\"n\"></td><td class=\"n\">0</td></tr><tr><td>(c) Int 2,00,000 (2,00,000)</td><td class=\"n\"></td><td class=\"n\">0</td></tr></table></div></div><p>MT is not deductible for self-occupied property.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Self-occupied house, loan after 1-4-1999 for repair: interest (a) ₹30,000 (b) ₹2,00,000. Loan before 1-4-1999 for purchase: interest ₹35,000. Compute IHP (old regime).",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Repair, int 30,000</td><td class=\"n\"></td><td class=\"x\">loss (30,000)</td></tr><tr><td>Repair, int 2,00,000</td><td class=\"x\">loss (30,000)</td><td class=\"n\">limit 30,000</td></tr><tr><td>Pre-1999 loan, int 35,000</td><td class=\"x\">loss (30,000)</td><td class=\"n\">limit 30,000</td></tr><tr><td>New regime — all cases</td><td class=\"n\"></td><td class=\"n\">0</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Let-out house: GAV ₹20L, MT ₹20K, interest ₹3L on loan taken on 1-8-1999 for construction (or repair). Compute IHP under old and new regimes.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>GAV</td><td class=\"n\">20,00,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(20,000)</td></tr><tr><td>NAV</td><td class=\"n\">19,80,000</td></tr><tr><td>Less: 30% u/s 22(1)(a) (5,94,000)</td><td class=\"n\"></td></tr><tr><td>Less: interest 22(1)(b)(3,00,000)</td><td class=\"n\"></td></tr><tr><td>IHP</td><td class=\"n\">10,86,000</td></tr></table></div></div><p>Same in both regimes and whether the loan was for construction or repair — no limit for let-out property.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "State the limits on deduction of interest for a self-occupied house property.",
+            "a": "<p>Old regime only: ₹2,00,000 if the loan was taken on/after 1-4-1999 for acquisition or construction (completed within 5 years); ₹30,000 for repair/renewal, or any loan taken before 1-4-1999. Under the new regime no interest is allowed on self-occupied property. For let-out property there is no limit.</p>",
+            "src": "",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Calculation of Interest (Pre-construction Period) & Comprehensive Problems",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Interest u/s 22(1)(b) = current-year interest + pre-construction interest",
+            "html": "<style>@container (max-width:500px){.pwf.w500 .t{width:auto;align-items:flex-start}.pwf.w500 .b0{text-align:left}.pwf.w500 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w500 .h::before{left:0;top:-4px;height:4px}.pwf.w500 .h>li{display:block;padding:6px 0 0 22px}.pwf.w500 .h>li::before,.pwf.w500 .h>li:first-child::before,.pwf.w500 .h>li:last-child::before,.pwf.w500 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w500 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w500 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w500 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w500 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w500\"><div class=\"t\"><div class=\"b b0\">Calculation of Interest<i>22(1)(b) = current year + PCP</i></div><ul class=\"h\"><li><div class=\"b b1\">Normal interest<i>current year, simple manner</i></div></li><li class=c><div class=\"b b1\">Pre-construction period interest (PCP)</div><ul class=\"v\"><li><div class=\"b b2\">Step 1<i>calculate PCP time</i></div></li><li><div class=\"b b2\">Step 2<i>calculate interest</i></div></li><li><div class=\"b b2\">Step 3<i>divide in 5 equal amounts</i></div></li></ul></li></ul></div></div><p class=\"pwn\">PCP = the period whose interest benefit was not taken; it is counted up to 31 March just before the tax year of construction.</p><p><b>Example: loan 1-10-2022, construction completed 31-5-2026</b></p><div class=\"pwl\"><div class=\"b\">26-27<i>current year + PCP</i></div><span class=\"a\">→</span><div class=\"b\">27-28<i>PCP</i></div><span class=\"a\">→</span><div class=\"b\">28-29<i>PCP</i></div><span class=\"a\">→</span><div class=\"b\">29-30<i>PCP</i></div><span class=\"a\">→</span><div class=\"b\">30-31<i>PCP</i></div></div><ul><li><b>Current-year interest</b> — simple interest for the tax year (months the loan was outstanding).</li><li><b>Pre-construction period (PCP)</b> — from the <b>date of borrowing</b> to <b>31 March immediately before the tax year in which construction is completed</b>.</li><li>Steps: (1) count PCP months; (2) compute PCP interest; (3) deduct it in <b>5 equal instalments</b> from the year of completion.</li></ul><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Loan 1-10-2024, completed 10-8-2026 → PCP = 6 + 12 = 18 months</td><td class=\"n\"></td></tr><tr><td>Loan 31-3-2024, completed 2-2-2027</td><td class=\"x\">→ PCP ≈ 24 months</td></tr><tr><td>Loan 1-6-2022, completed 5-5-2026</td><td class=\"x\">→ PCP = 10 + 12 + 12 + 12 = 46 months</td></tr></table></div></div>"
+          },
+          {
+            "type": "formula",
+            "title": "Interest formulas",
+            "items": [
+              {
+                "l": "Current-year interest",
+                "f": "Loan × rate × months outstanding / 12",
+                "n": ""
+              },
+              {
+                "l": "PCP interest",
+                "f": "Loan × rate × PCP months / 12",
+                "n": "PCP ends 31 March before the year of completion"
+              },
+              {
+                "l": "Annual PCP deduction",
+                "f": "PCP interest ÷ 5",
+                "n": "5 years from the year of completion"
+              },
+              {
+                "l": "Total 22(1)(b)",
+                "f": "Current-year + 1/5 of PCP",
+                "n": "Self-occupied (old): cap 2,00,000 / 30,000"
+              }
+            ]
+          },
+          {
+            "type": "question",
+            "q": "The assessee took a loan of ₹6,00,000 on 1.4.2024 @ 10% p.a. for construction of a house in Delhi, completed on 15.6.2026. The entire loan is outstanding. Compute interest allowable for TY 2026-27.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Current year: 6,00,000 × 10%</td><td class=\"n\">60,000</td></tr><tr><td>PCP 1.4.2024–31.3.2026 = 24 months</td><td class=\"n\"></td></tr><tr><td>6,00,000 × 10% × 24/12 = 1,20,000 ÷ 5</td><td class=\"n\">24,000</td></tr><tr><td>Deduction u/s 22(1)(b)</td><td class=\"n\">84,000</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Construction completed on 28.2.2027. Loan ₹10,00,000 @ 12% p.a. Compute interest deduction for TY 2026-27 if the loan was taken on (a) 1.4.2024 (b) 1.6.2024 (c) 1.5.2025.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Notes differ from class:</b> The class sheet writes ₹1,92,000 for (c); 1,20,000 + 22,000 = ₹1,42,000, which is what these notes show. Decide which to keep.</p><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Current-year interest = 10,00,000 × 12% = 1,20,000</td><td class=\"n\"></td></tr><tr><td>(a) PCP 24 months: 2,40,000 ÷ 5 = 48,000</td><td class=\"x\">→ total 1,68,000</td></tr><tr><td>(b) PCP 22 months: 2,20,000 ÷ 5 = 44,000</td><td class=\"x\">→ total 1,64,000</td></tr><tr><td>(c) PCP 11 months: 1,10,000 ÷ 5 = 22,000</td><td class=\"x\">→ total 1,42,000</td></tr></table></div></div><p>(The class sheet writes ₹1,92,000 for (c); 1,20,000 + 22,000 = ₹1,42,000.)</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "R took a loan of ₹6,00,000 @ 12% on 1.12.2023 and an additional ₹5,00,000 @ 10% on 1.4.2024. Construction completed on 15.9.2025. Nothing repaid. Compute interest deduction for TY 2026-27.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Completion in TY 2025-26 → PCP ends 31.3.2025</td><td class=\"n\"></td></tr><tr><td>Loan 1: PCP 16 months: 6,00,000 × 12% × 16/12 = 96,000 ÷ 5</td><td class=\"n\">19,200</td></tr><tr><td>Loan 2: PCP 12 months: 50,000 ÷ 5</td><td class=\"n\">10,000</td></tr><tr><td>Current year: 72,000 + 50,000</td><td class=\"n\">1,22,000</td></tr><tr><td>Deduction u/s 22(1)(b)</td><td class=\"n\">1,51,200</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "R took a loan of ₹12,00,000 @ 12% on 1.9.2022 for construction; repaid on 31.12.2026. Construction completed on 5.10.2025. Compute interest deduction for TY 2026-27.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Notes differ from class:</b> The class sheet counts the pre-construction period as 43 months (to 31.3.2026) → ₹2,11,200. These notes end it on 31.3.2025 (31 months → ₹1,82,400), because construction was completed in TY 2025-26. Decide which to keep.</p><div class=\"pwc\"><div class=\"tw\"><table><tr><td>Current year (1.4.2026–31.12.2026, 9 months)</td><td class=\"n\"></td></tr><tr><td style=\"padding-left:1.0em!important\">12,00,000 × 12% × 9/12</td><td class=\"n\">1,08,000</td></tr><tr><td>PCP 1.9.2022–31.3.2025 = 31 months</td><td class=\"n\"></td></tr><tr><td style=\"padding-left:1.0em!important\">12,00,000 × 12% × 31/12 = 3,72,000 ÷ 5</td><td class=\"n\">74,400</td></tr><tr><td>Deduction u/s 22(1)(b)</td><td class=\"n\">1,82,400</td></tr></table></div></div><p>The class sheet counts PCP as 43 months (including 2025-26) → ₹2,11,200. Completion was in TY 2025-26, so PCP ends 31.3.2025 = 31 months. The PCP instalment continues even after repayment.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "R owns a house in Delhi: MV ₹2,00,000; FR ₹2,52,000; SR ₹2,40,000; rent ₹23,000 p.m.; MT 20% of MV, 50% paid during the year; repairs ₹20,000; insurance ₹5,000. Borrowed ₹12,00,000 @ 10% on 1.7.2024; construction completed 28.2.2026. Compute IHP for TY 2026-27.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>FR₁ (higher of MV, FR)</td><td class=\"n\">2,52,000</td></tr><tr><td>SR</td><td class=\"n\">2,40,000</td></tr><tr><td>ER (lower)</td><td class=\"n\">2,40,000</td></tr><tr><td>AR (23,000 × 12)</td><td class=\"n\">2,76,000</td></tr><tr><td>GAV (higher)</td><td class=\"n\">2,76,000</td></tr><tr><td>Less: MT paid</td><td class=\"n\">(20,000)</td></tr><tr><td>NAV</td><td class=\"n\">2,56,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(76,800)</td></tr><tr><td>Less: interest</td><td class=\"n\"></td></tr><tr><td style=\"padding-left:1.0em!important\">Current 1,20,000 + PCP (9 months 90,000 ÷ 5) 18,000</td><td class=\"n\">(1,38,000)</td></tr><tr><td>IHP</td><td class=\"n\">41,200</td></tr></table></div></div><p>Repairs and insurance are not deductible.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "R occupies three houses. MV/FR/SR: I 2,30,000/2,90,000/2,42,000; II 1,70,000/2,00,000/2,30,000; III 2,10,000/2,20,000/2,10,000. MT paid 15%/15%/10% of MV; insurance 2,000/1,000/4,000; interest on construction loan 2,40,000/Nil/2,50,000. Other sources ₹5,40,000; PF contribution ₹1,20,000. Determine taxable income (a) old regime (b) new regime.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><th>If deemed let out:</th><th class=\"n\">H1</th><th class=\"n\">H2</th><th class=\"n\">H3</th></tr><tr><td>GAV (ER)</td><td class=\"n\">2,42,000</td><td class=\"n\">2,00,000</td><td class=\"n\">2,10,000</td></tr><tr><td>Less MT</td><td class=\"n\">(34,500)</td><td class=\"n\">(25,500)</td><td class=\"n\">(21,000)</td></tr><tr><td>NAV</td><td class=\"n\">2,07,500</td><td class=\"n\">1,74,500</td><td class=\"n\">1,89,000</td></tr><tr><td>30%</td><td class=\"n\">(62,250)</td><td class=\"n\">(52,350)</td><td class=\"n\">(56,700)</td></tr><tr><td>Interest</td><td class=\"n\">(2,40,000)</td><td class=\"n\">—</td><td class=\"n\">(2,50,000)</td></tr><tr><td>Income</td><td class=\"n\">(94,750)</td><td class=\"n\">1,22,150</td><td class=\"n\">(1,17,700)</td></tr></table></div><div class=\"gap\"></div><div class=\"tw\"><table><tr><td>OLD — SO interest capped at 2,00,000 in total</td><td class=\"n\"></td></tr><tr><td>H1 DLO: −94,750 − 2,00,000</td><td class=\"n\">= −2,94,750</td></tr><tr><td>H2 DLO: 1,22,150 − 2,00,000</td><td class=\"n\">= −77,850</td></tr><tr><td>H3 DLO: −1,17,700 − 2,00,000 = −3,17,700</td><td class=\"n\">← best</td></tr><tr><td>Class: 5,40,000 − 3,17,700 = 2,22,300 − PF 1,20,000 = 1,02,300</td><td class=\"n\"></td></tr></table></div><div class=\"gap\"></div><div class=\"ln\">NEW — no SO interest; H3 DLO → IHP (1,17,700)</div><div class=\"ln\">Class: 5,40,000 − 1,17,700 = 4,22,300</div></div><p><b>Note:</b> under set-off rules (Unit 4), a house-property loss can be set off against other heads only up to ₹2,00,000 in the old regime and not at all in the new regime → old ₹2,20,000 (₹1,17,700 carried forward); new ₹5,40,000. The class answer ignores this limit.</p>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "formula",
+            "title": "House property cheat sheet",
+            "items": [
+              {
+                "l": "Self-occupied (old)",
+                "f": "NAV 0; interest ≤ 2,00,000 (purchase/construction after 1-4-1999) or ≤ 30,000",
+                "n": "Combined cap for 2 SO houses"
+              },
+              {
+                "l": "Self-occupied (new)",
+                "f": "NAV 0; no interest",
+                "n": ""
+              },
+              {
+                "l": "Let out / DLO",
+                "f": "NAV − 30% − full interest",
+                "n": "Both regimes"
+              },
+              {
+                "l": "More than 2 SO houses",
+                "f": "Choose 2 SO; rest DLO",
+                "n": "Pick the option with least income"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Arrears of Rent & Unrealised Rent (Section 23, Rule 21)",
+        "cards": [
+          {
+            "type": "note",
+            "title": "Section 23 — arrears & unrealised rent received later",
+            "html": "<style>@container (max-width:650px){.pwf.w650 .t{width:auto;align-items:flex-start}.pwf.w650 .b0{text-align:left}.pwf.w650 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w650 .h::before{left:0;top:-4px;height:4px}.pwf.w650 .h>li{display:block;padding:6px 0 0 22px}.pwf.w650 .h>li::before,.pwf.w650 .h>li:first-child::before,.pwf.w650 .h>li:last-child::before,.pwf.w650 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w650 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w650 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w650 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w650 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w650\"><div class=\"t\"><div class=\"b b0\">Section 23 — Arrears &amp; Unrealised Rent received later</div><ul class=\"h\"><li class=c><div class=\"b b1\">Taxability<i>in the year received / realised — even if no longer the owner</i></div><ul class=\"v\"><li><div class=\"b b2\">Arrears of rent received from a tenant</div></li><li><div class=\"b b2\">Unrealised rent recovered later</div></li></ul></li><li><div class=\"b b1\">Standard deduction<i>30% of the amount · no other deduction</i></div></li></ul></div></div><ul><li><b>Arrears of rent</b> or <b>unrealised rent recovered later</b> are taxable under IHP <b>in the year of receipt</b> — even if the assessee is no longer the owner.</li><li>Deduction: <b>30% standard deduction</b> only; no other deduction.</li></ul>"
+          },
+          {
+            "type": "note",
+            "title": "Unrealised rent — Rule 21",
+            "html": "<style>@container (max-width:500px){.pwf.w500 .t{width:auto;align-items:flex-start}.pwf.w500 .b0{text-align:left}.pwf.w500 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w500 .h::before{left:0;top:-4px;height:4px}.pwf.w500 .h>li{display:block;padding:6px 0 0 22px}.pwf.w500 .h>li::before,.pwf.w500 .h>li:first-child::before,.pwf.w500 .h>li:last-child::before,.pwf.w500 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w500 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w500 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w500 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w500 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w500\"><div class=\"t\"><div class=\"b b0\">Unrealised Rent</div><ul class=\"h\"><li><div class=\"b b1\">When not recovered<i>less from GAV (but Rule 21)</i></div></li><li><div class=\"b b1\">When recovered<i>add after all calculations · less std. ded. 30%</i></div></li></ul></div></div><p class=\"pwn\">Rule 21: (a) tenancy bona fide (b) defaulting tenant vacated / steps taken (c) tenant not in another property of the assessee (d) legal proceedings taken, or AO satisfied they would be useless.</p><p>Rent payable but not paid and proved lost and irrecoverable, where:</p><ol><li>the tenancy is <b>bona fide</b>;</li><li>the defaulting tenant has <b>vacated</b>, or steps taken to compel him to vacate;</li><li>the defaulting tenant is <b>not in occupation of any other property</b> of the assessee;</li><li>the assessee has taken <b>all reasonable steps to institute legal proceedings</b> (or satisfies the AO they would be useless).</li></ol><ul><li><b>Not recovered</b> → deduct from actual rent while computing GAV.</li><li><b>Recovered later</b> → add in the year of receipt, less 30%.</li></ul>"
+          },
+          {
+            "type": "question",
+            "q": "Rent was raised by ₹1,000 p.m. with retrospective effect for 2023–2025 (36 months); the arrears are received in 2026. Current rent ₹9,000 p.m., MT ₹8,000. Compute IHP.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>GAV (9,000 × 12)</td><td class=\"n\">1,08,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(8,000)</td></tr><tr><td>NAV</td><td class=\"n\">1,00,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(30,000)</td></tr><tr><td style=\"padding-left:2.0em!important\">70,000</td><td class=\"n\"></td></tr><tr><td>Add: Arrears 36,000 − 30% 10,800</td><td class=\"n\">25,200</td></tr><tr><td>IHP</td><td class=\"n\">95,200</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "Rent ₹10,000 p.m., MT ₹20,000. During the year ₹30,000 of rent unrealised in an earlier year is recovered. Compute IHP.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>GAV (10,000 × 12)</td><td class=\"n\">1,20,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(20,000)</td></tr><tr><td>NAV</td><td class=\"n\">1,00,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(30,000)</td></tr><tr><td style=\"padding-left:2.0em!important\">70,000</td><td class=\"n\"></td></tr><tr><td>Add: Recovered 30,000 − 30% 9,000</td><td class=\"n\">21,000</td></tr><tr><td>IHP</td><td class=\"n\">91,000</td></tr></table></div></div>",
+            "src": "Class illustration",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "State the conditions of Rule 21 for unrealised rent.",
+            "a": "<ol><li>Tenancy is bona fide.</li><li>Defaulting tenant has vacated or steps taken to make him vacate.</li><li>Defaulting tenant not in occupation of any other property of the assessee.</li><li>All reasonable steps taken to institute legal proceedings, or the AO is satisfied they would be useless.</li></ol>",
+            "src": "",
+            "tags": [
+              "Theory",
+              "Important"
+            ]
+          },
+          {
+            "type": "note",
+            "title": "★ Master chart — Chapter 3 (all charts connected)",
+            "html": "<style>@container (max-width:1700px){.pwf.w1700 .t{width:auto;align-items:flex-start}.pwf.w1700 .b0{text-align:left}.pwf.w1700 .h{display:block;padding:0;margin:4px 0 0 12px}.pwf.w1700 .h::before{left:0;top:-4px;height:4px}.pwf.w1700 .h>li{display:block;padding:6px 0 0 22px}.pwf.w1700 .h>li::before,.pwf.w1700 .h>li:first-child::before,.pwf.w1700 .h>li:last-child::before,.pwf.w1700 .h>li:only-child::before{display:block;left:0;right:auto;top:0;bottom:0;border-top:0;border-left:2px solid var(--teal-line)}.pwf.w1700 .h>li:last-child::before{bottom:auto;height:24px}.pwf.w1700 .h>li::after{left:0;top:23px;height:0;width:14px;border-left:0;border-top:2px solid var(--teal-line)}.pwf.w1700 .h>li>.b{display:inline-block;text-align:left;max-width:300px}.pwf.w1700 .h>li>.b::before{top:12px;left:-7px;margin-left:0;border:5px solid transparent;border-left:6px solid var(--teal-line);border-right:0}}</style><div class=\"pwf w1700\"><div class=\"t\"><div class=\"b b0\">Income from House Property — Chapter 3</div><ul class=\"h\"><li class=c><div class=\"b b1\">Charge &amp; owner<i>Sec 20, 25</i></div><ul class=\"v\"><li><div class=\"b b2\">Charge<i>building / land appurtenant · assessee is owner · not own business use</i></div></li><li><div class=\"b b2\">Owner<i>real, or deemed (spouse, minor child, impartible estate, co-op member, possession, 12-year right)</i></div></li></ul></li><li class=c><div class=\"b b1\">Annual value<i>Sec 21</i></div><ul class=\"v\"><li><div class=\"b b2\">Expected rent (ER)<i>higher of MV &amp; FR, then lower with SR</i></div></li><li><div class=\"b b2\">GAV<i>higher of ER &amp; AR (vacancy rule)</i></div></li><li><div class=\"b b2\">NAV<i>GAV − municipal tax paid by owner (paid basis)</i></div></li></ul></li><li class=c><div class=\"b b1\">Situations<i>Sec 22</i></div><ul class=\"v\"><li><div class=\"b b2\">Self-occupied<i>NAV 0 · interest only (old regime)</i></div></li><li><div class=\"b b2\">Let out / DLO<i>normal manner</i></div></li><li><div class=\"b b2\">More than 2 SO<i>2 SO, rest DLO</i></div></li></ul></li><li class=c><div class=\"b b1\">Deductions<i>Sec 22</i></div><ul class=\"v\"><li><div class=\"b b2\">Standard<i>30% of NAV</i></div></li><li><div class=\"b b2\">Interest<i>SO 30,000 / 2,00,000 (old only) · let out no limit · PCP in 5 instalments</i></div></li></ul></li><li><div class=\"b b1\">Arrears &amp; unrealised rent<i>Sec 23, Rule 21 · taxable when received · 30% deduction</i></div></li></ul></div></div><p>Each branch names the lecture where it is taught. Every topic card above opens with its own smaller chart.</p>"
+          }
+        ]
+      },
+      {
+        "title": "Homework & Practice Questions",
+        "cards": [
+          {
+            "type": "question",
+            "q": "(Homework Q10) R's house in Delhi: MV ₹3,00,000; SR ₹3,12,000; MT paid ₹50,000; interest on loan for acquiring the house after 1.4.2024 ₹1,60,000; own residence 2 months; actual rent for 10 months ₹35,000 p.m. Compute IHP for TY 2026-27.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Not from the teacher:</b> There was no solution sheet for this homework — the working here is mine, not the teacher's. Check it against the lecture.</p><div class=\"pwc\"><div class=\"tw\"><table><tr><td>FR (35,000 × 12)</td><td class=\"n\">4,20,000</td></tr><tr><td>FR₁ (higher of MV, FR)</td><td class=\"n\">4,20,000</td></tr><tr><td>SR</td><td class=\"n\">3,12,000</td></tr><tr><td>ER (lower)</td><td class=\"n\">3,12,000</td></tr><tr><td>AR (35,000 × 10)</td><td class=\"n\">3,50,000</td></tr><tr><td>GAV (higher)</td><td class=\"n\">3,50,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(50,000)</td></tr><tr><td>NAV</td><td class=\"n\">3,00,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(90,000)</td></tr><tr><td>Less: interest</td><td class=\"n\">(1,60,000)</td></tr><tr><td>IHP</td><td class=\"n\">50,000</td></tr></table></div></div><p>Let out part and self-occupied part of the year → treated as let out; full interest allowed in both regimes. (Worked here — no solution sheet.)</p>",
+            "src": "Homework",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "(Homework Q12) R owns two houses: Delhi (let to a company at ₹30,000 p.m.; MV 2,40,000; MT 10% of MV; repairs 20,000; insurance 2,000; ground rent 1,750 unpaid; land revenue 10,000) and Jaipur (built 1.3.2026, self-occupied; loan ₹9,00,000 @ 8% on 1.8.2024; MV 1,80,000; MT 8% of MV unpaid; interest ₹72,000). Transferred to Mumbai on 1.12.2026, he let the Jaipur house from that date at ₹20,000 p.m. Compute IHP (old regime).",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td style=\"padding-left:2.0em!important\">H1 Delhi</td><td class=\"n\"></td><td class=\"n\">H2 Jaipur</td></tr><tr><td>MV</td><td class=\"n\">2,40,000</td><td class=\"n\">1,80,000</td></tr><tr><td>FR / ER</td><td class=\"n\">3,60,000</td><td class=\"n\">2,40,000</td></tr><tr><td>AR</td><td class=\"n\">3,60,000</td><td class=\"n\">80,000</td></tr><tr><td>GAV</td><td class=\"n\">3,60,000</td><td class=\"n\">2,40,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(24,000)</td><td class=\"n\">0 (unpaid)</td></tr><tr><td>NAV</td><td class=\"n\">3,36,000</td><td class=\"n\">2,40,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(1,00,800)</td><td class=\"n\">(72,000)</td></tr><tr><td>Less: interest</td><td class=\"n\">—</td><td class=\"n\">(72,000)</td></tr><tr><td>IHP</td><td class=\"n\">2,35,200</td><td class=\"n\">96,000</td></tr><tr class=\"k\"><td>Total IHP</td><td class=\"n\"></td><td class=\"n\">3,31,200</td></tr></table></div></div><p>As per the solution sheet (FR taken as rent × 12; interest ₹72,000 as given). Repairs, insurance, ground rent, land revenue are not deductible.</p>",
+            "src": "Homework Solution",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "(Homework Q13) R's Delhi house has two units: Unit A (60% area) self-occupied 8 months, let from 1.12.2026 at ₹10,000 p.m.; Unit B (40%) let from 1.10.2026 at ₹8,000 p.m. MT paid ₹40,000; insurance ₹4,000; interest ₹20,000. Compute IHP (old regime).",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td style=\"padding-left:2.0em!important\">Unit A (60%)</td><td class=\"n\"></td><td class=\"n\">Unit B (40%)</td></tr><tr><td>ER</td><td class=\"n\">1,20,000</td><td class=\"n\">96,000</td></tr><tr><td>AR</td><td class=\"n\">40,000</td><td class=\"n\">48,000</td></tr><tr><td>GAV</td><td class=\"n\">1,20,000</td><td class=\"n\">96,000</td></tr><tr><td>Less: MT (60:40)</td><td class=\"n\">(24,000)</td><td class=\"n\">(16,000)</td></tr><tr><td>NAV</td><td class=\"n\">96,000</td><td class=\"n\">80,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(28,800)</td><td class=\"n\">(24,000)</td></tr><tr><td>Less: interest (60:40) (12,000)</td><td class=\"n\"></td><td class=\"n\">(8,000)</td></tr><tr><td>IHP</td><td class=\"n\">55,200</td><td class=\"n\">48,000</td></tr><tr class=\"k\"><td>Total IHP</td><td class=\"n\"></td><td class=\"n\">1,03,200</td></tr></table></div></div><p>As per the solution sheet (ER as used there). Insurance is not deductible.</p>",
+            "src": "Homework Solution",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "(Homework Q14) MV ₹90,000; FR ₹1,10,000; SR ₹1,00,000. Let from 1.4.2026 at ₹8,000 p.m., vacated 30.9.2026, vacant 2 months, let from 1.12.2026 at ₹11,000 p.m. MT 20% of MV; insurance ₹3,000; interest on loan for purchase ₹30,000. Compute IHP.",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><td>ER (lower of 1,10,000 and SR 1,00,000)</td><td class=\"n\">1,00,000</td></tr><tr><td>AR 8,000 × 6 + 11,000 × 4</td><td class=\"n\">92,000</td></tr><tr><td>GAV (AR &lt; ER due to vacancy)</td><td class=\"n\">92,000</td></tr><tr><td>Less: MT (20% of 90,000)</td><td class=\"n\">(18,000)</td></tr><tr><td>NAV</td><td class=\"n\">74,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(22,200)</td></tr><tr><td>Less: interest</td><td class=\"n\">(30,000)</td></tr><tr><td>IHP</td><td class=\"n\">21,800</td></tr></table></div></div><p>Same in both regimes (let-out property).</p>",
+            "src": "Homework Solution",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "(Homework Q15) Mr X's Delhi house: ¾ self-occupied all year; ¼ let 1.4.2026–31.12.2026 at ₹7,000 p.m., then used for own residence. MV ₹2,00,000. MT due ₹60,000; repairs ₹20,000; insurance ₹35,000; land revenue ₹40,000; ground rent ₹2,000. Loan taken 1.4.2022 @ 9% for construction completed 28.3.2023. Compute IHP (old regime).",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><p class=\"flag\" style=\"margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--gold-line,#e0c88f);background:var(--gold-bg,#fbf3e0);color:var(--text,#222);font-size:13.5px;line-height:1.6\"><b>⚑ Unclear in the PDF:</b> The sheet's working reads the loan as ₹1,00,000 (interest ₹9,000). If the question means ₹10,00,000 (interest ₹90,000), the answer becomes SO (67,500), LO 36,300 → net (31,200). Check the question.</p><div class=\"pwc\"><div class=\"tw\"><table><tr><td style=\"padding-left:2.0em!important\">¾ SO</td><td class=\"n\"></td><td class=\"n\">¼ LO</td></tr><tr><td>MV</td><td class=\"n\">—</td><td class=\"n\">50,000</td></tr><tr><td>FR / ER (7,000 × 12)</td><td class=\"n\">—</td><td class=\"n\">84,000</td></tr><tr><td>AR (7,000 × 9)</td><td class=\"n\">—</td><td class=\"n\">63,000</td></tr><tr><td>GAV</td><td class=\"n\">0</td><td class=\"n\">84,000</td></tr><tr><td>Less: MT (due, not paid)</td><td class=\"n\">—</td><td class=\"n\">0</td></tr><tr><td>NAV</td><td class=\"n\">0</td><td class=\"n\">84,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">—</td><td class=\"n\">(25,200)</td></tr><tr><td>Less: interest (¾ : ¼)</td><td class=\"n\">(6,750)</td><td class=\"n\">(2,250)</td></tr><tr><td>IHP</td><td class=\"n\">(6,750)</td><td class=\"n\">56,550</td></tr><tr class=\"k\"><td>Net IHP</td><td class=\"n\"></td><td class=\"n\">49,800</td></tr></table></div></div><p>As per the solution sheet, reading the loan as ₹1,00,000 (interest ₹9,000). If the loan is ₹10,00,000 (interest ₹90,000): SO (67,500), LO 36,300 → net (31,200).</p>",
+            "src": "Homework Solution",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          },
+          {
+            "type": "question",
+            "q": "(Homework Q16) R owns three identical self-occupied houses: SR 3,30,000; MV 3,00,000; FR 3,60,000 each. MT paid 30,000/10,000/20,000; insurance 20,000/Nil/10,000. Construction completed September 2021; loans for Houses II and III (borrowed 1.6.2020) repaid 30.6.2025. Which house should be treated as let out? (old regime)",
+            "a": "<style>/*pw*/.pwc{background:var(--bg2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin:10px 0 14px;font-variant-numeric:tabular-nums;font-size:14px;line-height:1.7;color:var(--text)}.pwc .ln{white-space:pre-wrap}.pwc .gap{height:10px}.pwc .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}.pwc table{display:table!important;width:auto!important;border-collapse:collapse!important;margin:2px 0!important;font-size:13.5px!important}.pwc td,.pwc th{border:0!important;border-bottom:1px solid var(--line-soft)!important;padding:4px 16px 4px 0!important;vertical-align:top;background:none!important;text-align:left}.pwc th{font-weight:600;color:var(--dim)}.pwc .n{text-align:right!important;white-space:nowrap}.pwc .x{text-align:left!important;white-space:normal;min-width:7em}.pwc tr.k td{font-weight:700;border-bottom:2px solid var(--line)!important}.pwc .ok{color:var(--teal);font-weight:700}@media (max-width:520px){.pwc{padding:8px 10px}.pwc td,.pwc th{padding:4px 10px 4px 0!important}.pwc table{font-size:13px!important}}/*/pw*/</style><div class=\"pwc\"><div class=\"tw\"><table><tr><th>If deemed let out:</th><th class=\"n\">H1</th><th class=\"n\">H2</th><th class=\"n\">H3</th></tr><tr><td>ER</td><td class=\"n\">3,30,000</td><td class=\"n\">3,30,000</td><td class=\"n\">3,30,000</td></tr><tr><td>Less: MT</td><td class=\"n\">(30,000)</td><td class=\"n\">(10,000)</td><td class=\"n\">(20,000)</td></tr><tr><td>NAV</td><td class=\"n\">3,00,000</td><td class=\"n\">3,20,000</td><td class=\"n\">3,10,000</td></tr><tr><td>Less: 30%</td><td class=\"n\">(90,000)</td><td class=\"n\">(96,000)</td><td class=\"n\">(93,000)</td></tr><tr><td>IHP</td><td class=\"n\">2,10,000</td><td class=\"n\">2,24,000</td><td class=\"n\">2,17,000</td></tr></table></div></div><p>Loans were repaid before TY 2026-27, so no interest. Treat <b>House I as deemed let out</b> (lowest) and II and III as self-occupied → IHP ₹2,10,000.</p>",
+            "src": "Homework Solution",
+            "tags": [
+              "Numerical",
+              "Important"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
