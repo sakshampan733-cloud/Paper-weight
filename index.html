@@ -477,6 +477,58 @@ h1.chTitle{font-family:var(--disp); font-size:34px; font-weight:600; letter-spac
   .lecJump{max-width:220px; flex-shrink:0}
 }
 @media print{ .lecNav,.lecQs,.lecQonly,#toTop{display:none!important} }
+
+/* ── phones & touch: thumb-sized targets, nothing on top of the reading ── */
+@media (pointer:coarse){
+  /* "body" prefix: these must beat the base rules, some of which come later in the page */
+  body #menuBtn{min-width:42px; min-height:42px; display:flex; align-items:center; justify-content:center; font-size:21px}
+  body .topBtn{min-height:40px; min-width:42px; justify-content:center}
+  body .subjTab{padding:10px 15px}
+  body .tab{min-height:40px}
+  body .stepBtn{padding:10px 13px; font-size:12px}
+  body .lecJump{min-height:38px}
+  body .setMini{padding:11px 14px; font-size:12px}
+  body .setSeg button{padding:11px 15px; font-size:12px; min-width:40px}
+  body .hlSw{width:34px; height:34px}
+  body #hlOff{padding:11px 14px; font-size:13px}
+  body #gSkip, body #gNext{min-height:40px}
+  body #quizClose{min-height:38px; padding-left:14px; padding-right:14px}
+  body .lecQs button, body .lecQonly button{padding:11px 2px}
+  body .qFilter button{padding:10px 2px}
+  .kbdOnly{display:none}
+}
+@media (max-width:720px){
+  #promptText{font-size:16px}
+  .qzAnsBox{padding:16px 14px}
+  .qzAnsBox .pwc{padding:8px}
+  body.readingCh #pwStack{opacity:0}
+}
+@media (max-width:520px){ .tab{flex:1 1 auto} .tab .tLbl{display:none} #tabs{overflow-x:auto; scrollbar-width:none} #tabs::-webkit-scrollbar{display:none} }
+body.hlmode #pwStack{opacity:0}
+body.hlmode #toastBox{bottom:90px}
+.topBtn .ico{flex:0 0 auto}
+
+/* ── wide screens: use the whole screen (Settings ▸ Layout) ──
+   Auto (default) adds columns as the window gets wider, up to 3; 1/2/3 pin
+   it. Notes read like a textbook page: down one column, then the next; a
+   lecture's big chart spans the full width. Questions sit side by side. */
+body:not(.cols-1) #main{max-width:none}
+body.cols-auto .lecCards{columns:520px 3; column-gap:18px}
+body.cols-2 .lecCards{columns:380px 2; column-gap:18px}
+body.cols-3 .lecCards{columns:300px 3; column-gap:18px}
+.lecCards>.card{break-inside:avoid; -webkit-column-break-inside:avoid; page-break-inside:avoid}
+.lecCards>.card.span{column-span:all; -webkit-column-span:all}
+body.cols-auto .qList{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,max(520px,calc((100% - 36px)/3))),1fr)); column-gap:18px; align-items:start}
+body.cols-2 .qList{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,max(380px,calc((100% - 18px)/2))),1fr)); column-gap:18px; align-items:start}
+body.cols-3 .qList{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,max(300px,calc((100% - 36px)/3))),1fr)); column-gap:18px; align-items:start}
+
+/* ── ⚑ "to check" flags inside notes: something that looks like a slip, a
+   typo or a teacher's error, left for you to confirm against the lecture ── */
+.flag{margin:12px 0; padding:10px 14px; border-radius:10px; border:1px solid var(--gold-line); background:var(--gold-bg); color:var(--text); font-size:13.5px; line-height:1.6}
+.flag b:first-child{color:var(--gold)}
+.flagIntro{font-size:13.5px; color:var(--dim); margin:-12px 0 18px}
+.flagFrom{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--faint); margin:4px 0 6px}
+@media print{ .flag{border:1px solid #c9a24a; background:#fbf3e0} }
 /* ── highlighter colours ── */
 :root{
   --hc-y:#E9BE45; --hc-g:#7ED473; --hc-b:#6FB8FF;
@@ -797,7 +849,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
   <div id="topRight">
     <span id="offlineFlag" title="No connection — your notes still work, but Claude features are paused">Offline</span>
     <button class="topBtn" id="hlBtn" title="Highlighter — turn on, then drag across any text">✍<span>Highlight</span></button>
-    <button class="topBtn" id="palBtn"><span>Search</span> <kbd>⌘K</kbd></button>
+    <button class="topBtn" id="palBtn" aria-label="Search"><svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span>Search</span> <kbd>⌘K</kbd></button>
     <button class="topBtn" id="quizLaunch">◆ <span>Quiz</span></button>
     <div id="moreWrap">
       <button class="topBtn" id="moreBtn" aria-label="More">⋯</button>
@@ -841,7 +893,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
 
 <!-- Quiz -->
 <div id="quizWrap">
-  <button id="quizClose">Esc — Exit</button>
+  <button id="quizClose"><span class="kbdOnly">Esc — </span>Exit</button>
   <div id="quizInner"></div>
 </div>
 
@@ -1430,7 +1482,7 @@ function reorderChapter(chapterId, refChapterId, placeBefore){
   return true;
 }
 
-function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',pdfUsage:state.pdfUsage||null,subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},aiAnswers:state.aiAnswers||{},aiUsage:state.aiUsage||null,pastPapers:state.pastPapers||{},paperUsage:state.paperUsage||null,lastPrediction:state.lastPrediction||null})); return true; }catch(e){ return false; } }
+function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',pdfUsage:state.pdfUsage||null,subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},aiAnswers:state.aiAnswers||{},aiUsage:state.aiUsage||null,pastPapers:state.pastPapers||{},paperUsage:state.paperUsage||null,lastPrediction:state.lastPrediction||null,cols:state.cols||'auto'})); return true; }catch(e){ return false; } }
 function toast(msg,ms){
   let el=document.getElementById('toastBox');
   if(!el){ el=document.createElement('div'); el.id='toastBox'; document.body.appendChild(el); }
@@ -2427,7 +2479,9 @@ function settingsHTML(){
           <button data-th="auto" class="${state.theme==='auto'?'on':''}">Auto</button>
           <button data-th="light" class="${state.theme==='light'?'on':''}">Light</button>
           <button data-th="dark" class="${state.theme==='dark'?'on':''}">Dark</button>
-        </span></div></div>
+        </span></div>
+      <div class="setLine"><span>Layout<em>Columns of cards on wide screens. Auto adds columns as the window gets wider.</em></span>
+        <span class="setSeg">${['auto','1','2','3'].map(c=>`<button data-cols="${c}" class="${(state.cols||'auto')===c?'on':''}">${c==='auto'?'Auto':c}</button>`).join('')}</span></div></div>
 
     <div class="setBlk"><div class="setupLbl">Offline</div>
       <div class="setLine"><span>Works without a connection<em id="offReadyNote">Checking…</em></span>
@@ -2486,10 +2540,12 @@ function renderStack(){
 }
 function renderMain(){
   const m=$('#main'), ch=cur.ch;
+  document.body.classList.toggle('readingCh', !!ch && typeof ch==='object');
   renderStack();
   if(ch==='settings'){
     m.innerHTML=settingsHTML();
     $$('#main .setSeg button').forEach(b=>b.onclick=()=>setTheme(b.dataset.th));
+    $$('#main [data-cols]').forEach(b=>b.onclick=()=>setCols(b.dataset.cols));
     $$('#main [data-rmch]').forEach(b=>b.onclick=()=>{
       if(b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='Sure?'; setTimeout(()=>{b.dataset.armed='0';b.textContent='Remove';},2600); return; }
       state.content=(state.content||[]).filter(en=>entryChapId(en)!==b.dataset.rmch);
@@ -2643,6 +2699,10 @@ function renderMain(){
     return;
   }
   const qs=chQuestions(ch), fms=chFormulaCards(ch);
+  /* ⚑ flags: cards the notes generator marked "to check" (a slip, a typo, or
+     something taught differently) — collected in their own tab */
+  const flagged=ch.lectures.flatMap(l=>l.cards.filter(cd=>/class="flag"/.test(cd.type==='question'?(cd.a||''):(cd.html||''))));
+  if(cur.tab==='flags'&&!flagged.length) cur.tab='notes';
   const fmCount=fms.reduce((a,c)=>a+c.items.length,0);
   const d=chDone(ch), t=ch.lectures.length, pct=chStepsPct(ch);
   let h=`<div class="crumb"><b>${esc(ch.sub.code)}</b> · ${esc(ch.unit.name)} · Ch ${ch.no}</div>
@@ -2652,6 +2712,7 @@ function renderMain(){
       <button class="tab${cur.tab==='notes'?' on':''}" data-tab="notes">Notes <span class="ct">${t}</span></button>
       <button class="tab${cur.tab==='questions'?' on':''}" data-tab="questions">Questions <span class="ct">${qs.length}</span></button>
       <button class="tab${cur.tab==='formulas'?' on':''}" data-tab="formulas">Formulas <span class="ct">${fmCount}</span></button>
+      ${flagged.length?`<button class="tab${cur.tab==='flags'?' on':''}" data-tab="flags" title="Things to check against the lecture">⚑<span class="tLbl"> To check</span> <span class="ct">${flagged.length}</span></button>`:''}
     </div><div id="tabBody">`;
 
   if(cur.tab==='notes'){
@@ -2662,10 +2723,12 @@ function renderMain(){
       const d=state.done[lec.id]||{};
       h+=`<div class="lecHead${lecSteps(lec)===3?' allDone':''}" data-cid="${lec.id}"><span class="lecNum">LEC ${lec.no}</span><span class="lecTitle">${esc(lec.title)}</span>
         <span class="stepWrap">${STEPS.map(s=>`<button class="doneBtn stepBtn${d[s[0]]?' on':''}" data-lec="${lec.id}" data-step="${s[0]}"><span class="dot"></span>${s[1]}</button>`).join('')}</span></div>`;
+      h+='<div class="lecCards">';
       lec.cards.forEach(cd=>{
         if(cd.type==='note') h+=noteCard(cd);
         if(cd.type==='formula') h+=formulaCard(cd);
       });
+      h+='</div>';
       /* questions live in their own tab — point to this lecture's ones, and
          don't leave a questions-only section (homework) as an empty heading */
       const shown=lec.cards.filter(cd=>cd.type==='note'||cd.type==='formula').length;
@@ -2681,10 +2744,15 @@ function renderMain(){
     const fl=cur.qFilter&&ch.lectures.find(l=>l.id===cur.qFilter);
     const list=fl?qs.filter(q=>q.lec===fl):qs;
     if(fl) h+=`<div class="qFilter">Showing <b>Lec ${fl.no} · ${esc(fl.title)}</b> — ${list.length} of ${qs.length} questions <button id="qShowAll">Show all</button></div>`;
-    h+=list.length?list.map(cd=>questionCard(cd,qs.indexOf(cd))).join(''):`<div class="empty"><div class="big">No questions yet</div>They'll collect here, out of the way of your notes.</div>`;
+    h+=list.length?'<div class="qList">'+list.map(cd=>questionCard(cd,qs.indexOf(cd))).join('')+'</div>':`<div class="empty"><div class="big">No questions yet</div>They'll collect here, out of the way of your notes.</div>`;
+  }
+  if(cur.tab==='flags'){
+    h+=`<p class="flagIntro">Things that look like a slip, a typo or something taught differently — flagged for you to check against the lecture. Nothing here was changed.</p>`;
+    h+='<div class="qList">'+flagged.map(cd=>cd.type==='question'?questionCard(cd,qs.indexOf(cd))
+      :`<div><div class="flagFrom">LEC ${cd.lec.no} · ${esc(cd.lec.title)}</div>${noteCard(cd)}</div>`).join('')+'</div>';
   }
   if(cur.tab==='formulas'){
-    h+=fms.length?fms.map(formulaCard).join(''):`<div class="empty"><div class="big">No formulas yet</div>Every formula card in this chapter aggregates here as one sheet.</div>`;
+    h+=fms.length?'<div class="lecCards">'+fms.map(formulaCard).join('')+'</div>':`<div class="empty"><div class="big">No formulas yet</div>Every formula card in this chapter aggregates here as one sheet.</div>`;
   }
   h+='</div>';
   m.innerHTML=h;
@@ -2715,6 +2783,11 @@ function renderMain(){
       if(e.target.closest('[data-star]'))return;
       if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openIt(); }
     };
+  });
+  if(cur.tab==='flags') m.querySelectorAll('.qCard').forEach(c=>c.classList.add('open'));
+  /* in columns, a card with a big chart spans the full width, like a figure across a two-column page */
+  m.querySelectorAll('.lecCards>.card').forEach(c=>{
+    if([...c.querySelectorAll('.pwf')].some(p=>+((p.className.match(/\bw(\d+)\b/)||[])[1]||0)>=760)) c.classList.add('span');
   });
   upgradeBlocks(m);                              // before highlights, so they re-find the same text
   bindStars(m);
@@ -2905,6 +2978,17 @@ function applyTheme(){
   if(tb) tb.textContent = state.theme==='auto' ? 'A' : (eff==='light' ? '☀' : '☾');
   try{window.dispatchEvent(new Event('themechange'));}catch(e){}
 }
+function setCols(c){
+  state.cols=['1','2','3'].includes(String(c))?String(c):'auto';
+  save(); applyCols();
+  if(cur.ch==='settings') renderMain();
+}
+function applyCols(){
+  document.body.classList.remove('cols-auto','cols-1','cols-2','cols-3');
+  document.body.classList.add('cols-'+(state.cols||'auto'));
+  if(typeof fitChartsSoon==='function') fitChartsSoon();
+}
+applyCols();
 function setTheme(t){
   state.theme=(t==='light'||t==='dark')?t:'auto';
   save(); applyTheme();
@@ -3256,8 +3340,11 @@ const GUIDE=[
    h:'<b>Settings</b> (the ⋯ menu, or the sidebar) has your theme, export a full backup, load a demo chapter to look around, and manage subjects. That corner stack? One sheet per chapter you add.',
    k:'Do a quick <b>Export backup</b> now and then — it\'s your notes and progress in one file.'}
 ];
-const APP_VERSION='1.9';
+const APP_VERSION='1.10';
 const WHATS_NEW=[
+  'Wide screens: cards now fill the whole screen in columns. Settings ▸ Layout lets you pick Auto, 1, 2 or 3.',
+  'Phones: bigger buttons for your thumb, a proper search icon, and nothing floating over what you’re reading.',
+  'A ⚑ To check tab in a chapter collects everything flagged for you to confirm against the lecture.',
   'Flow charts. Notes can show real box-and-arrow charts — top-down like your teacher’s when there’s room, a tidy vertical tree on your phone.',
   'Worked calculations read like tables now, not code — in every chapter you already have, nothing to re-import.',
   'Long chapters: a lecture list at the top of Notes jumps straight to any lecture, and the ↑ button brings you back to it.',

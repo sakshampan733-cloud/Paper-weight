@@ -513,6 +513,53 @@ test('1.9 — lecture numbers restart at 1 in every chapter (like the PDFs)', as
   assertEq(r.ids[0], 'c2-l0', 'lecture ids (progress keys) must not change');
 });
 
+test('1.9 — Layout: 2 columns puts note cards side by side on a wide screen', async ()=>{
+  const cw=await loadApp();
+  const fw=document.getElementById('frameWrap'), fr=document.getElementById('app');
+  fw.style.width='1700px'; fr.style.width='1700px';
+  try{
+    seedNotesChapter(cw, {lectures:1, notes:6, html:'<p>'+'Some note text. '.repeat(12)+'</p>'});
+    const r=evJSON(cw, `
+      state.sideHid=true; applySide(); setCols('2'); openChapter(cur.ch,'notes',true);
+      const lefts=[...document.querySelectorAll('.lecCards>.card')].map(c=>Math.round(c.getBoundingClientRect().left));
+      const one=(setCols('1'), openChapter(cur.ch,'notes',true), [...document.querySelectorAll('.lecCards>.card')].map(c=>Math.round(c.getBoundingClientRect().left)));
+      return { cols2:[...new Set(lefts)].length, cols1:[...new Set(one)].length, saved:JSON.parse(localStorage.getItem('sem5v2')).cols };
+    `);
+    assertEq(r.cols2, 2, 'cards should sit in 2 columns');
+    assertEq(r.cols1, 1, 'Layout 1 should keep one column');
+    assertEq(r.saved, '1', 'layout choice should be saved');
+  } finally { fw.style.width=''; fr.style.width=''; }
+});
+
+test('1.9 — Settings ▸ Layout buttons don\'t change the theme', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    setTheme('dark'); openChapter('settings','notes',true);
+    document.querySelector('[data-cols="3"]').click();
+    return { cols:state.cols, theme:state.theme, body:document.body.classList.contains('cols-3') };
+  `);
+  assertEq(r.cols, '3'); assertEq(r.theme, 'dark', 'layout button changed the theme'); assert(r.body, 'body class not applied');
+});
+
+test('1.9 — ⚑ To check tab collects flagged notes and questions', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `
+    applyImportPayload({subject:'s1', unit:'Unit 1', chapter:{id:'fl', name:'Flags', lectures:[{title:'L1', cards:[
+      {type:'note', title:'Clean', html:'<p>ok</p>'},
+      {type:'note', title:'Flagged note', html:'<p class="flag"><b>⚑ Check:</b> rows add to 7,15,000</p><p>x</p>'},
+      {type:'question', q:'Flagged Q', a:'<p>a</p><p class="flag"><b>⚑ Check:</b> total</p>', src:'', tags:[]},
+      {type:'question', q:'Clean Q', a:'<p>a</p>', src:'', tags:[]}]}]}});
+    const c=allChapters(DATA.subjects.find(s=>s.id==='s1')).find(x=>x.id==='fl'); cur.sub=c.sub;
+    openChapter(c,'notes',true);
+    const tab=document.querySelector('#tabs [data-tab="flags"]');
+    const count=tab?tab.querySelector('.ct').textContent:'';
+    tab.click();
+    return { count, notes:document.querySelectorAll('#tabBody .card:not(.qCard)').length, qs:document.querySelectorAll('#tabBody .qCard').length,
+             open:document.querySelectorAll('#tabBody .qCard.open').length };
+  `);
+  assertEq(r.count, '2', 'flag count'); assertEq(r.notes, 1, 'flagged note shown'); assertEq(r.qs, 1, 'flagged question shown'); assertEq(r.open, 1, 'flagged answer should be open');
+});
+
 /* ─────────────────────────── runner ─────────────────────────── */
 
 async function run(){
