@@ -1,6 +1,6 @@
 {
  "about": "Chapters the Paperweight app downloads when it opens. Written by tools/publish_content.py in the notes folder; don't edit by hand.",
- "updated": "2026-11-22T22:39:21Z",
+ "updated": "2026-11-27T21:06:07Z",
  "subjectNames": {
   "s1": {
    "name": "Income Tax",
@@ -56,6 +56,20 @@
    "file": "management-accounting/chapter-01.json",
    "hash": "12ebaa42a5532073",
    "bytes": 70559
+  }
+ ],
+ "maps": [
+  {
+   "subject": "Income Tax",
+   "file": "income-tax/map.json",
+   "hash": "0fa62d8d538e9aa2",
+   "bytes": 25525,
+   "chapters": [
+    "it-ch01",
+    "it-ch02",
+    "it-ch04",
+    "it-ch03"
+   ]
   }
  ]
 }

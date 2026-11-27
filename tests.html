@@ -606,6 +606,123 @@ test('1.11 — the AI features are gone: no API code, no buttons, old passcode c
   assertEq(r.pass, null, 'old passcode not cleared from the device');
 });
 
+/* ─────────────────────────── 1.12: subject map, Charts tab ─────────────────────────── */
+
+/* a chapter with two note cards + a small map that points at them */
+function seedMap(cw){
+  ev(cw, `applyImportPayload(${JSON.stringify(chFile('mc1',[{type:'note',title:'First card',html:'<p>one</p>'},{type:'note',title:'Second card',html:'<p>two</p>'}]))});
+    state.maps={s1:{title:'Test map', about:'about text', root:{t:'Root',d:'root detail',ref:['mc1-l0-0'],kids:[
+      {t:'① A',d:'ad',ch:'mc1',kids:[{t:'a1',d:'d1'},{t:'a2',d:'d2',ref:['mc1-l0-1'],kids:[{t:'a2x',d:'deep'}]}]},
+      {t:'② B',d:'bd',kids:[{t:'b1',d:'b1d'}]},
+      {t:'Links',d:'ld',link:true,kids:[{t:'l1',d:'later one',later:true}]}]}}};
+    state.mapPrefs={level:99,layout:'wide',test:false};
+    save(); cur.sub=DATA.subjects.find(s=>s.id==='s1'); openChapter(null,'notes',true);`);
+}
+const boxes=cw=>evJSON(cw, `return document.querySelectorAll('#mapCanvas .b,#mapCanvas .mroot').length;`);
+
+test('1.12 — the subject map draws: sections with arrows, sidebar row, overview card, #map', async ()=>{
+  const cw=await loadApp(); seedMap(cw);
+  const pre=evJSON(cw, `return { row:!!document.querySelector('#mapRow'), card:!!document.querySelector('#ovMap') };`);
+  assert(pre.row, 'no 🗺 map row in the sidebar'); assert(pre.card, 'no map card on the subject overview');
+  ev(cw, `document.querySelector('#mapRow').click();`);
+  const r=evJSON(cw, `return { open:document.querySelector('#mapWrap').classList.contains('show'), arrows:document.querySelectorAll('#mapCanvas .mapArrow').length,
+    gaps:document.querySelectorAll('#mapCanvas .mapGap').length, later:document.querySelectorAll('#mapCanvas .b.later').length, chips:document.querySelectorAll('#mapCanvas .mch').length, hash:location.hash };`);
+  assert(r.open, 'map did not open'); assertEq(boxes(cw), 9, 'boxes'); assertEq(r.arrows, 2, 'arrows between the flow sections');
+  assertEq(r.gaps, 1, 'divider before the across-chapters part'); assertEq(r.later, 1, 'dashed later box'); assertEq(r.chips, 1, 'chapter chip'); assertEq(r.hash, '#map', 'hash');
+});
+
+test('1.12 — map levels, closing a branch, Test me, tap for notes, chapter chip', async ()=>{
+  const cw=await loadApp(); seedMap(cw); ev(cw, `openMap(cur.sub);`);
+  ev(cw, `document.querySelector('#mapLevel [data-lv="1"]').click();`); const outline=boxes(cw);
+  ev(cw, `document.querySelector('#mapLevel [data-lv="99"]').click();`); const all=boxes(cw);
+  assertEq(outline, 8, 'Outline shows sections + their boxes'); assertEq(all, 9, 'Everything');
+  const k=evJSON(cw, `const b=[...document.querySelectorAll('#mapCanvas .b')].find(x=>x.firstChild.textContent==='a2'); b.querySelector('.mtg').click();
+    return document.querySelectorAll('#mapCanvas .b').length;`);
+  assertEq(k, 7, 'closing a2 hides a2x');
+  const t=evJSON(cw, `document.querySelector('#mapTest').click();
+    const box=()=>[...document.querySelectorAll('#mapCanvas .b')].find(x=>x.firstChild.textContent==='a1');
+    const hidden=getComputedStyle(box().querySelector('i')).color;
+    box().click(); const rv=box().classList.contains('rv'), panel1=document.querySelector('#mapPanel').classList.contains('show');
+    box().click(); const panel2=document.querySelector('#mapPanel').classList.contains('show');
+    return { hidden, rv, panel1, panel2, title:(document.querySelector('#mapPanel .cardTitle')||{}).textContent };`);
+  assertEq(t.hidden, 'rgba(0, 0, 0, 0)', 'Test me should hide the details'); assert(t.rv, 'first tap should reveal');
+  assert(!t.panel1, 'first tap in Test me should not open the notes'); assert(t.panel2, 'second tap should open the notes');
+  assertEq(t.title, 'First card', 'a1 shares the notes of the nearest box above it that has some');
+  const c=evJSON(cw, `document.querySelector('#mapPanel .mpX').click(); document.querySelector('#mapCanvas .mch').click();
+    return { open:!!mapCur, ch:cur.ch&&cur.ch.id, hash:location.hash };`);
+  assert(!c.open, 'chip should close the map'); assertEq(c.ch, 'mc1', 'chip opens its chapter'); assertEq(c.hash, '', 'hash cleared');
+});
+
+test('1.12 — Esc closes the notes, then the map; search is ignored while the map is open', async ()=>{
+  const cw=await loadApp(); seedMap(cw); ev(cw, `openMap(cur.sub); [...document.querySelectorAll('#mapCanvas .b')].find(x=>x.firstChild.textContent==='a2').click();`);
+  const key=(k,o)=>cw.dispatchEvent(new cw.KeyboardEvent('keydown',Object.assign({key:k,bubbles:true},o||{})));
+  key('k',{metaKey:true});
+  const a=evJSON(cw, `return { pal:document.querySelector('#palWrap').classList.contains('show'), panel:document.querySelector('#mapPanel').classList.contains('show') };`);
+  key('Escape'); const b=evJSON(cw, `return { panel:document.querySelector('#mapPanel').classList.contains('show'), open:!!mapCur };`);
+  key('Escape'); const c=evJSON(cw, `return { open:!!mapCur, overflow:document.body.style.overflow };`);
+  assert(!a.pal, '⌘K opened search over the map'); assert(a.panel, 'notes panel should be open');
+  assert(!b.panel && b.open, 'first Esc should close only the notes'); assert(!c.open, 'second Esc should close the map'); assertEq(c.overflow, '', 'page scroll not restored');
+});
+
+test('1.12 — map print: chosen paper size, one sheet, only the map, then everything restored', async ()=>{
+  const cw=await loadApp(); seedMap(cw); ev(cw, `openMap(cur.sub);`);
+  cw.print=()=>{ cw.__printed=true; };
+  const pop=evJSON(cw, `document.querySelector('#mapPrintBtn').click(); return [...document.querySelectorAll('#mapPrintPop .mppOpt b')].map(b=>b.textContent);`);
+  assertEq(pop.join(','), 'A4,A3,A2,A1,A0', 'paper choices');
+  ev(cw, `document.querySelector('#mapPrintPop [data-paper="A3"]').click();`);
+  await new Promise(r=>setTimeout(r,200));
+  const r=evJSON(cw, `return { printed:!!window.__printed, page:document.querySelector('#mapPageStyle').textContent, zoom:+document.querySelector('#printRoot .mapPrCanvas').style.zoom,
+    cls:document.body.classList.contains('printingMap'), theme:document.documentElement.dataset.theme, boxes:document.querySelectorAll('#printRoot .b,#printRoot .mroot').length, toggles:document.querySelectorAll('#printRoot .mtg').length };`);
+  assert(r.printed, 'print() not called'); assert(/size:(420mm 297mm|297mm 420mm)/.test(r.page), 'A3 page size not set: '+r.page);
+  assert(r.zoom>0, 'no fit-to-page zoom'); assert(r.cls, 'printingMap class missing'); assertEq(r.theme, 'light', 'paper should print light');
+  assertEq(r.boxes, 9, 'printed boxes'); assertEq(r.toggles, 0, 'open/close buttons should not print');
+  cw.dispatchEvent(new cw.Event('afterprint'));
+  const after=evJSON(cw, `return { cls:document.body.classList.contains('printingMap'), page:document.querySelector('#mapPageStyle').textContent, root:document.querySelector('#printRoot').innerHTML };`);
+  assert(!after.cls && !after.page && !after.root, 'print leftovers not cleaned up');
+});
+
+test('1.12 — notes sync brings a subject map and files it with its chapters', async ()=>{
+  const cw=await loadApp();
+  const f=chFile('sm1',[{type:'note',title:'A',html:'<p>a</p>'}],{subject:'s2'});
+  const mf={subject:'A name that matches nothing', map:{title:'M', root:{t:'R',kids:[{t:'S',ch:'sm1',kids:[{t:'k'}]}]}}};
+  const ft=JSON.stringify(f), mt=JSON.stringify(mf), files={'/content/sm1.json':ft,'/content/x/map.json':mt};
+  files['/content/index.json']=JSON.stringify({chapters:[{id:'sm1',subject:'s2',unit:'Unit 1',name:'n',file:'sm1.json',hash:await sha16(ft)}],
+    maps:[{subject:mf.subject,file:'x/map.json',hash:await sha16(mt),chapters:['sm1']}]});
+  let asked=[];
+  cw.fetch=(url)=>{ const p=String(url).split('?')[0].replace(/^https?:\/\/[^/]+/,''); asked.push(p);
+    return Promise.resolve(p in files?new cw.Response(files[p],{status:200}):new cw.Response('x',{status:404})); };
+  const out=await cw.syncContent({manual:true});
+  const r=evJSON(cw, `cur.sub=DATA.subjects.find(s=>s.id==='s2'); renderSidebar();
+    return { s2:!!(state.maps&&state.maps.s2), s1:!!(state.maps&&state.maps.s1), hash:(state.contentHashes||{})['map:x/map.json']||null, row:!!document.querySelector('#mapRow') };`);
+  assertEq(out.maps.length, 1, 'map should count as updated'); assert(r.s2 && !r.s1, 'map should land with its chapter in s2');
+  assert(r.hash, 'map hash not recorded'); assert(r.row, 'map row missing for that subject');
+  asked=[]; await cw.syncContent({manual:true});
+  assertEq(asked.join(','), '/content/index.json', 'an unchanged map should not download again');
+});
+
+test('1.12 — a map file can be imported by hand (Import JSON)', async ()=>{
+  const cw=await loadApp();
+  const r=evJSON(cw, `const res=applyImportPayload({subject:'s1', map:{title:'Hand', root:{t:'R',kids:[{t:'S'}]}}});
+    return { map:res.map, saved:!!JSON.parse(localStorage.getItem('sem5v2')).maps.s1 };`);
+  assertEq(r.map, 's1', 'import should file the map under s1'); assert(r.saved, 'map not saved');
+});
+
+test('1.12 — Charts tab: every chart once, in lecture order; a title jumps to the notes', async ()=>{
+  const cw=await loadApp();
+  const chart='<ul class="chart"><li>Root<ul><li>A :: a</li><li>B</li></ul></li></ul>';
+  ev(cw, `applyImportPayload({subject:'s1',unit:'Unit 1',chapter:{id:'cc',name:'Charts',lectures:[
+    {title:'L1',cards:[{type:'note',title:'Plain',html:'<p>no chart</p>'},{type:'note',title:'Has chart',html:${JSON.stringify('<p>x</p>'+chart)}}]},
+    {title:'L2',cards:[{type:'note',title:'Flow',html:'<div class="pwl"><div class="b">One</div><span class="a">→</span><div class="b">Two</div></div>'}]},
+    {title:'Rev',cards:[{type:'note',title:'Repeat',html:${JSON.stringify(chart)}}]}]}});
+    const c=findChapter('cc'); cur.sub=c.sub; openChapter(c,'charts',true);`);
+  const r=evJSON(cw, `return { ct:(document.querySelector('#tabs [data-tab="charts"] .ct')||{}).textContent, titles:[...document.querySelectorAll('#tabBody .ciGo')].map(b=>b.textContent),
+    drawn:document.querySelectorAll('#tabBody .pwf').length, plain:/no chart/.test(document.querySelector('#tabBody').textContent) };`);
+  assertEq(r.ct, '2', 'chart count'); assertEq(r.titles.join('|'), 'LEC 1Has chart|LEC 2Flow', 'order / repeat skipped');
+  assert(r.drawn>=1, 'the outline chart was not drawn'); assert(!r.plain, 'text around a chart should stay in the notes');
+  const j=evJSON(cw, `document.querySelector('#tabBody .ciGo').click(); return cur.tab;`);
+  assertEq(j, 'notes', 'title should jump to the notes');
+});
+
 /* ─────────────────────────── runner ─────────────────────────── */
 
 async function run(){

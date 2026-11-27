@@ -1,0 +1,978 @@
+{
+ "subject": "Income Tax",
+ "map": {
+  "id": "it-map",
+  "title": "Income Tax — the whole subject",
+  "about": "Built from each chapter's master chart, in the order Chapter 1 works tax out. Dashed boxes are still to come.",
+  "root": {
+   "t": "Income Tax",
+   "d": "Total income × Rate of tax = Tax",
+   "ref": [
+    "it-ch01-l1-0",
+    "it-ch01-l0-0"
+   ],
+   "kids": [
+    {
+     "t": "① Basics",
+     "d": "Lecture 1 — words used in every chapter",
+     "ch": "it-ch01",
+     "ref": [
+      "it-ch01-l0-4"
+     ],
+     "kids": [
+      {
+       "t": "Types of taxes",
+       "d": "direct (income tax) · indirect (GST, customs)",
+       "ref": [
+        "it-ch01-l0-1"
+       ]
+      },
+      {
+       "t": "Income-tax Act 2025",
+       "d": "from 1-4-2026 · 23 chapters · 536 sections · 16 schedules",
+       "ref": [
+        "it-ch01-l0-2"
+       ]
+      },
+      {
+       "t": "Basic terms",
+       "d": "assessee · tax year · assessment · person · agricultural income",
+       "ref": [
+        "it-ch01-l0-4",
+        "it-ch01-l0-5",
+        "it-ch01-l0-6",
+        "it-ch01-l0-7"
+       ]
+      },
+      {
+       "t": "Person 2(77)",
+       "d": "individual · HUF · company · firm · AOP/BOI · local authority · AJP",
+       "ref": [
+        "it-ch01-l0-8"
+       ]
+      },
+      {
+       "t": "Assessed in the tax year itself",
+       "d": "shipping NR · leaving India · AOP/BOI for an event · transfer to avoid tax · discontinued business",
+       "ref": [
+        "it-ch01-l0-19"
+       ]
+      }
+     ],
+     "dir": "h"
+    },
+    {
+     "t": "② Status → which income is taxed",
+     "d": "Person → status → income → tax",
+     "ch": "it-ch02",
+     "ref": [
+      "it-ch02-l2-0"
+     ],
+     "kids": [
+      {
+       "t": "Individual",
+       "d": "Section 6",
+       "kids": [
+        {
+         "t": "Basic conditions 6(2)",
+         "d": "BC1 182 days · BC2 60 days + 365 days in last 4 years",
+         "ref": [
+          "it-ch02-l0-1",
+          "it-ch02-l0-3"
+         ]
+        },
+        {
+         "t": "Exception",
+         "d": "Indian origin visitor · crew member · job abroad → only BC1 (Indian income > 15L → 120 days + 365)",
+         "ref": [
+          "it-ch02-l0-2"
+         ]
+        },
+        {
+         "t": "Additional conditions 6(13)",
+         "d": "AC1 resident 2 of last 10 years · AC2 730 days in last 7 years",
+         "ref": [
+          "it-ch02-l0-4"
+         ]
+        },
+        {
+         "t": "Status",
+         "d": "ROR = any BC + both AC · RNOR = any BC + one / no AC · NR = no BC",
+         "ref": [
+          "it-ch02-l0-5",
+          "it-ch02-l1-1"
+         ]
+        },
+        {
+         "t": "Deemed resident",
+         "d": "Indian citizen · tax nowhere · Indian income > 15L → RNOR",
+         "ref": [
+          "it-ch02-l3-1"
+         ]
+        }
+       ],
+       "ref": [
+        "it-ch02-l0-0"
+       ],
+       "dir": "h"
+      },
+      {
+       "t": "HUF",
+       "d": "control & management in India → resident · Karta's AC → ROR / RNOR",
+       "ref": [
+        "it-ch02-l3-2"
+       ]
+      },
+      {
+       "t": "Company",
+       "d": "Indian company / management in India → resident (no ROR / RNOR)",
+       "ref": [
+        "it-ch02-l3-3"
+       ]
+      },
+      {
+       "t": "Scope of total income",
+       "kids": [
+        {
+         "t": "Indian income (accrues or received in India)",
+         "d": "taxable for all"
+        },
+        {
+         "t": "Foreign business controlled from India",
+         "d": "ROR, RNOR"
+        },
+        {
+         "t": "Other foreign income",
+         "d": "ROR only"
+        }
+       ],
+       "ref": [
+        "it-ch02-l2-0",
+        "it-ch02-l2-1"
+       ]
+      },
+      {
+       "t": "Gifts",
+       "d": "marriage ✗ · relative ✗ · non-relative above 50,000 → fully taxable",
+       "ref": [
+        "it-ch02-l2-3"
+       ]
+      }
+     ],
+     "dir": "h"
+    },
+    {
+     "t": "③ Total Income — 5 heads",
+     "d": "salary · house property · PGBP · capital gains · other sources",
+     "ch": "it-ch01",
+     "ref": [
+      "it-ch01-l1-1"
+     ],
+     "kids": [
+      {
+       "t": "Salaries",
+       "d": "job (employee ← employer) · Sec 16 to 18",
+       "ch": "it-ch04",
+       "ref": [
+        "it-ch04-l0-1"
+       ],
+       "dir": "h",
+       "kids": [
+        {
+         "t": "1. Basic Salary + D.A.",
+         "d": "Lecture 1",
+         "kids": [
+          {
+           "t": "Fixed amount, or Grade",
+           "d": "start − incr. − stage − incr. − max · increment added on increment date → tax year may have 2 rates"
+          },
+          {
+           "t": "DA",
+           "d": "assume NOT part of salary for retirement unless stated (R = retirement)",
+           "ref": [
+            "it-ch04-l1-1",
+            "it-ch04-l2-2"
+           ]
+          }
+         ],
+         "ref": [
+          "it-ch04-l0-4",
+          "it-ch04-l1-1"
+         ]
+        },
+        {
+         "t": "2. Allowances (cash)",
+         "d": "Rule 280 · Lectures 2–4",
+         "kids": [
+          {
+           "t": "Fully taxable",
+           "d": "DA, entertainment, CCA, medical, lunch/tiffin, overtime, servant, warden, non-practicing, newspaper, project"
+          },
+          {
+           "t": "Partly taxable",
+           "kids": [
+            {
+             "t": "Official (normal)",
+             "d": "uniform, travelling, daily, helper, research, conveyance → taxable = received − spent"
+            },
+            {
+             "t": "Limit based",
+             "d": "children education 3,000 pm/child (max 2) · hostel 9,000 pm/child (max 2) · transport (disabled) 15,000 / 8,000 + DA · transport-system EE 70% max 25,000 pm"
+            },
+            {
+             "t": "Rule 280 list",
+             "d": "remote locality 7,000/4,500/1,500 · field area 13,500 · modified 8,000 · insurgency 22,000 · high altitude 4,500/7,000/30,000 · underground 15% · highly active 22,000 · island 10/16/20% · Siachen 42,500",
+             "ref": [
+              "it-ch04-l1-3"
+             ]
+            },
+            {
+             "t": "HRA",
+             "d": "exempt LOWER of (1) actual HRA (2) rent − 10% salary (3) 50% metro / 40% other",
+             "kids": [
+              {
+               "t": "Salary",
+               "d": "basic + DA(R) + % commission (same period)",
+               "ref": [
+                "it-ch04-l2-2"
+               ]
+              },
+              {
+               "t": "NOT allowed",
+               "d": "rent ≤ 10% · own/relative house · new regime",
+               "ref": [
+                "it-ch04-l2-3"
+               ]
+              },
+              {
+               "t": "Period-wise",
+               "d": "when rent / HRA / salary / city changes",
+               "ref": [
+                "it-ch04-l3-1"
+               ]
+              }
+             ],
+             "ref": [
+              "it-ch04-l2-1"
+             ]
+            }
+           ]
+          },
+          {
+           "t": "Fully exempt",
+           "d": "MP/MLA, HC/SC judges, Govt. EE abroad"
+          },
+          {
+           "t": "New regime (sec 202)",
+           "d": "no exemption for allowances"
+          }
+         ],
+         "ref": [
+          "it-ch04-l1-2"
+         ]
+        },
+        {
+         "t": "3. Perquisites (in kind, Sec 17)",
+         "d": "Lectures 7–11",
+         "kids": [
+          {
+           "t": "Asset use",
+           "kids": [
+            {
+             "t": "House — RFA",
+             "kids": [
+              {
+               "t": "Govt. EE",
+               "d": "licence fee"
+              },
+              {
+               "t": "Non-Govt. — ER owned",
+               "d": "≤15 lac 5% · 15–40 lac 7.5% · >40 lac 10% of salary"
+              },
+              {
+               "t": "Non-Govt. — ER rented",
+               "d": "lower of 10% salary / rent paid"
+              },
+              {
+               "t": "Less rent recovered",
+               "d": "salary = basic + DA(R) + bonus + fee + commission + taxable allow.",
+               "ref": [
+                "it-ch04-l6-3"
+               ]
+              },
+              {
+               "t": "Hotel",
+               "d": "lower of 24% / hire charges; ≤15 days on transfer exempt",
+               "ref": [
+                "it-ch04-l6-4"
+               ]
+              },
+              {
+               "t": "Exempt",
+               "d": "ministers, judges, mining/remote sites, 2 houses ≤ 90 days",
+               "ref": [
+                "it-ch04-l6-5"
+               ]
+              }
+             ],
+             "ref": [
+              "it-ch04-l6-2"
+             ]
+            },
+            {
+             "t": "Motor car",
+             "kids": [
+              {
+               "t": "ER car",
+               "d": "official → nil · personal → 10% cost + expenses · mixed: R&M by ER 5,000 / 7,000 pm; by EE 2,000 / 3,000 pm (≤1600 cc / >1600 cc) + driver 3,000 pm"
+              },
+              {
+               "t": "EE car",
+               "d": "official → not taxable · personal → taxable · mixed: received − 5,000 / 7,000 (R&M by EE) − 2,000 / 3,000 (R&M by ER)",
+               "ref": [
+                "it-ch04-l7-2"
+               ]
+              }
+             ],
+             "ref": [
+              "it-ch04-l7-1"
+             ]
+            },
+            {
+             "t": "Other asset",
+             "d": "laptop/computer exempt · ER owned 10% cost · rented → rent",
+             "ref": [
+              "it-ch04-l7-3"
+             ]
+            }
+           ]
+          },
+          {
+           "t": "Asset sold (transfer)",
+           "d": "value − paid by EE · computer WDV 50% · car WDV 20% · other SLM 10% · no dep. in year of sale · <180 days half rate",
+           "ref": [
+            "it-ch04-l8-1",
+            "it-ch04-l8-2"
+           ]
+          },
+          {
+           "t": "Services provided",
+           "kids": [
+            {
+             "t": "Free meal",
+             "d": "tea/soft drink exempt · remote area exempt · wine/beer taxable · food ≤ ₹200 per meal exempt",
+             "ref": [
+              "it-ch04-l8-3"
+             ]
+            },
+            {
+             "t": "Gift",
+             "d": "cash fully taxable · kind ≤ 15,000 exempt",
+             "ref": [
+              "it-ch04-l8-4"
+             ]
+            },
+            {
+             "t": "Interest-free / concessional loan",
+             "d": "≤ 20,000 exempt · for disease exempt · interest free → SBI rate (1st day of TY) · ER rate < SBI → difference taxable · ≥ SBI → nil · month-end outstanding",
+             "ref": [
+              "it-ch04-l9-1"
+             ]
+            },
+            {
+             "t": "Medical",
+             "d": "Govt./ER hospital exempt · approved pvt. exempt · abroad: treatment up to RBI limit; air fare exempt if GTI ≤ 8L · (medical allowance in cash → fully taxable)",
+             "ref": [
+              "it-ch04-l9-2"
+             ]
+            },
+            {
+             "t": "LTC",
+             "d": "new regime taxable · old: rail 1st AC / air economy / AC bus · ₹30 per km if no transport · India only",
+             "ref": [
+              "it-ch04-l10-1"
+             ]
+            },
+            {
+             "t": "Education",
+             "d": "EE himself exempt · child: ER school → nearby school fee, otherwise actual fee · ₹3,000 per child exempt",
+             "ref": [
+              "it-ch04-l10-2"
+             ]
+            },
+            {
+             "t": "Credit card / club",
+             "d": "official & records → not taxable",
+             "ref": [
+              "it-ch04-l10-3"
+             ]
+            },
+            {
+             "t": "Domestic services",
+             "d": "ER cost − EE contribution",
+             "ref": [
+              "it-ch04-l10-4"
+             ]
+            },
+            {
+             "t": "Gas, electricity, water",
+             "d": "paid by ER − paid by EE (own resources → manufacturing cost)",
+             "ref": [
+              "it-ch04-l10-4"
+             ]
+            },
+            {
+             "t": "Other amenities",
+             "d": "arm's length cost − EE contribution · no perq. for telephone",
+             "ref": [
+              "it-ch04-l10-4"
+             ]
+            }
+           ]
+          }
+         ],
+         "ref": [
+          "it-ch04-l6-1"
+         ],
+         "dir": "h"
+        },
+        {
+         "t": "4. Retirement Benefits",
+         "d": "Lectures 5, 6, 12–14",
+         "kids": [
+          {
+           "t": "Provident fund",
+           "kids": [
+            {
+             "t": "RPF",
+             "d": "ER cont. exempt ≤ 7,50,000 (RPF+SPF+superannuation) · EE cont. → deduction u/s 123 (old) · interest exempt ≤ 9.5% · withdrawal exempt after 5 years (or ill / death / transfer)",
+             "ref": [
+              "it-ch04-l5-2",
+              "it-ch04-l4-3"
+             ]
+            },
+            {
+             "t": "URPF",
+             "d": "during service all exempt · on withdrawal: ER cont. + its interest → Salary; EE cont. exempt; interest on EE cont. → Other Sources",
+             "ref": [
+              "it-ch04-l5-3"
+             ]
+            },
+            {
+             "t": "SPF",
+             "d": "fully exempt"
+            },
+            {
+             "t": "PPF",
+             "d": "deduction u/s 123 (min 500, max 1,50,000)"
+            }
+           ],
+           "ref": [
+            "it-ch04-l4-2"
+           ]
+          },
+          {
+           "t": "Gratuity (Act 1972)",
+           "kids": [
+            {
+             "t": "During job → taxable",
+             "d": "Govt. EE → exempt"
+            },
+            {
+             "t": "Covered",
+             "d": "lower of actual · 15/26 × last salary × yrs (>6 m round up) · 20L · salary = basic + DA (full) + % comm."
+            },
+            {
+             "t": "Not covered",
+             "d": "lower of actual · 15/30 × avg. 10 m salary × yrs (ignore fraction) · 20L · salary = basic + DA(R) + % comm. · silent → not covered · earlier exemption reduces 20L"
+            }
+           ],
+           "ref": [
+            "it-ch04-l11-3"
+           ]
+          },
+          {
+           "t": "Pension",
+           "kids": [
+            {
+             "t": "Uncommuted",
+             "d": "fully taxable"
+            },
+            {
+             "t": "Commuted",
+             "d": "Govt. exempt · with gratuity 1/3 of full · without 1/2 of full · full = commuted × 100 / % commuted"
+            },
+            {
+             "t": "Family pension",
+             "d": "Other Sources · exempt lower of actual / 25,000"
+            }
+           ],
+           "ref": [
+            "it-ch04-l12-2"
+           ]
+          },
+          {
+           "t": "Leave encashment",
+           "kids": [
+            {
+             "t": "During job → taxable",
+             "d": "Govt. on retirement → exempt"
+            },
+            {
+             "t": "Non-Govt. on retirement",
+             "d": "lower of actual · 10 × avg. salary · unused/30 × avg. salary · 25 lakh (max 30 days per year)"
+            }
+           ],
+           "ref": [
+            "it-ch04-l13-1"
+           ]
+          }
+         ],
+         "ref": [
+          "it-ch04-l11-1"
+         ]
+        },
+        {
+         "t": "5. Deductions (Sec 19)",
+         "d": "Lecture 2 + revision",
+         "kids": [
+          {
+           "t": "Standard deduction",
+           "d": "old 50,000 · new 75,000"
+          },
+          {
+           "t": "Professional tax"
+          },
+          {
+           "t": "= Taxable Salary",
+           "d": "Gross total salary − deductions"
+          }
+         ],
+         "ref": [
+          "it-ch04-l0-3"
+         ]
+        }
+       ],
+       "notes": [
+        "Sweet equity, ESOP, retrenchment compensation, VRS → not in syllabus."
+       ]
+      },
+      {
+       "t": "House Property",
+       "d": "rent · Sections 20 to 25",
+       "ch": "it-ch03",
+       "ref": [
+        "it-ch03-l0-0"
+       ],
+       "dir": "h",
+       "kids": [
+        {
+         "t": "Charge & owner",
+         "d": "Sec 20, 25",
+         "kids": [
+          {
+           "t": "Charge",
+           "d": "building / land appurtenant · assessee is owner · not own business use",
+           "ref": [
+            "it-ch03-l0-1"
+           ]
+          },
+          {
+           "t": "Owner",
+           "d": "real, or deemed (spouse, minor child, impartible estate, co-op member, possession, 12-year right)",
+           "ref": [
+            "it-ch03-l0-2"
+           ]
+          }
+         ],
+         "ref": [
+          "it-ch03-l0-1",
+          "it-ch03-l0-2"
+         ]
+        },
+        {
+         "t": "Annual value",
+         "d": "Sec 21",
+         "kids": [
+          {
+           "t": "Expected rent (ER)",
+           "d": "higher of MV & FR, then lower with SR"
+          },
+          {
+           "t": "GAV",
+           "d": "higher of ER & AR (vacancy rule)",
+           "ref": [
+            "it-ch03-l1-0"
+           ]
+          },
+          {
+           "t": "NAV",
+           "d": "GAV − municipal tax paid by owner (paid basis)",
+           "ref": [
+            "it-ch03-l1-1"
+           ]
+          }
+         ],
+         "ref": [
+          "it-ch03-l0-4"
+         ]
+        },
+        {
+         "t": "Situations",
+         "d": "Sec 22",
+         "kids": [
+          {
+           "t": "Self-occupied",
+           "d": "NAV 0 · interest only (old regime)"
+          },
+          {
+           "t": "Let out / DLO",
+           "d": "normal manner"
+          },
+          {
+           "t": "More than 2 SO",
+           "d": "2 SO, rest DLO"
+          }
+         ],
+         "ref": [
+          "it-ch03-l2-0",
+          "it-ch03-l2-1"
+         ]
+        },
+        {
+         "t": "Deductions",
+         "d": "Sec 22",
+         "kids": [
+          {
+           "t": "Standard",
+           "d": "30% of NAV"
+          },
+          {
+           "t": "Interest",
+           "d": "SO 30,000 / 2,00,000 (old only) · let out no limit · PCP in 5 instalments",
+           "ref": [
+            "it-ch03-l3-1",
+            "it-ch03-l4-0"
+           ]
+          }
+         ],
+         "ref": [
+          "it-ch03-l3-0"
+         ]
+        },
+        {
+         "t": "Arrears & unrealised rent",
+         "d": "Sec 23, Rule 21 · taxable when received · 30% deduction",
+         "ref": [
+          "it-ch03-l5-0",
+          "it-ch03-l5-1"
+         ]
+        }
+       ]
+      },
+      {
+       "t": "Business or Profession (PGBP)",
+       "d": "shop, business, service · own chapter later (Unit 3)",
+       "later": true,
+       "ref": [
+        "it-ch01-l1-1"
+       ]
+      },
+      {
+       "t": "Capital Gains",
+       "d": "sale of gold, shares… · own chapter later (Unit 3)",
+       "later": true,
+       "ref": [
+        "it-ch01-l1-1",
+        "it-ch01-l1-8"
+       ],
+       "kids": [
+        {
+         "t": "Rates already taught (Ch 1)",
+         "d": "196 STCG shares 20% · 197 LTCG other 12.5% · 198 LTCG shares 12.5% (above 1.25L)",
+         "ch": "it-ch01",
+         "ref": [
+          "it-ch01-l1-8",
+          "it-ch01-l2-3"
+         ]
+        }
+       ]
+      },
+      {
+       "t": "Other Sources",
+       "d": "FD interest, lottery… · own chapter later (Unit 4)",
+       "later": true,
+       "ref": [
+        "it-ch01-l1-1"
+       ],
+       "kids": [
+        {
+         "t": "From Salaries (Ch 4)",
+         "d": "family pension · interest on employee's own URPF contribution",
+         "ch": "it-ch04",
+         "ref": [
+          "it-ch04-l12-2",
+          "it-ch04-l5-3"
+         ]
+        }
+       ]
+      }
+     ],
+     "dir": "h"
+    },
+    {
+     "t": "④ Gross Total Income − Deductions = Total Income",
+     "d": "round off (Sec 516)",
+     "ch": "it-ch01",
+     "ref": [
+      "it-ch01-l1-2",
+      "it-ch01-l1-3"
+     ],
+     "kids": [
+      {
+       "t": "Deductions (Chapter VIII)",
+       "d": "own chapter later (Unit 5) · so far: deduction u/s 123 (Ch 4)",
+       "later": true,
+       "ref": [
+        "it-ch01-l1-2",
+        "it-ch04-l5-2"
+       ]
+      },
+      {
+       "t": "Round off (Sec 516)",
+       "d": "to the nearest ₹10 — 5 and above rounds up",
+       "ch": "it-ch01",
+       "ref": [
+        "it-ch01-l1-3"
+       ]
+      }
+     ],
+     "dir": "h"
+    },
+    {
+     "t": "⑤ Tax on total income",
+     "d": "Lectures 2–6",
+     "ch": "it-ch01",
+     "ref": [
+      "it-ch01-l1-4"
+     ],
+     "kids": [
+      {
+       "t": "Rates",
+       "d": "Lectures 2–3",
+       "kids": [
+        {
+         "t": "Basic rate",
+         "d": "slab (individual / HUF / AOP / BOI / AJP) · fixed (company, firm, LA)",
+         "ref": [
+          "it-ch01-l1-4"
+         ]
+        },
+        {
+         "t": "Old regime",
+         "d": "below 60 · 60 to < 80 · 80+ (deductions allowed)",
+         "ref": [
+          "it-ch01-l1-5"
+         ]
+        },
+        {
+         "t": "New regime (Sec 202)",
+         "d": "4L nil · 5% · 10% · 15% · 20% · 25% · above 24L 30%",
+         "ref": [
+          "it-ch01-l2-0"
+         ]
+        },
+        {
+         "t": "Special rates",
+         "d": "194 lottery 30% · 195 deemed 30% · 196 STCG shares 20% · 197 LTCG other 12.5% · 198 LTCG shares 12.5% (above 1.25L)",
+         "ref": [
+          "it-ch01-l2-3",
+          "it-ch01-l1-8"
+         ]
+        }
+       ],
+       "ref": [
+        "it-ch01-l1-4"
+       ],
+       "dir": "h"
+      },
+      {
+       "t": "Rebate u/s 156",
+       "d": "Lecture 4",
+       "kids": [
+        {
+         "t": "Old",
+         "d": "total income ≤ 5L → up to 12,500 · no marginal relief"
+        },
+        {
+         "t": "New",
+         "d": "total income ≤ 12L → up to 60,000 · marginal relief",
+         "ref": [
+          "it-ch01-l3-0",
+          "it-ch01-l3-1"
+         ]
+        }
+       ],
+       "ref": [
+        "it-ch01-l3-0"
+       ],
+       "dir": "h"
+      },
+      {
+       "t": "Surcharge + cess",
+       "d": "Lecture 5",
+       "kids": [
+        {
+         "t": "Rates",
+         "d": "10% · 15% · 25% · 37% (new max 25%) · special income max 15%",
+         "ref": [
+          "it-ch01-l4-1"
+         ]
+        },
+        {
+         "t": "Then",
+         "d": "+ 4% health & education cess on (tax + surcharge)"
+        }
+       ],
+       "ref": [
+        "it-ch01-l4-0"
+       ],
+       "dir": "h"
+      },
+      {
+       "t": "Marginal relief",
+       "d": "Lectures 4–6",
+       "kids": [
+        {
+         "t": "Rebate",
+         "d": "new regime only",
+         "ref": [
+          "it-ch01-l3-1"
+         ]
+        },
+        {
+         "t": "Surcharge thresholds",
+         "d": "old and new",
+         "ref": [
+          "it-ch01-l4-3"
+         ]
+        }
+       ],
+       "ref": [
+        "it-ch01-l5-0"
+       ],
+       "dir": "h"
+      }
+     ],
+     "dir": "h"
+    },
+    {
+     "t": "Old regime vs New regime",
+     "d": "chosen once — changes things in every chapter",
+     "link": true,
+     "ref": [
+      "it-ch01-l1-5"
+     ],
+     "kids": [
+      {
+       "t": "Rates",
+       "d": "old: by age, deductions allowed · new (Sec 202): 4L nil … above 24L 30%",
+       "ch": "it-ch01",
+       "ref": [
+        "it-ch01-l1-5",
+        "it-ch01-l2-0"
+       ]
+      },
+      {
+       "t": "Rebate u/s 156",
+       "d": "old: total income ≤ 5L → up to 12,500, no marginal relief · new: ≤ 12L → up to 60,000, marginal relief",
+       "ch": "it-ch01",
+       "ref": [
+        "it-ch01-l3-0",
+        "it-ch01-l3-1"
+       ]
+      },
+      {
+       "t": "Surcharge",
+       "d": "max 37% (old) · new max 25%",
+       "ch": "it-ch01",
+       "ref": [
+        "it-ch01-l4-1"
+       ]
+      },
+      {
+       "t": "House property",
+       "d": "self-occupied: interest 30,000 / 2,00,000 — old regime only",
+       "ch": "it-ch03",
+       "ref": [
+        "it-ch03-l3-1"
+       ]
+      },
+      {
+       "t": "Salaries",
+       "d": "new regime: no exemption for allowances · no HRA exemption · LTC taxable · standard deduction 75,000 (old 50,000)",
+       "ch": "it-ch04",
+       "ref": [
+        "it-ch04-l1-2",
+        "it-ch04-l2-3",
+        "it-ch04-l10-1",
+        "it-ch04-l0-3"
+       ]
+      },
+      {
+       "t": "Deduction u/s 123",
+       "d": "employee's own RPF contribution (old regime) · PPF",
+       "ch": "it-ch04",
+       "ref": [
+        "it-ch04-l5-2",
+        "it-ch04-l4-2"
+       ]
+      }
+     ],
+     "dir": "h"
+    },
+    {
+     "t": "Still to come",
+     "d": "from the syllabus map (Ch 1) — each joins the chart where it belongs",
+     "link": true,
+     "ref": [
+      "it-ch01-l0-0"
+     ],
+     "kids": [
+      {
+       "t": "Incomes which do not form part of total income",
+       "d": "Unit 1",
+       "later": true
+      },
+      {
+       "t": "Clubbing of income",
+       "d": "Unit 4",
+       "later": true
+      },
+      {
+       "t": "Set off / carry forward of losses",
+       "d": "Unit 4",
+       "later": true
+      },
+      {
+       "t": "Agricultural income",
+       "d": "Unit 5",
+       "later": true
+      },
+      {
+       "t": "Assessment of individuals",
+       "d": "Unit 5",
+       "later": true
+      },
+      {
+       "t": "Assessment of firms (incl. LLP)",
+       "d": "Unit 5",
+       "later": true
+      }
+     ],
+     "dir": "h"
+    }
+   ]
+  }
+ }
+}

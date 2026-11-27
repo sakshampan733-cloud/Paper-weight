@@ -728,6 +728,107 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
 .prtItem .k{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); flex-shrink:0; width:92px}
 .prtItem .t{font-size:13.5px; color:var(--text)}
 
+/* ── Subject map (1.12) — one chart for the whole subject, full screen ── */
+#mapWrap{position:fixed; inset:0; z-index:97; display:none; flex-direction:column; background:var(--bg)}
+#mapWrap.show{display:flex}
+#mapBar{display:flex; align-items:center; gap:8px; padding:8px 12px; border-bottom:1px solid var(--line); background:var(--panel); flex-shrink:0; overflow-x:auto; scrollbar-width:none}
+#mapBar::-webkit-scrollbar{display:none}
+#mapBar .mbT{font-family:var(--disp); font-size:16px; font-weight:600; white-space:nowrap; margin-right:auto; padding:0 6px; line-height:1.25}
+#mapBar .mbT small{display:block; font-family:var(--body); font-size:11.5px; font-weight:400; color:var(--faint)}
+.mbBtn{flex-shrink:0; height:34px; padding:0 12px; border:1px solid var(--line); border-radius:8px; background:var(--panel2); color:var(--dim); font-size:13px; white-space:nowrap}
+.mbBtn:hover{color:var(--text); border-color:var(--line2)}
+.mbBtn.on{color:var(--gold); border-color:var(--gold-line); background:var(--gold-bg)}
+.mbSeg{display:inline-flex; flex-shrink:0; border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.mbSeg button{height:32px; padding:0 11px; font-size:12.5px; color:var(--dim); background:var(--panel2); border-right:1px solid var(--line)}
+.mbSeg button:last-child{border-right:0}
+.mbSeg button:hover{color:var(--text)}
+.mbSeg button.on{background:var(--teal-bg); color:var(--teal)}
+#mapZoomLbl{font-family:var(--mono); font-size:11px; min-width:48px}
+#mapMain{position:relative; flex:1; min-height:0; display:flex}
+#mapScroll{flex:1; overflow:auto; touch-action:pan-x pan-y; cursor:grab; overscroll-behavior:contain}
+#mapScroll.drag{cursor:grabbing; user-select:none; -webkit-user-select:none}
+#mapCanvas{display:flex; flex-direction:column; align-items:center; width:max-content; margin:0 auto; padding:26px 40px 90px}
+#mapCanvas.tree{align-items:flex-start; width:auto; max-width:760px; margin:0; padding:18px 14px 90px}
+.mroot{position:relative; font-family:var(--disp); font-size:25px; font-weight:600; line-height:1.25; text-align:center; color:var(--text); border:2px solid var(--gold); background:var(--gold-bg); border-radius:14px; padding:12px 28px; max-width:560px; cursor:pointer}
+.mroot i{display:block; font-family:var(--body); font-style:normal; font-size:14px; font-weight:500; color:var(--gold); margin-top:4px}
+#mapCanvas.tree .mroot{text-align:left; font-size:21px; padding:10px 16px}
+.mapArrow{position:relative; flex-shrink:0; width:2px; height:34px; margin:4px 0 16px; background:var(--teal)}
+.mapArrow::after{content:''; position:absolute; left:50%; top:100%; transform:translateX(-50%); border:7px solid transparent; border-top:10px solid var(--teal); border-bottom:0}
+#mapCanvas.tree .mapArrow{margin-left:24px}
+.mapGap{display:flex; align-items:center; gap:12px; align-self:stretch; margin:46px 0 18px; color:var(--faint); font-size:11px; letter-spacing:.14em; text-transform:uppercase; white-space:nowrap}
+.mapGap::before,.mapGap::after{content:''; flex:1; border-top:1px dashed var(--line2)}
+.mapGap.small{margin:28px 0 12px}
+.mapAbout{margin-top:40px; max-width:620px; font-size:12.5px; color:var(--faint); text-align:center; line-height:1.6}
+#mapCanvas.tree .mapAbout{text-align:left}
+.pwmap.pwf{overflow:visible; container-type:normal; margin:0; padding:0}
+.pwmap .b{cursor:default; transition:border-color .15s, box-shadow .15s}
+.pwmap .b.ref{cursor:pointer}
+.pwmap .b.ref:hover{border-color:var(--teal)}
+.pwmap .b.later{border-style:dashed; background:transparent; color:var(--dim)}
+.pwmap .b.later i{color:var(--faint)}
+.pwmap .b small{display:block; font-size:11.5px; font-weight:400; font-style:italic; color:var(--faint); margin-top:4px}
+.pwmap .mtg{position:absolute; right:-9px; bottom:-10px; min-width:22px; height:20px; padding:0 6px; border-radius:10px; border:1px solid var(--line2); background:var(--panel); color:var(--dim); font:600 11px/18px var(--mono); z-index:2}
+.pwmap .mtg:hover{color:var(--text); border-color:var(--teal)}
+.pwmap .mch{float:right; margin:-1px -4px 3px 10px; padding:0 7px; border-radius:99px; border:1px solid var(--teal-line); background:var(--panel); color:var(--teal); font:600 10.5px/17px var(--mono)}
+.pwmap .mch:hover{border-color:var(--teal)}
+#mapCanvas .hit{box-shadow:0 0 0 3px var(--teal-line)}
+#mapCanvas.test .pwmap .b i{color:transparent; background:var(--line-soft); border-radius:4px}
+#mapCanvas.test .pwmap .b.rv i{color:var(--dim); background:none}
+#mapPanel{position:absolute; top:0; right:0; bottom:0; width:min(480px,100%); display:flex; flex-direction:column; background:var(--bg); border-left:1px solid var(--line); box-shadow:-24px 0 60px rgba(0,0,0,.35); transform:translateX(104%); transition:transform .22s ease; z-index:3}
+#mapPanel.show{transform:none}
+.mpHead{display:flex; gap:10px; align-items:flex-start; padding:14px 16px 12px; border-bottom:1px solid var(--line-soft)}
+.mpCrumb{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--faint)}
+.mpTitle{font-family:var(--disp); font-size:19px; font-weight:600; line-height:1.3; margin-top:2px}
+.mpSub{font-size:13px; color:var(--dim); margin-top:3px; line-height:1.5}
+.mpX{margin-left:auto; flex-shrink:0; width:34px; height:34px; border-radius:8px; border:1px solid var(--line); color:var(--dim)}
+.mpBody{flex:1; overflow-y:auto; padding:12px 14px 24px; overscroll-behavior:contain}
+.mpBody .card,.mpBody .qCard{margin-bottom:12px}
+.mpFrom{font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin:6px 2px 6px}
+.mpFoot{display:flex; align-items:center; gap:10px; padding:10px 14px calc(10px + env(safe-area-inset-bottom)); border-top:1px solid var(--line-soft)}
+.mpHint{font-size:12px; color:var(--faint); margin-right:auto}
+#mapPrintPop{position:absolute; top:10px; right:12px; width:min(380px,calc(100% - 24px)); display:none; padding:14px; background:var(--panel); border:1px solid var(--line); border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,.45); z-index:4}
+#mapPrintPop.show{display:block}
+.mppT{font-weight:600; font-size:15px}
+.mppN{font-size:12.5px; color:var(--dim); margin:6px 0 10px; line-height:1.55}
+.mppOpt{display:flex; width:100%; align-items:center; gap:10px; padding:9px 11px; margin-bottom:6px; text-align:left; border:1px solid var(--line); border-radius:8px; background:var(--panel2)}
+.mppOpt:hover{border-color:var(--teal)}
+.mppOpt b{font-size:14px; min-width:28px; color:var(--text)}
+.mppOpt span{flex:1; font-size:12.5px; color:var(--dim)}
+.mppOpt em{font-style:normal; font-family:var(--mono); font-size:11px; color:var(--teal)}
+.mppOpt em.small{color:var(--gold)}
+.mapMeasure{position:absolute; left:-100000px; top:0; visibility:hidden; pointer-events:none}
+.mapMeasure>div,.mapPrCanvas{display:flex; flex-direction:column; align-items:center; width:max-content; padding:4px}
+@media (max-width:700px){
+  #mapBar{gap:6px; padding:7px 10px}
+  #mapBar .mbT{font-size:14px}
+  #mapBar .mbT small{display:none}
+  #mapPanel{top:auto; left:0; width:auto; height:80%; border-left:0; border-top:1px solid var(--line); border-radius:16px 16px 0 0; transform:translateY(104%); box-shadow:0 -24px 60px rgba(0,0,0,.4)}
+}
+#moreMenu button[hidden]{display:none}
+.mapCard{display:flex; align-items:center; gap:14px; width:100%; text-align:left; margin:0 0 24px; padding:14px 16px; border:1px solid var(--teal-line); border-radius:var(--r); background:var(--teal-bg); color:var(--text)}
+.mapCard:hover{border-color:var(--teal)}
+.mapCard .mcI{font-size:26px; line-height:1}
+.mapCard b{font-size:15px}
+.mapCard .mcS{display:block; font-size:12.5px; color:var(--dim); margin-top:2px}
+.mapCard .mcGo{margin-left:auto; color:var(--teal); font-weight:600; white-space:nowrap}
+/* Charts tab — every flow chart of a chapter on one page */
+@media (max-width:520px){ .tab:not(.on) .ct{display:none} }   /* five tabs fit a phone; the open one keeps its count */
+.chartCard .ciGo{text-align:left; font:inherit; font-weight:600; color:var(--text); cursor:pointer}
+.chartCard .ciGo:hover{color:var(--teal)}
+.chartCard .ciLec{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--gold); margin-right:6px}
+@media print{
+  #mapWrap{display:none!important}
+  body.printingMap>*:not(#printRoot){display:none!important}
+  body.printingMap{overflow:visible!important}
+  #printRoot .pwf ul{margin:0}
+  #printRoot .pwf .v,#printRoot .pwf.vfit .h{margin:4px 0 0 12px}
+  #printRoot .mapPrint{font-family:var(--body); color:var(--text); -webkit-print-color-adjust:exact; print-color-adjust:exact}
+  #printRoot .mapPrint p{margin:0}
+  #printRoot .mpPrHead{display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-bottom:1.5pt solid #333; padding-bottom:4pt; margin-bottom:8pt; font-size:11pt}
+  #printRoot .mpPrHead span{font-size:9pt; color:#555}
+  #printRoot .mapPrint .mtg{display:none}
+}
+
 /* ── Print output ───────────────────────────────── */
 #printRoot{display:none}
 @media print{
@@ -854,6 +955,7 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
     <div id="moreWrap">
       <button class="topBtn" id="moreBtn" aria-label="More">⋯</button>
       <div id="moreMenu">
+        <button data-act="map" hidden>Subject map <span>🗺</span></button>
         <button data-act="import">Import JSON</button>
         <button data-act="importManual">Import JSON manually</button>
         <button data-act="settings">Settings</button>
@@ -895,6 +997,26 @@ body.hlmode #hlBar{display:flex; animation:riseIn .3s cubic-bezier(.22,1,.36,1)}
 <div id="quizWrap">
   <button id="quizClose"><span class="kbdOnly">Esc — </span>Exit</button>
   <div id="quizInner"></div>
+</div>
+
+<!-- Subject map (1.12): the whole subject on one chart -->
+<div id="mapWrap" role="dialog" aria-label="Subject map">
+  <div id="mapBar">
+    <button class="mbBtn" id="mapBack" title="Back to your notes (Esc)">← Back</button>
+    <div class="mbT"><span id="mapTitleT">Map</span><small>Tap a box for its notes · dashed boxes are still to come</small></div>
+    <span class="mbSeg" id="mapLevel" role="group" aria-label="How much to show"><button data-lv="1">Outline</button><button data-lv="2">Chapters</button><button data-lv="99">Everything</button></span>
+    <button class="mbBtn" id="mapTest" title="Hide the details and test yourself — tap a box to check">Test me</button>
+    <span class="mbSeg"><button id="mapOut" aria-label="Zoom out">−</button><button id="mapZoomLbl" title="Actual size">100%</button><button id="mapIn" aria-label="Zoom in">+</button></span>
+    <button class="mbBtn" id="mapFitBtn" title="Fit the whole map on screen (0)">Fit</button>
+    <button class="mbBtn" id="mapLayout">Tree view</button>
+    <button class="mbBtn" id="mapPrintBtn" title="Print — A4 up to chart-paper size">Print</button>
+    <button class="mbBtn" id="mapFull" title="Full screen" aria-label="Full screen">⛶</button>
+  </div>
+  <div id="mapMain">
+    <div id="mapScroll"><div id="mapCanvas"></div></div>
+    <aside id="mapPanel" aria-label="Notes for this box"></aside>
+    <div id="mapPrintPop"></div>
+  </div>
 </div>
 
 <!-- Print menu -->
@@ -1335,6 +1457,10 @@ function applyImportPayload(d,forced){
     Object.assign(state.subjectNames=state.subjectNames||{}, d.subjectNames);
     DATA.subjects.forEach(sb=>{ const o=d.subjectNames[sb.id]; if(o){ if(o.name) sb.name=o.name; if(o.code) sb.code=o.code; } });
   }
+  /* a subject map file ({subject, map}) files under the subject its chapters are in; a backup brings its maps */
+  let mapSid=null;
+  if(d.map&&d.map.root){ mapSid=mapSubjectId(d.subject,mapChapterIds(d.map.root)); if(mapSid) (state.maps=state.maps||{})[mapSid]=d.map; }
+  if(d.maps&&typeof d.maps==='object'&&!Array.isArray(d.maps)) Object.assign(state.maps=state.maps||{}, d.maps);
   ents.forEach(en=>{
     if(forced){
       const chap0=entryChapter(en);
@@ -1361,7 +1487,7 @@ function applyImportPayload(d,forced){
      so anything rendered before the post-import reload is already correct */
   DATA.subjects.forEach(indexSubject);
   const stored=save();
-  return {done,stored};
+  return {done,stored,map:mapSid};
 }
 
 /* Move a chapter to a different subject/unit without touching its content.
@@ -1431,7 +1557,7 @@ function reorderChapter(chapterId, refChapterId, placeBefore){
   return true;
 }
 
-function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},aiAnswers:state.aiAnswers||{},cols:state.cols||'auto',syncOff:!!state.syncOff,contentHashes:state.contentHashes||{},syncSkip:state.syncSkip||[]})); return true; }catch(e){ return false; } }
+function save(){ try{ localStorage.setItem('sem5v2', JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,view:state.view,theme:state.theme,subs:state.subs||[],content:state.content||[],sideHid:!!state.sideHid,hlmode:!!state.hlmode,hlColor:state.hlColor||'y',subjectNames:state.subjectNames||{},removedSubjectIds:state.removedSubjectIds||[],removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},aiAnswers:state.aiAnswers||{},cols:state.cols||'auto',syncOff:!!state.syncOff,contentHashes:state.contentHashes||{},syncSkip:state.syncSkip||[],maps:state.maps||{},mapPrefs:state.mapPrefs||null})); return true; }catch(e){ return false; } }
 function toast(msg,ms){
   let el=document.getElementById('toastBox');
   if(!el){ el=document.createElement('div'); el.id='toastBox'; document.body.appendChild(el); }
@@ -1601,6 +1727,7 @@ function renderSidebar(){
   const sub=cur.sub;
   let h=`<button class="chRow${!cur.ch?' on':''}" id="ovRow">
     <span class="t"><span>◈ ${esc(sub.code)} overview</span></span></button>
+    ${subjectMap(sub)?`<button class="chRow" id="mapRow" title="The whole subject on one chart"><span class="t"><span style="color:var(--teal)">🗺 ${esc(sub.code)} map — whole subject</span></span></button>`:''}
     <button class="chRow${cur.ch==='weak'?' on':''}" id="weakRow" style="margin-bottom:4px">
     <span class="t"><span style="color:var(--gold)">★ Weak topics</span></span></button>`;
   /* every subject starts with an empty "Unit 1"; once chapters live in named
@@ -1628,6 +1755,7 @@ function renderSidebar(){
     if(e.target.closest('.chGrip')) return;
     if(b.id==='ovRow'){ openChapter(null,'notes'); }
     else if(b.id==='weakRow'){ openChapter('weak','notes'); }
+    else if(b.id==='mapRow'){ openMap(cur.sub); }
     else if(b.id==='setRow'){ openChapter('settings','notes'); }
     else openChapter(allChapters(cur.sub).find(c=>c.id===b.dataset.cid),'notes');
     closeSideIfDrawer();
@@ -1702,7 +1830,7 @@ function fileIsDescribed(d){
   return ents.length>0 && ents.every(entryIsDescribed);
 }
 function applyResults(results,{forcedFor}={}){
-  let added=0, updated=0, restored=0, stored=true;
+  let added=0, updated=0, restored=0, maps=0, stored=true;
   const skipped=[], guessed=[];
   results.forEach(({name,d,err})=>{
     if(err){ skipped.push(name); return; }
@@ -1712,6 +1840,7 @@ function applyResults(results,{forcedFor}={}){
     const res=applyImportPayload(d,forced);
     if(!res.stored) stored=false;
     if(!res.done.length){
+      if(res.map){ maps++; return; }
       if(!isChapterFile) restored++;   // backup with only progress/state, no chapters
       else skipped.push(name);
       return;
@@ -1722,12 +1851,13 @@ function applyResults(results,{forcedFor}={}){
   if(added) bits.push(added+' chapter'+(added>1?'s':'')+' added');
   if(updated) bits.push(updated+' updated');
   if(restored) bits.push(restored+' backup'+(restored>1?'s':'')+' restored');
+  if(maps) bits.push(maps+' subject map'+(maps>1?'s':'')+' added');
   if(skipped.length) bits.push(skipped.length+' skipped'+(skipped.length<=3?' ('+skipped.join(', ')+')':''));
   let msg=bits.join(' · ')||'Nothing importable in those files.';
   if(guessed.length) msg+=` — ${guessed.length} didn't match a subject, check where ${guessed.length>1?'they':'it'} landed.`;
   if(!stored) msg+=' — storage is full, some may not have saved.';
   toast(msg,5500);
-  if(added+updated+restored) setTimeout(()=>location.reload(),1600);
+  if(added+updated+restored+maps) setTimeout(()=>location.reload(),1600);
 }
 
 /* ── Auto: no picker, ever. Files that don't declare their own routing
@@ -2036,7 +2166,7 @@ function upgradeBlocks(root){
   fitCharts(root);
 }
 function fitCharts(root){
-  (root||document).querySelectorAll('.pwf').forEach(p=>{
+  (root||document).querySelectorAll('.pwf:not(.pwmap)').forEach(p=>{
     const t=p.querySelector('.t'); if(!t || !p.clientWidth) return;   // hidden (a closed answer) — fitted when opened
     p.classList.remove('vfit');
     if(t.getBoundingClientRect().width>p.clientWidth+1) p.classList.add('vfit');
@@ -2226,7 +2356,7 @@ function renderMain(){
     });
     reportOfflineReady();
     $('#expBtn').onclick=()=>{
-      const blob=new Blob([JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,subs:state.subs||[],subjectNames:state.subjectNames||{},removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},content:state.content||[]},null,1)],{type:'application/json'});
+      const blob=new Blob([JSON.stringify({done:state.done,stars:state.stars,quiz:state.quiz,exams:state.exams,hl:state.hl,subs:state.subs||[],subjectNames:state.subjectNames||{},removedUnits:state.removedUnits||{},addedUnits:state.addedUnits||{},maps:state.maps||{},content:state.content||[]},null,1)],{type:'application/json'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='sem5-backup.json'; a.click();
     };
     $('#impBtn').onclick=()=>jsonToggle(true);
@@ -2298,6 +2428,7 @@ function renderMain(){
         <div class="hStat"><div class="v" style="color:var(--gold)">${stT}</div><div class="l">Starred (all subjects)</div></div>
         ${(()=>{const s=quizStats(chs.flatMap(chQuizKeys));return s.n?`<div class="hStat"><div class="v" style="color:var(--teal)">${s.g?s.pct+'%':'—'}</div><div class="l">Quiz score · ${s.g}/${s.n} tried</div></div>`:'';})()}
       </div>`;
+    if(subjectMap(sub)) h+=`<button class="mapCard" id="ovMap"><span class="mcI">🗺</span><span><b>All of ${esc(sub.name)} on one chart</b><span class="mcS">Every chapter connected, in the order it's worked out · tap a box for its notes · Test me · print it as a poster</span></span><span class="mcGo">Open →</span></button>`;
     if(chs.length){
       h+='<div class="homeGrid">'+chs.map(c=>{
         const d=chDone(c), t=c.lectures.length, pct=chStepsPct(c);
@@ -2314,6 +2445,7 @@ function renderMain(){
     }
     m.innerHTML=h;
     $$('#main .homeCard').forEach(b=>b.onclick=()=>openChapter(chs.find(c=>c.id===b.dataset.cid),'notes'));
+    const ovMap=$('#ovMap'); if(ovMap) ovMap.onclick=()=>openMap(sub);
     const ex=$('#examSet');
     if(ex) ex.onclick=()=>{
       const v=prompt('Exam date for '+sub.name+'? (YYYY-MM-DD, blank to clear)', state.exams[sub.id]||'');
@@ -2347,6 +2479,8 @@ function renderMain(){
      something taught differently) — collected in their own tab */
   const flagged=ch.lectures.flatMap(l=>l.cards.filter(cd=>/class="flag"/.test(cd.type==='question'?(cd.a||''):(cd.html||''))));
   if(cur.tab==='flags'&&!flagged.length) cur.tab='notes';
+  const charts=chChartCards(ch);
+  if(cur.tab==='charts'&&!charts.length) cur.tab='notes';
   const fmCount=fms.reduce((a,c)=>a+c.items.length,0);
   const d=chDone(ch), t=ch.lectures.length, pct=chStepsPct(ch);
   let h=`<div class="crumb"><b>${esc(ch.sub.code)}</b> · ${esc(ch.unit.name)} · Ch ${ch.no}</div>
@@ -2354,6 +2488,7 @@ function renderMain(){
     <div id="chMeta"><div id="chProg"><i style="width:${pct}%"></i></div><div id="chProgTxt">${chSteps(ch)}/${t*3} steps · ${d}/${t} lectures complete${(()=>{const s=quizStats(chQuizKeys(ch));return s.g?` · quiz ${s.r}✓ ${s.p}~ ${s.w}✗ of ${s.n}`:'';})()}</div></div>
     <div id="tabs">
       <button class="tab${cur.tab==='notes'?' on':''}" data-tab="notes">Notes <span class="ct">${t}</span></button>
+      ${charts.length?`<button class="tab${cur.tab==='charts'?' on':''}" data-tab="charts" title="Every flow chart in this chapter on one page">Charts <span class="ct">${charts.length}</span></button>`:''}
       <button class="tab${cur.tab==='questions'?' on':''}" data-tab="questions">Questions <span class="ct">${qs.length}</span></button>
       <button class="tab${cur.tab==='formulas'?' on':''}" data-tab="formulas">Formulas <span class="ct">${fmCount}</span></button>
       ${flagged.length?`<button class="tab${cur.tab==='flags'?' on':''}" data-tab="flags" title="Things to check against the lecture">⚑<span class="tLbl"> To check</span> <span class="ct">${flagged.length}</span></button>`:''}
@@ -2394,6 +2529,9 @@ function renderMain(){
     h+='<div class="qList">'+flagged.map(cd=>cd.type==='question'?questionCard(cd,qs.indexOf(cd))
       :`<div><div class="flagFrom">LEC ${cd.lec.no} · ${esc(cd.lec.title)}</div>${noteCard(cd)}</div>`).join('')+'</div>';
   }
+  if(cur.tab==='charts'){
+    h+=`<p class="flagIntro">Every flow chart in this chapter, lecture by lecture. Tap a title to read it in the notes.</p><div class="lecCards">`+charts.map(c=>`<div class="card chartCard"><div class="cardTop"><button class="cardTitle ciGo" data-go="${c.cd.id}"><span class="ciLec">LEC ${c.cd.lec.no}</span>${esc(c.cd.title)}</button></div><div class="cardBody">${c.html}</div></div>`).join('')+'</div>';
+  }
   if(cur.tab==='formulas'){
     h+=fms.length?'<div class="lecCards">'+fms.map(formulaCard).join('')+'</div>':`<div class="empty"><div class="big">No formulas yet</div>Every formula card in this chapter aggregates here as one sheet.</div>`;
   }
@@ -2407,6 +2545,7 @@ function renderMain(){
   });
   $$('#tabBody [data-qlec]').forEach(b=>b.onclick=()=>{ cur.qFilter=b.dataset.qlec; openChapter(ch,'questions'); });
   const qAll=$('#qShowAll'); if(qAll) qAll.onclick=()=>{ cur.qFilter=null; openChapter(ch,'questions'); };
+  $$('#tabBody .ciGo').forEach(b=>b.onclick=()=>{ const cd=CARDS[b.dataset.go]; if(cd) jumpTo(cd); });
   $$('#tabBody [data-step]').forEach(b=>b.onclick=()=>{
     const id=b.dataset.lec, s=b.dataset.step;
     const d=state.done[id]||(state.done[id]={});
@@ -2696,9 +2835,12 @@ function prtOpen(){
   if(ch){
     ops.push(['Chapter','Full chapter — notes, formulas, questions',()=>prtGo(prtChapter(ch,true))]);
     ops.push(['Chapter','Formula sheet only',()=>prtGo(prtFms([ch],`${sub.name} · ${ch.unit.name}`,ch.name+' — Formula Sheet'))]);
+    const cc=chChartCards(ch);
+    if(cc.length) ops.push(['Chapter','Flow charts only — all '+cc.length,()=>prtGo(pCover(`${sub.name} · ${ch.unit.name}`,ch.name+' — Flow Charts')+cc.map(c=>`<div class="pCard"><h3>Lec ${c.cd.lec.no} · ${esc(c.cd.title)}</h3>${c.html}</div>`).join(''))]);
     ops.push(['Chapter','Questions with answers',()=>prtGo(prtQs([ch],true,`${sub.name} · ${ch.unit.name}`,ch.name+' — Questions'))]);
     ops.push(['Chapter','Question paper — answers hidden',()=>prtGo(prtQs([ch],false,`${sub.name} · ${ch.unit.name}`,ch.name+' — Question Paper'))]);
   }
+  if(subjectMap(sub)) ops.push([sub.code,'Subject map — poster, A4 up to chart paper',()=>{ prtToggle(false); openMap(sub); setTimeout(()=>mapPrintToggle(true),80); }]);
   if(chs.length){
     ops.push([sub.code,'All chapters — complete notes',()=>prtGo(pCover(sub.name,'Complete Notes')+chs.map(c=>prtChapter(c,false)).join(''))]);
     ops.push([sub.code,'Full formula sheet',()=>prtGo(prtFms(chs,sub.name,'Formula Sheet'))]);
@@ -2715,9 +2857,8 @@ function prtOpen(){
 
 /* ── global keys & wiring ── */
 addEventListener('keydown',e=>{
+  if(mapCur&&mapKey(e)) return;                 // the map takes the keyboard while it's open
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); palToggle(!$('#palWrap').classList.contains('show')); return; }
-  /* pdf/paper sheets are deliberately left out — Escape mid-extraction would
-     abort a call that's already been paid for */
   if(e.key==='Escape'){ palToggle(false); quizClose(); prtToggle(false); jsonToggle(false); jsonManualToggle(false); promptToggle(false); return; }
   if($('#palWrap').classList.contains('show')){
     if(e.key==='ArrowDown'){ palSel=Math.min(palSel+1,palHits.length-1); palRender(); e.preventDefault(); }
@@ -2745,7 +2886,7 @@ $('#sideScrim').onclick=closeSideIfDrawer;
 /* on a phone or iPad the chapter list is a drawer — it starts closed */
 if(isNarrow()) state.sideHid=true;
 applySide();
-$('#moreBtn').onclick=e=>{ e.stopPropagation(); $('#moreMenu').classList.toggle('on'); };
+$('#moreBtn').onclick=e=>{ e.stopPropagation(); const mb=$('#moreMenu [data-act="map"]'); if(mb) mb.hidden=!subjectMap(cur.sub); $('#moreMenu').classList.toggle('on'); };
 document.addEventListener('click',()=>$('#moreMenu')&&$('#moreMenu').classList.remove('on'));
 $$('#moreMenu button').forEach(b=>b.onclick=e=>{
   e.stopPropagation(); $('#moreMenu').classList.remove('on');
@@ -2754,6 +2895,7 @@ $$('#moreMenu button').forEach(b=>b.onclick=e=>{
   else if(a==='theme') setTheme(state.theme==='auto'?'light':state.theme==='light'?'dark':'auto');
   else if(a==='settings') openChapter('settings','notes');
   else if(a==='import') jsonToggle(true);
+  else if(a==='map') openMap(cur.sub);
   else if(a==='importManual') jsonManualToggle(true);
 });
 applyTheme();
@@ -2980,8 +3122,11 @@ const GUIDE=[
    h:'<b>Settings</b> (the ⋯ menu, or the sidebar) has your theme, export a full backup, load a demo chapter to look around, and manage subjects. That corner stack? One sheet per chapter you add.',
    k:'Do a quick <b>Export backup</b> now and then — it\'s your notes and progress in one file.'}
 ];
-const APP_VERSION='1.11';
+const APP_VERSION='1.12';
 const WHATS_NEW=[
+  'Subject map: all of Income Tax on one big chart — every chapter connected, in the order tax is worked out. Open it from the sidebar (🗺 IT map) or the subject overview. It grows as chapters are added.',
+  'On the map: tap any box to read the notes behind it, Test me hides the details so you can recall them, and Print makes a poster from A4 up to chart-paper size.',
+  'A Charts tab in every chapter shows all its flow charts on one page.',
   'Notes update themselves: new and corrected chapters download when you open the app, or come back to it, with a connection. Your ticks, stars and highlights stay. Settings ▸ Notes sync.',
   'The AI features are gone (Import PDF, AI answers, ✨ Generate questions, Paper Predictor). The app no longer talks to any AI service or uses an API key.',
   'Wide screens: cards fill the whole screen in columns. Settings ▸ Layout lets you pick Auto, 1, 2 or 3.',
@@ -3105,7 +3250,7 @@ async function syncContent(opts){
   if(!location.protocol.startsWith('http')) return {skipped:'file'};
   if(isOffline()){ if(manual) toast('You’re offline — check again when you have a connection.'); return {skipped:'offline'}; }
   syncBusy=true;
-  const out={updated:[],added:[],same:0,failed:0};
+  const out={updated:[],added:[],same:0,failed:0,maps:[]};
   try{
     const r=await syncFetch(SYNC_LIST+'?t='+Date.now());
     if(!r.ok) throw new Error('list '+r.status);
@@ -3158,15 +3303,35 @@ async function syncContent(opts){
       const ch=findChapter(c.id);
       (have?out.updated:out.added).push(ch?`${ch.sub.code} Ch ${ch.no}`:fileChap.name);
     });
+    /* subject maps: same idea — downloaded when the hash changed, filed under the subject
+       that holds the map's chapters (so it follows a renamed subject) */
+    for(const mm of (Array.isArray(man.maps)?man.maps:[]).filter(x=>x&&x.file)){
+      const key='map:'+mm.file, sid0=mapSubjectId(mm.subject,mm.chapters);
+      if(hashes[key]===mm.hash&&sid0&&state.maps&&state.maps[sid0]) continue;
+      try{
+        const fr=await syncFetch('/content/'+mm.file+'?h='+encodeURIComponent(mm.hash||''),30000);
+        if(!fr.ok) throw new Error('map '+fr.status);
+        const buf=await fr.arrayBuffer(), h=await syncHash(buf);
+        if(h&&mm.hash&&h!==mm.hash) throw new Error('map hash');
+        const d=JSON.parse(new TextDecoder().decode(buf));
+        const sid=d&&d.map&&d.map.root?mapSubjectId(d.subject,mapChapterIds(d.map.root)):null;
+        if(!sid) throw new Error('map subject');
+        (state.maps=state.maps||{})[sid]=d.map;
+        (state.contentHashes=state.contentHashes||{})[key]=mm.hash; dirty=true;
+        out.maps.push((DATA.subjects.find(s=>s.id===sid)||{}).code||'');
+      }catch(e){ out.failed++; }
+    }
     if(dirty) save();
     const n=out.updated.length+out.added.length;
     syncInfo={at:Date.now(), ok:true, n, failed:out.failed};
-    if(n){
+    if(n||out.maps.length){
       refreshAfterSync();
       const bits=[];
       if(out.updated.length) bits.push('Notes updated: '+out.updated.join(', '));
       if(out.added.length) bits.push('New: '+out.added.join(', '));
+      if(out.maps.length) bits.push((out.maps.length>1?out.maps.join(', ')+' maps':out.maps[0]+' map')+' updated');
       toast(bits.join(' · '),5000);
+      if(location.hash==='#map'&&!mapCur){ const s=subjectMap(cur.sub)?cur.sub:DATA.subjects.find(x=>subjectMap(x)); if(s) openMap(s); }
     } else if(out.full) toast('New notes came in, but this device’s storage is full — remove an old chapter in Settings.',6000);
     else if(manual) toast(out.failed?'Couldn’t download every chapter — try again in a minute.':'Your notes are up to date.');
   }catch(e){
@@ -3187,6 +3352,7 @@ function refreshAfterSync(){
   buildPalIndex();
   cur.sub=DATA.subjects.find(s=>s.id===(cur.sub&&cur.sub.id))||DATA.subjects[0];
   if(cur.ch&&typeof cur.ch==='object') cur.ch=findChapter(cur.ch.id)||null;
+  if(mapCur&&subjectMap(mapCur.sub)!==mapCur.map) openMap(mapCur.sub);   // its map changed under it
   if($('#quizWrap').classList.contains('show')){ renderSubjTabs(); renderSidebar(); return; }
   const y=scrollY;
   openChapter(cur.ch,cur.tab,true);
@@ -3208,6 +3374,284 @@ document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState==='visible'&&syncInfo&&Date.now()-syncInfo.at>10*60*1000) syncContent();
 });
 
+/* ══ Subject map (1.12) ═════════════════════════════════════════════
+   One chart for a whole subject: the order the subject is worked out in,
+   with every chapter's ★ master chart hung where it belongs. It arrives with
+   notes sync (content/<subject>/map.json → state.maps[subject id]) and is
+   drawn with the same box-and-arrow look as the charts in the notes.
+   Full screen · zoom (buttons, ⌘/Ctrl + scroll, pinch) · drag to move ·
+   open/close any box · tap a box → the note cards that explain it ·
+   Test me hides the details · prints as a poster from A4 up to A1. ══ */
+let mapCur=null, mapDragged=false;
+const MAP_PAPERS=[['A4',297,210,'home printer'],['A3',420,297,'print shop'],['A2',594,420,'half a chart paper'],['A1',841,594,'about a full chart paper'],['A0',1189,841,'big wall poster']];
+function subjectMap(sub){ return (sub&&state.maps&&state.maps[sub.id])||null; }
+function mapPrefs(){ return state.mapPrefs=Object.assign({level:99,layout:'auto',test:false},state.mapPrefs||{}); }
+function mapChapterIds(n,out){ out=out||[]; if(n){ if(n.ch&&!out.includes(n.ch)) out.push(n.ch); (n.kids||[]).forEach(k=>mapChapterIds(k,out)); } return out; }
+function mapSubjectId(name,chIds){
+  for(const id of chIds||[]){ const c=findChapter(id); if(c) return c.sub.id; }
+  const key=String(name||'').trim().toLowerCase(); if(!key) return null;
+  const s=DATA.subjects.find(x=>String(x.id).toLowerCase()===key)||DATA.subjects.find(x=>String(x.name).toLowerCase()===key)
+       ||DATA.subjects.find(x=>String(x.code||'').toLowerCase()===key);
+  return s?s.id:null;
+}
+/* number the boxes; a box without its own notes shares its parent's */
+function mapPrepare(map){
+  const nodes=[], root=JSON.parse(JSON.stringify(map.root||{t:'Map'}));
+  (function walk(n,depth,inh){
+    n.k=nodes.length; nodes.push(n); n.depth=depth;
+    n.refEff=(n.ref&&n.ref.length)?n.ref:inh;
+    (n.kids||[]).forEach(c=>walk(c,depth+1,n.refEff));
+  })(root,-1,[]);
+  return {root,nodes};
+}
+function mapApplyLevel(level){ mapCur.nodes.forEach(n=>{ n.open=n.depth<level; }); }
+function mapBox(n,lvl,print){
+  const cls='b b'+Math.min(lvl,3)+(n.later?' later':'')+(n.refEff.length?' ref':'')+(mapCur.rev.has(n.k)?' rv':'');
+  const ch=n.ch&&findChapter(n.ch);
+  const chip=ch?`<button class="mch" data-ch="${esc(ch.id)}" title="Open Ch ${ch.no} · ${esc(ch.name)}">Ch ${ch.no}</button>`:'';
+  const nk=(n.kids||[]).length;
+  const tog=nk&&!print?`<button class="mtg" data-tg="${n.k}" aria-label="${n.open?'Close':'Open'} this branch" title="${n.open?'Close':'Open'} this branch">${n.open?'−':'+'+nk}</button>`:'';
+  return `<div class="${cls}" data-k="${n.k}">${chip}${esc(n.t)}${n.d?'<i>'+esc(n.d)+'</i>':''}${(n.notes||[]).map(x=>'<small>'+esc(x)+'</small>').join('')}${tog}</div>`;
+}
+function mapKids(n,lvl,print){
+  const ks=n.kids||[]; if(!ks.length||!n.open) return '';
+  if((n.dir||(lvl===0?'h':'v'))==='h')
+    return '<ul class="h">'+ks.map(k=>`<li${(k.kids||[]).length&&k.open&&(k.dir||'v')==='v'?' class="c"':''}>${mapBox(k,lvl+1,print)}${mapKids(k,lvl+1,print)}</li>`).join('')+'</ul>';
+  return '<ul class="v">'+ks.map(k=>`<li>${mapBox(k,lvl+1,print)}${mapKids(k,lvl+1,print)}</li>`).join('')+'</ul>';
+}
+function mapHTML(print){
+  const r=mapCur.root, tree=!print&&mapCur.tree;
+  let h=`<div class="mroot${r.refEff.length?' ref':''}" data-k="${r.k}">${esc(r.t)}${r.d?'<i>'+esc(r.d)+'</i>':''}</div>`, across=false;
+  (r.kids||[]).forEach(s=>{
+    if(!s.link) h+='<div class="mapArrow" aria-hidden="true"></div>';
+    else if(!across){ h+='<div class="mapGap"><span>Across chapters</span></div>'; across=true; }
+    else h+='<div class="mapGap small"></div>';
+    h+=`<div class="pwf pwmap${tree?' vfit':''}"><div class="t">${mapBox(s,0,print)}${mapKids(s,0,print)}</div></div>`;
+  });
+  if(mapCur.map.about&&!print) h+=`<p class="mapAbout">${esc(mapCur.map.about)}</p>`;
+  return h;
+}
+function mapRender(keepK){
+  const cv=$('#mapCanvas'), sc=$('#mapScroll');
+  let anchor=null;
+  if(keepK!=null){ const el=cv.querySelector(`[data-k="${keepK}"]`); if(el){ const r=el.getBoundingClientRect(); anchor={x:r.left,y:r.top}; } }
+  cv.classList.toggle('tree',mapCur.tree);
+  cv.classList.toggle('test',mapCur.test);
+  cv.innerHTML=mapHTML(false);
+  if(anchor){ const el=cv.querySelector(`[data-k="${keepK}"]`); if(el){ const r=el.getBoundingClientRect(); sc.scrollLeft+=r.left-anchor.x; sc.scrollTop+=r.top-anchor.y; } }
+  mapBarState();
+}
+function mapBarState(){
+  $$('#mapLevel button').forEach(b=>b.classList.toggle('on',+b.dataset.lv===mapCur.level));
+  const t=$('#mapTest'); t.classList.toggle('on',mapCur.test); t.textContent=mapCur.test?'Show all':'Test me';
+  $('#mapLayout').textContent=mapCur.tree?'Wide view':'Tree view';
+  $('#mapZoomLbl').textContent=Math.round((mapCur.zoom||1)*100)+'%';
+  $('#mapFull').hidden=!(document.fullscreenEnabled||document.webkitFullscreenEnabled);
+}
+function mapSetZoom(z,px,py){
+  const sc=$('#mapScroll'), cv=$('#mapCanvas');
+  z=Math.max(0.15,Math.min(2.5,z));
+  const old=mapCur.zoom||1;
+  if(px==null){ px=sc.clientWidth/2; py=sc.clientHeight/2; }
+  const ax=(sc.scrollLeft+px)/old, ay=(sc.scrollTop+py)/old;
+  cv.style.zoom=z; mapCur.zoom=z;
+  sc.scrollLeft=ax*z-px; sc.scrollTop=ay*z-py;
+  $('#mapZoomLbl').textContent=Math.round(z*100)+'%';
+}
+function mapNatural(){
+  const cv=$('#mapCanvas'), z=mapCur.zoom||1;
+  cv.style.zoom=1; const r=cv.getBoundingClientRect(); cv.style.zoom=z;
+  return {w:r.width,h:r.height};
+}
+/* 'all' = whole map on screen · 'start' = as wide as fits, but never so small it can't be read */
+function mapFit(mode){
+  const sc=$('#mapScroll'), cv=$('#mapCanvas'), {w,h}=mapNatural(), W=sc.clientWidth, H=sc.clientHeight;
+  let z=1;
+  if(!mapCur.tree) z=mode==='all'?Math.min(W/w,H/h):Math.min(1,Math.max(W/w,0.7));
+  z=Math.max(0.15,Math.min(2.5,z));
+  cv.style.zoom=z; mapCur.zoom=z; $('#mapZoomLbl').textContent=Math.round(z*100)+'%';
+  sc.scrollTop=0; sc.scrollLeft=Math.max(0,(sc.scrollWidth-W)/2);
+}
+function openMap(sub){
+  const map=subjectMap(sub); if(!map){ toast('No map for this subject yet.'); return; }
+  const pr=mapPrefs(), prep=mapPrepare(map);
+  mapCur={sub,map,root:prep.root,nodes:prep.nodes,zoom:1,test:!!pr.test,rev:new Set(),level:pr.level,
+          tree:pr.layout==='tree'||(pr.layout==='auto'&&innerWidth<700)};
+  mapApplyLevel(mapCur.level);
+  $('#mapTitleT').textContent=map.title||sub.name;
+  $('#mapWrap').classList.add('show'); document.body.style.overflow='hidden';
+  mapClosePanel(); mapPrintToggle(false);
+  mapRender(); mapFit('start');
+  try{ if(location.hash!=='#map') history.replaceState(null,'','#map'); }catch(e){}
+}
+function closeMap(){
+  if(!mapCur) return;
+  mapClosePanel(); mapPrintToggle(false);
+  $('#mapWrap').classList.remove('show'); document.body.style.overflow='';
+  mapCur=null;
+  try{ if(location.hash==='#map') history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  const d=document; if(d.fullscreenElement||d.webkitFullscreenElement){ try{ (d.exitFullscreen||d.webkitExitFullscreen).call(d); }catch(e){} }
+}
+function mapOpenPanel(n,box){
+  const ids=(n.refEff||[]).filter(id=>CARDS[id]);
+  if(!ids.length){ if((n.kids||[]).length){ n.open=!n.open; mapRender(n.k); } return; }
+  $$('#mapCanvas .hit').forEach(x=>x.classList.remove('hit')); if(box) box.classList.add('hit');
+  const c0=CARDS[ids[0]], p=$('#mapPanel');
+  p.innerHTML=`<div class="mpHead"><div><div class="mpCrumb">${esc(c0.lec.ch.sub.code)} · Ch ${c0.lec.ch.no} · ${esc(c0.lec.ch.name)}</div><div class="mpTitle">${esc(n.t)}</div>${n.d?`<div class="mpSub">${esc(n.d)}</div>`:''}</div><button class="mpX" aria-label="Close">✕</button></div>
+    <div class="mpBody">${ids.map(id=>{ const cd=CARDS[id];
+      return `<div class="mpFrom">Ch ${cd.lec.ch.no} · Lec ${cd.lec.no} · ${esc(cd.lec.title)}</div>`+(cd.type==='formula'?formulaCard(cd):cd.type==='question'?questionCard(cd,0):noteCard(cd)); }).join('')}</div>
+    <div class="mpFoot"><span class="mpHint">${ids.length>1?ids.length+' cards from your notes':'From your notes'}</span><button class="setMini" id="mpGo">Open in the chapter →</button></div>`;
+  p.classList.add('show');
+  const body=p.querySelector('.mpBody'); body.scrollTop=0;
+  body.querySelectorAll('.qCard').forEach(c=>c.classList.add('open'));
+  upgradeBlocks(body); applyHighlights(body); bindStars(body);
+  p.querySelector('.mpX').onclick=mapClosePanel;
+  $('#mpGo').onclick=()=>{ const cd=CARDS[ids[0]]; closeMap(); jumpTo(cd); };
+}
+function mapClosePanel(){ const p=$('#mapPanel'); if(p) p.classList.remove('show'); $$('#mapCanvas .hit').forEach(x=>x.classList.remove('hit')); }
+/* print: the wide layout of whatever is open, scaled to fill one sheet */
+function mapPrintSize(){
+  const html=mapHTML(true), m=document.createElement('div');
+  m.className='mapMeasure'; m.innerHTML=`<div>${html}</div>`; document.body.appendChild(m);
+  const r=m.firstChild.getBoundingClientRect(); m.remove();
+  return {w:r.width,h:r.height,html};
+}
+function mapPaper(nm,w,h){
+  const p=MAP_PAPERS.find(x=>x[0]===nm), land=w>=h, PW=land?p[1]:p[2], PH=land?p[2]:p[1], mm=96/25.4;
+  const s=Math.min(2,((PW-16)*mm)/w,((PH-16)*mm-60)/h)*0.96;   // a little air so nothing spills onto a 2nd page
+  return {PW,PH,s};
+}
+function mapPrintToggle(show){
+  const pop=$('#mapPrintPop'); if(!pop) return;
+  if(!show||!mapCur){ pop.classList.remove('show'); return; }
+  const {w,h}=mapPrintSize();
+  pop.innerHTML=`<div class="mppT">Print the map</div>
+    <div class="mppN">Prints what's open now — choose <b>Everything</b> first for the full chart. ${w>=h?'Landscape':'Portrait'}, fitted to one sheet.</div>
+    ${MAP_PAPERS.map(([nm,,,note])=>{ const pt=Math.round(13.5*mapPaper(nm,w,h).s*0.75*10)/10;
+      return `<button class="mppOpt" data-paper="${nm}"><b>${nm}</b><span>${note}</span><em class="${pt<7?'small':''}">text ≈ ${pt} pt</em></button>`; }).join('')}
+    <div class="mppN">For chart paper: in the print window pick <b>Save as PDF</b> (Chrome keeps the paper size) and take the file to a print shop — it stays sharp at any size.</div>`;
+  pop.querySelectorAll('[data-paper]').forEach(b=>b.onclick=()=>{ pop.classList.remove('show'); mapPrint(b.dataset.paper); });
+  pop.classList.add('show');
+}
+function mapPrint(nm){
+  const {w,h,html}=mapPrintSize(), {PW,PH,s}=mapPaper(nm,w,h);
+  const pr=$('#printRoot');
+  pr.innerHTML=`<div class="mapPrint"><div class="mpPrHead"><b>${esc(mapCur.map.title||mapCur.sub.name)}</b><span>${esc(nm)} · ${esc(new Date().toLocaleDateString())} · Paperweight</span></div><div class="mapPrCanvas" style="zoom:${s.toFixed(4)}">${html}</div></div>`;
+  let st=$('#mapPageStyle'); if(!st){ st=document.createElement('style'); st.id='mapPageStyle'; document.head.appendChild(st); }
+  st.textContent=`@page{size:${PW}mm ${PH}mm; margin:8mm}`;
+  const theme=document.documentElement.dataset.theme;
+  document.documentElement.dataset.theme='light';       // paper is white
+  document.body.classList.add('printingMap');          // only the map goes to paper
+  const done=()=>{ removeEventListener('afterprint',done); st.textContent=''; document.documentElement.dataset.theme=theme; document.body.classList.remove('printingMap'); pr.innerHTML=''; };
+  addEventListener('afterprint',done);
+  setTimeout(()=>window.print(),80);
+}
+function mapFullscreen(){
+  const d=document, el=d.documentElement;
+  if(d.fullscreenElement||d.webkitFullscreenElement){ (d.exitFullscreen||d.webkitExitFullscreen).call(d); return; }
+  const go=el.requestFullscreen||el.webkitRequestFullscreen; if(go){ try{ const p=go.call(el); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
+}
+function mapKey(e){
+  if(e.key==='Escape'){ e.preventDefault();
+    if($('#mapPrintPop').classList.contains('show')) mapPrintToggle(false);
+    else if($('#mapPanel').classList.contains('show')) mapClosePanel();
+    else closeMap();
+    return true; }
+  if(e.metaKey||e.ctrlKey){ if(e.key.toLowerCase()==='p'){ e.preventDefault(); mapPrintToggle(true); } return true; }
+  if(e.target&&e.target.closest&&e.target.closest('input,textarea,select')) return true;
+  if(e.key==='+'||e.key==='='){ mapSetZoom(mapCur.zoom*1.25); return true; }
+  if(e.key==='-'||e.key==='_'){ mapSetZoom(mapCur.zoom/1.25); return true; }
+  if(e.key==='0'){ mapFit('all'); return true; }
+  return true;
+}
+(function(){
+  const cv=$('#mapCanvas'), sc=$('#mapScroll'); if(!cv||!sc) return;
+  cv.addEventListener('click',e=>{
+    if(!mapCur) return;
+    if(mapDragged){ mapDragged=false; return; }
+    const tg=e.target.closest('.mtg');
+    if(tg){ const n=mapCur.nodes[+tg.dataset.tg]; n.open=!n.open; mapRender(n.k); return; }
+    const chb=e.target.closest('.mch');
+    if(chb){ const c=findChapter(chb.dataset.ch); if(c){ closeMap(); cur.sub=c.sub; openChapter(c,'notes'); } return; }
+    const box=e.target.closest('[data-k]'); if(!box) return;
+    const n=mapCur.nodes[+box.dataset.k];
+    if(mapCur.test&&n.d&&!mapCur.rev.has(n.k)&&box.classList.contains('b')){ mapCur.rev.add(n.k); box.classList.add('rv'); return; }
+    mapOpenPanel(n,box);
+  });
+  $('#mapBack').onclick=closeMap;
+  $$('#mapLevel button').forEach(b=>b.onclick=()=>{
+    const lv=+b.dataset.lv; mapCur.level=lv; mapPrefs().level=lv; save();
+    mapApplyLevel(lv); mapRender(); mapFit('start');
+  });
+  $('#mapTest').onclick=()=>{
+    mapCur.test=!mapCur.test; mapCur.rev.clear(); mapPrefs().test=mapCur.test; save(); mapRender();
+    toast(mapCur.test?'Test me: the details are hidden. Say each one, then tap the box to check.':'Details showing again.',3600);
+  };
+  $('#mapLayout').onclick=()=>{ mapCur.tree=!mapCur.tree; mapPrefs().layout=mapCur.tree?'tree':'wide'; save(); mapRender(); mapFit('start'); };
+  $('#mapIn').onclick=()=>mapSetZoom(mapCur.zoom*1.25);
+  $('#mapOut').onclick=()=>mapSetZoom(mapCur.zoom/1.25);
+  $('#mapZoomLbl').onclick=()=>mapSetZoom(1);
+  $('#mapFitBtn').onclick=()=>mapFit('all');
+  $('#mapPrintBtn').onclick=e=>{ e.stopPropagation(); mapPrintToggle(!$('#mapPrintPop').classList.contains('show')); };
+  $('#mapFull').onclick=mapFullscreen;
+  $('#mapScroll').addEventListener('click',()=>mapPrintToggle(false));
+  /* drag to move (mouse), pinch to zoom (touch), ⌘/Ctrl + scroll or trackpad pinch to zoom */
+  let drag=null, pinch=null; const pts=new Map();
+  sc.addEventListener('pointerdown',e=>{
+    if(!mapCur) return;
+    if(e.pointerType==='touch'){
+      pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      if(pts.size===2){ const [p1,p2]=[...pts.values()]; pinch={d:Math.hypot(p1.x-p2.x,p1.y-p2.y)||1,z:mapCur.zoom}; }
+      return;
+    }
+    if(e.button!==0||e.target.closest('button')) return;
+    drag={x:e.clientX,y:e.clientY,l:sc.scrollLeft,t:sc.scrollTop,id:e.pointerId,moved:false};
+  });
+  sc.addEventListener('pointermove',e=>{
+    if(pts.has(e.pointerId)){
+      pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      if(pinch&&pts.size===2){ const [p1,p2]=[...pts.values()], r=sc.getBoundingClientRect();
+        mapSetZoom(pinch.z*Math.hypot(p1.x-p2.x,p1.y-p2.y)/pinch.d,(p1.x+p2.x)/2-r.left,(p1.y+p2.y)/2-r.top); }
+      return;
+    }
+    if(!drag) return;
+    const dx=e.clientX-drag.x, dy=e.clientY-drag.y;
+    if(!drag.moved&&Math.hypot(dx,dy)>5){ drag.moved=true; sc.classList.add('drag'); try{ sc.setPointerCapture(drag.id); }catch(_){} }
+    if(drag.moved){ sc.scrollLeft=drag.l-dx; sc.scrollTop=drag.t-dy; }
+  });
+  const end=e=>{
+    pts.delete(e.pointerId); if(pts.size<2) pinch=null;
+    if(drag&&e.pointerId===drag.id){ if(drag.moved){ mapDragged=true; setTimeout(()=>{ mapDragged=false; },60); } drag=null; sc.classList.remove('drag'); }
+  };
+  sc.addEventListener('pointerup',end); sc.addEventListener('pointercancel',end);
+  sc.addEventListener('wheel',e=>{
+    if(!mapCur||!(e.ctrlKey||e.metaKey)) return;
+    e.preventDefault(); const r=sc.getBoundingClientRect();
+    mapSetZoom(mapCur.zoom*Math.exp(-e.deltaY*0.0025),e.clientX-r.left,e.clientY-r.top);
+  },{passive:false});
+})();
+/* Charts tab: every chart in a chapter, in lecture order, each one once (the revision
+   lecture repeats the lecture charts — those are skipped, the master chart stays) */
+const _chartMemo=new WeakMap();
+function chChartCards(ch){
+  if(_chartMemo.has(ch)) return _chartMemo.get(ch);
+  const seen=new Set(), out=[];
+  ch.lectures.forEach(lec=>lec.cards.forEach(cd=>{
+    if(cd.type!=='note'||!/class="(pwf|pwl|chart)\b/.test(cd.html||'')) return;
+    const tmp=document.createElement('div'); tmp.innerHTML=cd.html;
+    let body='';
+    [...tmp.querySelectorAll('.pwf,.pwl,ul.chart,ol.chart')].filter(el=>!el.parentElement.closest('.pwf,.pwl,ul.chart,ol.chart')).forEach(el=>{
+      const key=el.outerHTML.replace(/\s+/g,' ');
+      if(seen.has(key)) return; seen.add(key);
+      body+=el.outerHTML;
+      for(let s=el.nextElementSibling; s&&s.classList.contains('pwn'); s=s.nextElementSibling) body+=s.outerHTML;
+    });
+    if(body) out.push({cd, html:[...tmp.querySelectorAll('style')].map(s=>s.outerHTML).join('')+body});
+  }));
+  _chartMemo.set(ch,out);
+  return out;
+}
+
 /* ── boot: restore last view ── */
 buildPalIndex();
 renderOfflineFlag();
@@ -3220,6 +3664,7 @@ renderOfflineFlag();
   if(!ch) ch=allChapters(cur.sub)[0]||null;
   openChapter(ch,(state.view&&state.view.tab)||'notes',true);
   showGuide(false); showWhatsNew();
+  if(location.hash==='#map'){ const s=subjectMap(cur.sub)?cur.sub:DATA.subjects.find(x=>subjectMap(x)); if(s) openMap(s); }
   setTimeout(()=>syncContent(),400);         // after the first paint, never in its way
 })();
 </script>
